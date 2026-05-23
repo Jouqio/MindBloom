@@ -1,980 +1,2938 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
---ink:#0D0F1A;--ink2:#2D3056;--ink3:#6B7280;
---cream:#FAFAF8;--card:#FFFFFF;--card2:#F5F4F0;
---primary:#5B4FE8;--primary2:#7C6EF5;--primary3:#A89EFF;
---aurora1:#B8A9FF;--aurora2:#9ECFFF;--aurora3:#A8F0E0;--aurora4:#FFD6A0;
---success:#1DB97A;--warn:#F0A500;--danger:#E85B5B;--accent:#FF7B8A;
---glass:rgba(255,255,255,0.72);--glass2:rgba(255,255,255,0.45);
---border:rgba(91,79,232,0.12);--border2:rgba(91,79,232,0.25);
---shadow:0 4px 32px rgba(91,79,232,0.1);--shadow-lg:0 16px 64px rgba(91,79,232,0.18);
---shadow-xl:0 32px 80px rgba(91,79,232,0.22);
---font:'Outfit',sans-serif;--serif:'Playfair Display',serif;
---r:18px;--r-sm:10px;--r-xs:6px;
-}
-[data-dark]{
---ink:#EEF0FF;--ink2:#BCC0FF;--ink3:#6B7280;
---cream:#080A14;--card:#0F1221;--card2:#161B2E;
---border:rgba(169,158,255,0.12);--border2:rgba(169,158,255,0.28);
---glass:rgba(15,18,33,0.82);--glass2:rgba(15,18,33,0.55);
---shadow:0 4px 32px rgba(0,0,0,0.35);--shadow-lg:0 16px 64px rgba(0,0,0,0.5);
-}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --ink: #0d0f1a;
+        --ink2: #2d3056;
+        --ink3: #6b7280;
+        --cream: #fafaf8;
+        --card: #ffffff;
+        --card2: #f5f4f0;
+        --primary: #5b4fe8;
+        --primary2: #7c6ef5;
+        --primary3: #a89eff;
+        --aurora1: #b8a9ff;
+        --aurora2: #9ecfff;
+        --aurora3: #a8f0e0;
+        --aurora4: #ffd6a0;
+        --success: #1db97a;
+        --warn: #f0a500;
+        --danger: #e85b5b;
+        --accent: #ff7b8a;
+        --glass: rgba(255, 255, 255, 0.72);
+        --glass2: rgba(255, 255, 255, 0.45);
+        --border: rgba(91, 79, 232, 0.12);
+        --border2: rgba(91, 79, 232, 0.25);
+        --shadow: 0 4px 32px rgba(91, 79, 232, 0.1);
+        --shadow-lg: 0 16px 64px rgba(91, 79, 232, 0.18);
+        --shadow-xl: 0 32px 80px rgba(91, 79, 232, 0.22);
+        --font: "Outfit", sans-serif;
+        --serif: "Playfair Display", serif;
+        --r: 18px;
+        --r-sm: 10px;
+        --r-xs: 6px;
+      }
+      [data-dark] {
+        --ink: #eef0ff;
+        --ink2: #bcc0ff;
+        --ink3: #6b7280;
+        --cream: #080a14;
+        --card: #0f1221;
+        --card2: #161b2e;
+        --border: rgba(169, 158, 255, 0.12);
+        --border2: rgba(169, 158, 255, 0.28);
+        --glass: rgba(15, 18, 33, 0.82);
+        --glass2: rgba(15, 18, 33, 0.55);
+        --shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
+        --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+      }
 
-html,body{font-family:var(--font);background:var(--cream);color:var(--ink);font-size:15px;line-height:1.6;overflow-x:hidden}
+      html,
+      body {
+        font-family: var(--font);
+        background: var(--cream);
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
 
-/* AURORA BG */
-.aurora-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.aurora{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.18;animation:auroraMove linear infinite}
-.a1{width:600px;height:400px;background:radial-gradient(ellipse,var(--aurora1),transparent 70%);top:-100px;left:-100px;animation-duration:18s}
-.a2{width:500px;height:500px;background:radial-gradient(ellipse,var(--aurora2),transparent 70%);top:20%;right:-150px;animation-duration:22s;animation-delay:-8s}
-.a3{width:400px;height:600px;background:radial-gradient(ellipse,var(--aurora3),transparent 70%);bottom:-100px;left:20%;animation-duration:26s;animation-delay:-14s}
-.a4{width:350px;height:350px;background:radial-gradient(ellipse,var(--aurora4),transparent 70%);bottom:10%;right:5%;animation-duration:20s;animation-delay:-5s}
-@keyframes auroraMove{0%{transform:translate(0,0) scale(1) rotate(0deg)}33%{transform:translate(40px,-30px) scale(1.1) rotate(20deg)}66%{transform:translate(-30px,40px) scale(0.9) rotate(-15deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
+      /* AURORA BG */
+      .aurora-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .aurora {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.18;
+        animation: auroraMove linear infinite;
+      }
+      .a1 {
+        width: 600px;
+        height: 400px;
+        background: radial-gradient(ellipse, var(--aurora1), transparent 70%);
+        top: -100px;
+        left: -100px;
+        animation-duration: 18s;
+      }
+      .a2 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(ellipse, var(--aurora2), transparent 70%);
+        top: 20%;
+        right: -150px;
+        animation-duration: 22s;
+        animation-delay: -8s;
+      }
+      .a3 {
+        width: 400px;
+        height: 600px;
+        background: radial-gradient(ellipse, var(--aurora3), transparent 70%);
+        bottom: -100px;
+        left: 20%;
+        animation-duration: 26s;
+        animation-delay: -14s;
+      }
+      .a4 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(ellipse, var(--aurora4), transparent 70%);
+        bottom: 10%;
+        right: 5%;
+        animation-duration: 20s;
+        animation-delay: -5s;
+      }
+      @keyframes auroraMove {
+        0% {
+          transform: translate(0, 0) scale(1) rotate(0deg);
+        }
+        33% {
+          transform: translate(40px, -30px) scale(1.1) rotate(20deg);
+        }
+        66% {
+          transform: translate(-30px, 40px) scale(0.9) rotate(-15deg);
+        }
+        100% {
+          transform: translate(0, 0) scale(1) rotate(0deg);
+        }
+      }
 
-/* LAYOUT */
-.app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
-.page{display:none;flex:1}
-.page.on{display:flex;flex-direction:column;animation:pgIn 0.45s cubic-bezier(.4,0,.2,1)}
-@keyframes pgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(91,79,232,0.4)}50%{box-shadow:0 0 0 12px rgba(91,79,232,0)}}
-@keyframes spinRing{to{stroke-dashoffset:-502}}
-@keyframes treeSway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
-@keyframes leafFloat{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-40px) rotate(180deg);opacity:0}}
-@keyframes plantGrow{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
-@keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}}
-@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-@keyframes typeBlink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes breathExpand{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-@keyframes waveRipple{from{transform:scale(0.8);opacity:0.8}to{transform:scale(2.5);opacity:0}}
+      /* LAYOUT */
+      .app {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .page {
+        display: none;
+        flex: 1;
+      }
+      .page.on {
+        display: flex;
+        flex-direction: column;
+        animation: pgIn 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes pgIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.88);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes glowPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(91, 79, 232, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 12px rgba(91, 79, 232, 0);
+        }
+      }
+      @keyframes spinRing {
+        to {
+          stroke-dashoffset: -502;
+        }
+      }
+      @keyframes treeSway {
+        0%,
+        100% {
+          transform: rotate(-1deg);
+        }
+        50% {
+          transform: rotate(1deg);
+        }
+      }
+      @keyframes leafFloat {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-40px) rotate(180deg);
+          opacity: 0;
+        }
+      }
+      @keyframes plantGrow {
+        from {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+        to {
+          transform: scaleY(1);
+          transform-origin: bottom;
+        }
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        14% {
+          transform: scale(1.15);
+        }
+        28% {
+          transform: scale(1);
+        }
+      }
+      @keyframes confettiFall {
+        to {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+      @keyframes typeBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      @keyframes breathExpand {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.25);
+        }
+      }
+      @keyframes waveRipple {
+        from {
+          transform: scale(0.8);
+          opacity: 0.8;
+        }
+        to {
+          transform: scale(2.5);
+          opacity: 0;
+        }
+      }
 
-/* NAV */
-.nav{
-position:sticky;top:0;z-index:200;
-background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-border-bottom:1px solid var(--border);
-height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:8px;
-}
-.nav-logo{font-family:var(--serif);font-size:20px;color:var(--primary);cursor:pointer;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.logo-bloom{width:30px;height:30px;background:linear-gradient(135deg,var(--primary),var(--primary2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px}
-.nav-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
-.nav-tabs::-webkit-scrollbar{display:none}
-.tab{padding:6px 12px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:500;color:var(--ink3);white-space:nowrap;transition:all .2s}
-.tab:hover,.tab.on{background:rgba(91,79,232,0.1);color:var(--primary)}
-.tab.on{font-weight:600}
-.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.icon-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s}
-.icon-btn:hover{transform:scale(1.08);background:rgba(91,79,232,0.08)}
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: var(--glass);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        gap: 8px;
+      }
+      .nav-logo {
+        font-family: var(--serif);
+        font-size: 20px;
+        color: var(--primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .logo-bloom {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .nav-tabs {
+        display: flex;
+        gap: 2px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex: 1;
+        justify-content: center;
+      }
+      .nav-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tab {
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-family: var(--font);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ink3);
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      .tab:hover,
+      .tab.on {
+        background: rgba(91, 79, 232, 0.1);
+        color: var(--primary);
+      }
+      .tab.on {
+        font-weight: 600;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .icon-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        background: var(--glass2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      .icon-btn:hover {
+        transform: scale(1.08);
+        background: rgba(91, 79, 232, 0.08);
+      }
 
-/* BUTTONS */
-.btn{padding:10px 22px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;transition:all .25s}
-.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;animation:glowPulse 2.5s ease infinite}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(91,79,232,0.4)}
-.btn-ghost{background:var(--card);border:1px solid var(--border2);color:var(--primary)}
-.btn-ghost:hover{background:rgba(91,79,232,0.06);transform:translateY(-1px)}
-.btn-sm{padding:7px 16px;font-size:12px;border-radius:8px}
-.btn-icon{width:38px;height:38px;padding:0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+      /* BUTTONS */
+      .btn {
+        padding: 10px 22px;
+        border-radius: var(--r-sm);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font);
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.25s;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: #fff;
+        animation: glowPulse 2.5s ease infinite;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(91, 79, 232, 0.4);
+      }
+      .btn-ghost {
+        background: var(--card);
+        border: 1px solid var(--border2);
+        color: var(--primary);
+      }
+      .btn-ghost:hover {
+        background: rgba(91, 79, 232, 0.06);
+        transform: translateY(-1px);
+      }
+      .btn-sm {
+        padding: 7px 16px;
+        font-size: 12px;
+        border-radius: 8px;
+      }
+      .btn-icon {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
 
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .3s}
-.card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-.card-glass{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border)}
-.card-gradient{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+      /* CARDS */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 24px;
+        transition: all 0.3s;
+      }
+      .card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
+      }
+      .card-glass {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+      }
+      .card-gradient {
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: #fff;
+      }
 
-/* TYPOGRAPHY */
-.h1{font-family:var(--serif);font-size:clamp(32px,5vw,56px);line-height:1.15;font-weight:700}
-.h2{font-family:var(--serif);font-size:clamp(22px,3vw,36px);line-height:1.2}
-.h3{font-size:18px;font-weight:700;line-height:1.3}
-.h4{font-size:15px;font-weight:600}
-.label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink3)}
-.muted{color:var(--ink3);font-size:13px}
-.gradient-text{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+      /* TYPOGRAPHY */
+      .h1 {
+        font-family: var(--serif);
+        font-size: clamp(32px, 5vw, 56px);
+        line-height: 1.15;
+        font-weight: 700;
+      }
+      .h2 {
+        font-family: var(--serif);
+        font-size: clamp(22px, 3vw, 36px);
+        line-height: 1.2;
+      }
+      .h3 {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .h4 {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--ink3);
+      }
+      .muted {
+        color: var(--ink3);
+        font-size: 13px;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
 
-/* BADGES & PILLS */
-.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700}
-.pill-primary{background:rgba(91,79,232,0.12);color:var(--primary)}
-.pill-success{background:rgba(29,185,122,0.12);color:var(--success)}
-.pill-warn{background:rgba(240,165,0,0.12);color:var(--warn)}
-.pill-danger{background:rgba(232,91,91,0.12);color:var(--danger)}
-.pill-ai{background:linear-gradient(135deg,rgba(91,79,232,0.15),rgba(255,123,138,0.15));color:var(--primary)}
+      /* BADGES & PILLS */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .pill-primary {
+        background: rgba(91, 79, 232, 0.12);
+        color: var(--primary);
+      }
+      .pill-success {
+        background: rgba(29, 185, 122, 0.12);
+        color: var(--success);
+      }
+      .pill-warn {
+        background: rgba(240, 165, 0, 0.12);
+        color: var(--warn);
+      }
+      .pill-danger {
+        background: rgba(232, 91, 91, 0.12);
+        color: var(--danger);
+      }
+      .pill-ai {
+        background: linear-gradient(
+          135deg,
+          rgba(91, 79, 232, 0.15),
+          rgba(255, 123, 138, 0.15)
+        );
+        color: var(--primary);
+      }
 
-/* ─────────────────── LANDING ─────────────────── */
-.landing{padding:0;overflow:hidden}
-.hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;background:rgba(91,79,232,0.1);border:1px solid rgba(91,79,232,0.25);color:var(--primary);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px;animation:fadeUp .6s ease both}
-.hero-title{animation:fadeUp .6s .1s ease both;margin-bottom:20px}
-.hero-sub{font-size:17px;color:var(--ink3);max-width:520px;line-height:1.7;margin:0 auto 36px;animation:fadeUp .6s .2s ease both}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
-.hero-social-proof{display:flex;align-items:center;gap:16px;margin-top:48px;animation:fadeUp .6s .4s ease both;flex-wrap:wrap;justify-content:center}
-.avatar-stack{display:flex}
-.avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--cream);background:linear-gradient(135deg,var(--primary3),var(--aurora4));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--primary);margin-left:-8px}
-.avatar:first-child{margin-left:0}
-.features-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1100px;margin:0 auto;padding:60px 24px}
-.strip-card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .3s}
-.strip-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
-.strip-icon{font-size:28px;margin-bottom:12px}
+      /* ─────────────────── LANDING ─────────────────── */
+      .landing {
+        padding: 0;
+        overflow: hidden;
+      }
+      .hero {
+        min-height: calc(100vh - 60px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 24px;
+        position: relative;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 100px;
+        background: rgba(91, 79, 232, 0.1);
+        border: 1px solid rgba(91, 79, 232, 0.25);
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 28px;
+        animation: fadeUp 0.6s ease both;
+      }
+      .hero-title {
+        animation: fadeUp 0.6s 0.1s ease both;
+        margin-bottom: 20px;
+      }
+      .hero-sub {
+        font-size: 17px;
+        color: var(--ink3);
+        max-width: 520px;
+        line-height: 1.7;
+        margin: 0 auto 36px;
+        animation: fadeUp 0.6s 0.2s ease both;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeUp 0.6s 0.3s ease both;
+      }
+      .hero-social-proof {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 48px;
+        animation: fadeUp 0.6s 0.4s ease both;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .avatar-stack {
+        display: flex;
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid var(--cream);
+        background: linear-gradient(135deg, var(--primary3), var(--aurora4));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-left: -8px;
+      }
+      .avatar:first-child {
+        margin-left: 0;
+      }
+      .features-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 60px 24px;
+      }
+      .strip-card {
+        background: var(--glass);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 24px;
+        transition: all 0.3s;
+      }
+      .strip-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+      }
+      .strip-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
 
-/* ─────────────────── DASHBOARD ─────────────────── */
-.dashboard{padding:24px;max-width:1200px;margin:0 auto;width:100%}
-.dash-header{margin-bottom:24px}
-.greeting{font-family:var(--serif);font-size:28px;margin-bottom:2px}
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px}
-.widget{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;animation:scaleIn .4s ease both;transition:all .3s}
-.widget:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-.wlabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);margin-bottom:10px}
-.wvalue{font-size:26px;font-weight:700;color:var(--ink)}
-.wsub{font-size:11px;color:var(--ink3);margin-top:3px}
-.widget-streak{background:linear-gradient(135deg,#FF6B35,#FF9F43);color:#fff}
-.widget-streak .wlabel,.widget-streak .wsub{color:rgba(255,255,255,.65)}
-.widget-streak .wvalue{color:#fff}
-.streak-fire{display:inline-block;animation:heartbeat 1.5s ease infinite}
+      /* ─────────────────── DASHBOARD ─────────────────── */
+      .dashboard {
+        padding: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .dash-header {
+        margin-bottom: 24px;
+      }
+      .greeting {
+        font-family: var(--serif);
+        font-size: 28px;
+        margin-bottom: 2px;
+      }
+      .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .widget {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 20px;
+        animation: scaleIn 0.4s ease both;
+        transition: all 0.3s;
+      }
+      .widget:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
+      }
+      .wlabel {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--ink3);
+        margin-bottom: 10px;
+      }
+      .wvalue {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .wsub {
+        font-size: 11px;
+        color: var(--ink3);
+        margin-top: 3px;
+      }
+      .widget-streak {
+        background: linear-gradient(135deg, #ff6b35, #ff9f43);
+        color: #fff;
+      }
+      .widget-streak .wlabel,
+      .widget-streak .wsub {
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .widget-streak .wvalue {
+        color: #fff;
+      }
+      .streak-fire {
+        display: inline-block;
+        animation: heartbeat 1.5s ease infinite;
+      }
 
-/* Mood Ring */
-.mood-ring-wrap{display:flex;align-items:center;justify-content:center;position:relative;margin:8px 0}
-.mood-ring-center{position:absolute;font-size:22px;font-weight:700;color:var(--primary);text-align:center;line-height:1}
-.mood-ring-score{font-size:11px;color:var(--ink3)}
+      /* Mood Ring */
+      .mood-ring-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 8px 0;
+      }
+      .mood-ring-center {
+        position: absolute;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--primary);
+        text-align: center;
+        line-height: 1;
+      }
+      .mood-ring-score {
+        font-size: 11px;
+        color: var(--ink3);
+      }
 
-/* Quick Write Banner */
-.write-banner{background:linear-gradient(120deg,var(--primary) 0%,var(--primary2) 50%,#9B8DFF 100%);border-radius:var(--r);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .3s;margin-bottom:20px;color:#fff;position:relative;overflow:hidden}
-.write-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(255,255,255,0.15),transparent 60%)}
-.write-banner:hover{transform:translateY(-3px);box-shadow:var(--shadow-xl)}
-.write-banner-text h3{font-size:18px;font-weight:700;margin-bottom:4px}
-.write-banner-text p{font-size:13px;opacity:.75}
-.write-banner-arrow{font-size:36px;opacity:.8}
+      /* Quick Write Banner */
+      .write-banner {
+        background: linear-gradient(
+          120deg,
+          var(--primary) 0%,
+          var(--primary2) 50%,
+          #9b8dff 100%
+        );
+        border-radius: var(--r);
+        padding: 24px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 20px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .write-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at top right,
+          rgba(255, 255, 255, 0.15),
+          transparent 60%
+        );
+      }
+      .write-banner:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-xl);
+      }
+      .write-banner-text h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .write-banner-text p {
+        font-size: 13px;
+        opacity: 0.75;
+      }
+      .write-banner-arrow {
+        font-size: 36px;
+        opacity: 0.8;
+      }
 
-/* Heatmap */
-.heatmap-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:20px}
-.heatmap-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
-.heatmap-grid{display:flex;gap:3px;flex-wrap:wrap}
-.hm-cell{width:14px;height:14px;border-radius:3px;cursor:pointer;transition:transform .15s;flex-shrink:0}
-.hm-cell:hover{transform:scale(1.4)}
-.hm-0{background:var(--card2)}
-.hm-1{background:rgba(91,79,232,0.2)}
-.hm-2{background:rgba(91,79,232,0.4)}
-.hm-3{background:rgba(91,79,232,0.65)}
-.hm-4{background:var(--primary)}
-.hm-5{background:linear-gradient(135deg,var(--primary),var(--accent))}
+      /* Heatmap */
+      .heatmap-wrap {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+      .heatmap-title {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .heatmap-grid {
+        display: flex;
+        gap: 3px;
+        flex-wrap: wrap;
+      }
+      .hm-cell {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: transform 0.15s;
+        flex-shrink: 0;
+      }
+      .hm-cell:hover {
+        transform: scale(1.4);
+      }
+      .hm-0 {
+        background: var(--card2);
+      }
+      .hm-1 {
+        background: rgba(91, 79, 232, 0.2);
+      }
+      .hm-2 {
+        background: rgba(91, 79, 232, 0.4);
+      }
+      .hm-3 {
+        background: rgba(91, 79, 232, 0.65);
+      }
+      .hm-4 {
+        background: var(--primary);
+      }
+      .hm-5 {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+      }
 
-/* AI Insight Banner */
-.ai-banner{background:linear-gradient(135deg,rgba(91,79,232,0.06),rgba(255,123,138,0.06));border:1px solid rgba(91,79,232,0.18);border-radius:var(--r);padding:20px;margin-bottom:20px}
-.ai-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ai-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);animation:heartbeat 1.5s ease infinite}
-.insight-text{font-size:13px;line-height:1.7;color:var(--ink2)}
+      /* AI Insight Banner */
+      .ai-banner {
+        background: linear-gradient(
+          135deg,
+          rgba(91, 79, 232, 0.06),
+          rgba(255, 123, 138, 0.06)
+        );
+        border: 1px solid rgba(91, 79, 232, 0.18);
+        border-radius: var(--r);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .ai-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .ai-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary);
+        animation: heartbeat 1.5s ease infinite;
+      }
+      .insight-text {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--ink2);
+      }
 
-/* ─────────────────── EMOTIONAL GARDEN ─────────────────── */
-.garden-page{padding:24px;max-width:900px;margin:0 auto;width:100%}
-.garden-container{background:linear-gradient(180deg,#E8F5E9 0%,#C8E6C9 50%,#A5D6A7 100%);border-radius:var(--r);padding:40px 24px;position:relative;overflow:hidden;margin-bottom:20px;min-height:320px}
-[data-dark] .garden-container{background:linear-gradient(180deg,#0D2B0F 0%,#1B3B1C 50%,#0F2010 100%)}
-.garden-sky{position:absolute;inset:0;background:linear-gradient(180deg,#BBDEFB 0%,#E8F5E9 100%);opacity:.5}
-[data-dark] .garden-sky{background:linear-gradient(180deg,#0D1117 0%,#0D2B0F 100%)}
-.garden-ground{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(180deg,#6D4C41,#5D4037);border-radius:0 0 var(--r) var(--r)}
-.garden-content{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:20px;padding-bottom:50px;min-height:240px}
-.plant{display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .2s}
-.plant:hover{transform:scale(1.05)}
-.plant-svg{animation:treeSway 4s ease-in-out infinite}
-.plant-label{font-size:10px;font-weight:600;color:var(--ink3);margin-top:4px;text-align:center;max-width:60px}
-.sun{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle,#FFD54F,#FF8F00);box-shadow:0 0 30px rgba(255,213,79,0.6)}
-.cloud{position:absolute;background:rgba(255,255,255,.8);border-radius:50px}
-.c1{width:80px;height:25px;top:30px;left:15%}
-.c2{width:60px;height:20px;top:50px;left:30%}
-.garden-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.garden-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;text-align:center}
-.garden-emoji{font-size:28px;margin-bottom:6px}
-.garden-stat-val{font-size:20px;font-weight:700;color:var(--primary)}
-.garden-stat-label{font-size:11px;color:var(--ink3)}
+      /* ─────────────────── EMOTIONAL GARDEN ─────────────────── */
+      .garden-page {
+        padding: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .garden-container {
+        background: linear-gradient(
+          180deg,
+          #e8f5e9 0%,
+          #c8e6c9 50%,
+          #a5d6a7 100%
+        );
+        border-radius: var(--r);
+        padding: 40px 24px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+        min-height: 320px;
+      }
+      [data-dark] .garden-container {
+        background: linear-gradient(
+          180deg,
+          #0d2b0f 0%,
+          #1b3b1c 50%,
+          #0f2010 100%
+        );
+      }
+      .garden-sky {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, #bbdefb 0%, #e8f5e9 100%);
+        opacity: 0.5;
+      }
+      [data-dark] .garden-sky {
+        background: linear-gradient(180deg, #0d1117 0%, #0d2b0f 100%);
+      }
+      .garden-ground {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(180deg, #6d4c41, #5d4037);
+        border-radius: 0 0 var(--r) var(--r);
+      }
+      .garden-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 20px;
+        padding-bottom: 50px;
+        min-height: 240px;
+      }
+      .plant {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .plant:hover {
+        transform: scale(1.05);
+      }
+      .plant-svg {
+        animation: treeSway 4s ease-in-out infinite;
+      }
+      .plant-label {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--ink3);
+        margin-top: 4px;
+        text-align: center;
+        max-width: 60px;
+      }
+      .sun {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffd54f, #ff8f00);
+        box-shadow: 0 0 30px rgba(255, 213, 79, 0.6);
+      }
+      .cloud {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50px;
+      }
+      .c1 {
+        width: 80px;
+        height: 25px;
+        top: 30px;
+        left: 15%;
+      }
+      .c2 {
+        width: 60px;
+        height: 20px;
+        top: 50px;
+        left: 30%;
+      }
+      .garden-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+      }
+      .garden-stat {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        padding: 16px;
+        text-align: center;
+      }
+      .garden-emoji {
+        font-size: 28px;
+        margin-bottom: 6px;
+      }
+      .garden-stat-val {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      .garden-stat-label {
+        font-size: 11px;
+        color: var(--ink3);
+      }
 
-/* ─────────────────── AI COACH ─────────────────── */
-.coach-page{padding:24px;max-width:760px;margin:0 auto;width:100%}
-.coach-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
-.coach-header{background:linear-gradient(135deg,var(--primary),var(--primary2));padding:20px 24px;display:flex;align-items:center;gap:14px;color:#fff}
-.coach-avatar{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.coach-name{font-weight:700;font-size:16px}
-.coach-status{font-size:12px;opacity:.75;display:flex;align-items:center;gap:4px}
-.coach-online{width:6px;height:6px;border-radius:50%;background:#6EFF99}
-.chat-area{padding:20px;min-height:300px;display:flex;flex-direction:column;gap:12px;max-height:400px;overflow-y:auto;scroll-behavior:smooth}
-.chat-area::-webkit-scrollbar{width:4px}
-.chat-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.msg{display:flex;gap:8px;animation:fadeUp .3s ease}
-.msg-ai{justify-content:flex-start}
-.msg-user{justify-content:flex-end}
-.msg-bubble{padding:10px 14px;border-radius:14px;max-width:82%;font-size:13px;line-height:1.6}
-.msg-ai .msg-bubble{background:var(--card2);border:1px solid var(--border);color:var(--ink);border-bottom-left-radius:4px}
-.msg-user .msg-bubble{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border-bottom-right-radius:4px}
-.msg-ai .msg-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary2));display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.chat-input-wrap{padding:16px;border-top:1px solid var(--border);display:flex;gap:8px}
-.chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--card2);color:var(--ink);font-family:var(--font);font-size:13px;outline:none;transition:all .2s}
-.chat-input:focus{border-color:var(--primary);background:var(--card)}
-.typing-wrap{display:flex;gap:5px;align-items:center;padding:8px 12px}
-.tdot{width:7px;height:7px;border-radius:50%;background:var(--ink3);animation:typeDot 1.2s ease-in-out infinite}
-.tdot:nth-child(2){animation-delay:.2s}
-.tdot:nth-child(3){animation-delay:.4s}
-@keyframes typeDot{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-5px);opacity:1}}
-.quick-prompts{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 16px}
-.qp{padding:6px 12px;border-radius:100px;border:1px solid var(--border2);background:var(--card2);font-size:11px;font-weight:500;color:var(--primary);cursor:pointer;transition:all .2s}
-.qp:hover{background:rgba(91,79,232,0.1)}
+      /* ─────────────────── AI COACH ─────────────────── */
+      .coach-page {
+        padding: 24px;
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .coach-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .coach-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #fff;
+      }
+      .coach-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .coach-name {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .coach-status {
+        font-size: 12px;
+        opacity: 0.75;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .coach-online {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #6eff99;
+      }
+      .chat-area {
+        padding: 20px;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+      }
+      .chat-area::-webkit-scrollbar {
+        width: 4px;
+      }
+      .chat-area::-webkit-scrollbar-thumb {
+        background: var(--border2);
+        border-radius: 2px;
+      }
+      .msg {
+        display: flex;
+        gap: 8px;
+        animation: fadeUp 0.3s ease;
+      }
+      .msg-ai {
+        justify-content: flex-start;
+      }
+      .msg-user {
+        justify-content: flex-end;
+      }
+      .msg-bubble {
+        padding: 10px 14px;
+        border-radius: 14px;
+        max-width: 82%;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .msg-ai .msg-bubble {
+        background: var(--card2);
+        border: 1px solid var(--border);
+        color: var(--ink);
+        border-bottom-left-radius: 4px;
+      }
+      .msg-user .msg-bubble {
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: #fff;
+        border-bottom-right-radius: 4px;
+      }
+      .msg-ai .msg-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .chat-input-wrap {
+        padding: 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 8px;
+      }
+      .chat-input {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1.5px solid var(--border);
+        background: var(--card2);
+        color: var(--ink);
+        font-family: var(--font);
+        font-size: 13px;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .chat-input:focus {
+        border-color: var(--primary);
+        background: var(--card);
+      }
+      .typing-wrap {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        padding: 8px 12px;
+      }
+      .tdot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ink3);
+        animation: typeDot 1.2s ease-in-out infinite;
+      }
+      .tdot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .tdot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes typeDot {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        50% {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+      }
+      .quick-prompts {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 0 20px 16px;
+      }
+      .qp {
+        padding: 6px 12px;
+        border-radius: 100px;
+        border: 1px solid var(--border2);
+        background: var(--card2);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--primary);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .qp:hover {
+        background: rgba(91, 79, 232, 0.1);
+      }
 
-/* ─────────────────── SOUNDSCAPE ─────────────────── */
-.sound-page{padding:24px;max-width:800px;margin:0 auto;width:100%}
-.sound-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
-.sound-btn{border-radius:var(--r);border:2px solid var(--border);background:var(--card);padding:20px 12px;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.sound-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--primary),var(--primary2));opacity:0;transition:opacity .3s}
-.sound-btn.playing{border-color:var(--primary);color:#fff}
-.sound-btn.playing::before{opacity:1}
-.sound-icon{font-size:32px;margin-bottom:8px;position:relative;z-index:1}
-.sound-name{font-size:12px;font-weight:600;position:relative;z-index:1;transition:color .3s}
-.sound-btn.playing .sound-name{color:#fff}
-.sound-waves{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-.sound-btn.playing .sound-waves{opacity:0.15}
-.sw{width:200px;height:200px;border-radius:50%;border:2px solid #fff;position:absolute;animation:waveRipple 1.5s ease-out infinite}
-.sw:nth-child(2){animation-delay:.5s}
-.sw:nth-child(3){animation-delay:1s}
-.mixer{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px}
-.mixer-title{font-size:14px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px}
-.mix-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.mix-icon{font-size:18px;width:28px;text-align:center}
-.mix-name{font-size:13px;font-weight:500;min-width:70px}
-.mix-slider{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--card2);outline:none;cursor:pointer}
-.mix-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;box-shadow:0 2px 8px rgba(91,79,232,.35)}
-.mix-val{font-size:11px;color:var(--ink3);min-width:28px;text-align:right}
-.timer-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
-.timer-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink2)}
-.timer-btn:hover,.timer-btn.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+      /* ─────────────────── SOUNDSCAPE ─────────────────── */
+      .sound-page {
+        padding: 24px;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .sound-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .sound-btn {
+        border-radius: var(--r);
+        border: 2px solid var(--border);
+        background: var(--card);
+        padding: 20px 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .sound-btn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .sound-btn.playing {
+        border-color: var(--primary);
+        color: #fff;
+      }
+      .sound-btn.playing::before {
+        opacity: 1;
+      }
+      .sound-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+      }
+      .sound-name {
+        font-size: 12px;
+        font-weight: 600;
+        position: relative;
+        z-index: 1;
+        transition: color 0.3s;
+      }
+      .sound-btn.playing .sound-name {
+        color: #fff;
+      }
+      .sound-waves {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .sound-btn.playing .sound-waves {
+        opacity: 0.15;
+      }
+      .sw {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        position: absolute;
+        animation: waveRipple 1.5s ease-out infinite;
+      }
+      .sw:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .sw:nth-child(3) {
+        animation-delay: 1s;
+      }
+      .mixer {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 24px;
+      }
+      .mixer-title {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .mix-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .mix-icon {
+        font-size: 18px;
+        width: 28px;
+        text-align: center;
+      }
+      .mix-name {
+        font-size: 13px;
+        font-weight: 500;
+        min-width: 70px;
+      }
+      .mix-slider {
+        flex: 1;
+        height: 6px;
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 3px;
+        background: var(--card2);
+        outline: none;
+        cursor: pointer;
+      }
+      .mix-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(91, 79, 232, 0.35);
+      }
+      .mix-val {
+        font-size: 11px;
+        color: var(--ink3);
+        min-width: 28px;
+        text-align: right;
+      }
+      .timer-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      .timer-btn {
+        padding: 6px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--card2);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--ink2);
+      }
+      .timer-btn:hover,
+      .timer-btn.on {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
 
-/* ─────────────────── LIFE WHEEL ─────────────────── */
-.life-page{padding:24px;max-width:900px;margin:0 auto;width:100%}
-.wheel-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
-@media(max-width:640px){.wheel-wrap{grid-template-columns:1fr}}
-.wheel-canvas-wrap{display:flex;align-items:center;justify-content:center}
-.life-controls{display:flex;flex-direction:column;gap:12px}
-.life-row{display:flex;align-items:center;gap:10px}
-.life-emoji{font-size:16px;width:24px;text-align:center}
-.life-name{font-size:13px;font-weight:500;min-width:80px}
-.life-slider{flex:1;height:5px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--card2);outline:none;cursor:pointer}
-.life-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer}
-.life-val{font-size:12px;font-weight:700;color:var(--primary);min-width:20px;text-align:right}
-.life-ai{background:linear-gradient(135deg,rgba(91,79,232,.06),rgba(255,123,138,.06));border:1px solid rgba(91,79,232,.18);border-radius:var(--r);padding:20px;margin-top:20px}
+      /* ─────────────────── LIFE WHEEL ─────────────────── */
+      .life-page {
+        padding: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .wheel-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+      @media (max-width: 640px) {
+        .wheel-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+      .wheel-canvas-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .life-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .life-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .life-emoji {
+        font-size: 16px;
+        width: 24px;
+        text-align: center;
+      }
+      .life-name {
+        font-size: 13px;
+        font-weight: 500;
+        min-width: 80px;
+      }
+      .life-slider {
+        flex: 1;
+        height: 5px;
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 3px;
+        background: var(--card2);
+        outline: none;
+        cursor: pointer;
+      }
+      .life-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+      }
+      .life-val {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--primary);
+        min-width: 20px;
+        text-align: right;
+      }
+      .life-ai {
+        background: linear-gradient(
+          135deg,
+          rgba(91, 79, 232, 0.06),
+          rgba(255, 123, 138, 0.06)
+        );
+        border: 1px solid rgba(91, 79, 232, 0.18);
+        border-radius: var(--r);
+        padding: 20px;
+        margin-top: 20px;
+      }
 
-/* ─────────────────── HABIT TRACKER ─────────────────── */
-.habit-page{padding:24px;max-width:900px;margin:0 auto;width:100%}
-.habit-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
-.habit-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all .3s}
-.habit-row:hover{box-shadow:var(--shadow);transform:translateX(3px)}
-.habit-icon{font-size:22px;width:36px;text-align:center}
-.habit-info{flex:1}
-.habit-name{font-size:14px;font-weight:600;margin-bottom:2px}
-.habit-meta{font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:8px}
-.habit-days{display:flex;gap:5px}
-.hday{width:24px;height:24px;border-radius:6px;border:1.5px solid var(--border2);background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--ink3)}
-.hday.done{background:var(--success);border-color:var(--success);color:#fff}
-.hday:hover{transform:scale(1.15)}
-.habit-streak-badge{background:rgba(255,107,53,.12);color:#FF6B35;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700}
-.habit-correlation{background:linear-gradient(135deg,rgba(29,185,122,.06),rgba(29,185,122,.02));border:1px solid rgba(29,185,122,.2);border-radius:var(--r);padding:16px;display:flex;align-items:flex-start;gap:10px;margin-top:8px}
+      /* ─────────────────── HABIT TRACKER ─────────────────── */
+      .habit-page {
+        padding: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .habit-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .habit-row {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transition: all 0.3s;
+      }
+      .habit-row:hover {
+        box-shadow: var(--shadow);
+        transform: translateX(3px);
+      }
+      .habit-icon {
+        font-size: 22px;
+        width: 36px;
+        text-align: center;
+      }
+      .habit-info {
+        flex: 1;
+      }
+      .habit-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .habit-meta {
+        font-size: 11px;
+        color: var(--ink3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .habit-days {
+        display: flex;
+        gap: 5px;
+      }
+      .hday {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        border: 1.5px solid var(--border2);
+        background: var(--card2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--ink3);
+      }
+      .hday.done {
+        background: var(--success);
+        border-color: var(--success);
+        color: #fff;
+      }
+      .hday:hover {
+        transform: scale(1.15);
+      }
+      .habit-streak-badge {
+        background: rgba(255, 107, 53, 0.12);
+        color: #ff6b35;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .habit-correlation {
+        background: linear-gradient(
+          135deg,
+          rgba(29, 185, 122, 0.06),
+          rgba(29, 185, 122, 0.02)
+        );
+        border: 1px solid rgba(29, 185, 122, 0.2);
+        border-radius: var(--r);
+        padding: 16px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 8px;
+      }
 
-/* ─────────────────── INSIGHTS ─────────────────── */
-.insights-page{padding:24px;max-width:1000px;margin:0 auto;width:100%}
-.insight-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
-.ins-tab{padding:7px 16px;border-radius:100px;border:1px solid var(--border);background:var(--card2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink3)}
-.ins-tab.on,.ins-tab:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
-.insight-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.insight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:all .3s;animation:fadeUp .4s ease both}
-.insight-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
-.insight-icon{font-size:28px;margin-bottom:10px}
-.insight-title{font-size:14px;font-weight:700;margin-bottom:6px}
-.insight-body{font-size:12px;line-height:1.7;color:var(--ink3)}
-.insight-stat{font-size:28px;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:8px 0}
+      /* ─────────────────── INSIGHTS ─────────────────── */
+      .insights-page {
+        padding: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .insight-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .ins-tab {
+        padding: 7px 16px;
+        border-radius: 100px;
+        border: 1px solid var(--border);
+        background: var(--card2);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--ink3);
+      }
+      .ins-tab.on,
+      .ins-tab:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .insight-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .insight-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 20px;
+        transition: all 0.3s;
+        animation: fadeUp 0.4s ease both;
+      }
+      .insight-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-3px);
+      }
+      .insight-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .insight-title {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .insight-body {
+        font-size: 12px;
+        line-height: 1.7;
+        color: var(--ink3);
+      }
+      .insight-stat {
+        font-size: 28px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 8px 0;
+      }
 
-/* ─────────────────── MEMORY ROOM ─────────────────── */
-.memory-page{padding:24px;max-width:900px;margin:0 auto;width:100%}
-.memory-book{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:var(--r);padding:32px;position:relative;overflow:hidden;margin-bottom:20px}
-.memory-book::before{content:'';position:absolute;top:0;left:0;width:8px;height:100%;background:linear-gradient(180deg,var(--primary),var(--accent));border-radius:var(--r) 0 0 var(--r)}
-.memory-month{font-family:var(--serif);font-size:22px;margin-bottom:4px;padding-left:16px}
-.memory-year{font-size:12px;color:var(--ink3);padding-left:16px;margin-bottom:20px}
-.memory-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;padding-left:16px}
-.memory-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px}
-.memory-item-icon{font-size:20px;margin-bottom:6px}
-.memory-item-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink3);margin-bottom:4px}
-.memory-item-text{font-size:13px;font-weight:500;line-height:1.5}
+      /* ─────────────────── MEMORY ROOM ─────────────────── */
+      .memory-page {
+        padding: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .memory-book {
+        background: linear-gradient(135deg, var(--card), var(--card2));
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .memory-book::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--primary), var(--accent));
+        border-radius: var(--r) 0 0 var(--r);
+      }
+      .memory-month {
+        font-family: var(--serif);
+        font-size: 22px;
+        margin-bottom: 4px;
+        padding-left: 16px;
+      }
+      .memory-year {
+        font-size: 12px;
+        color: var(--ink3);
+        padding-left: 16px;
+        margin-bottom: 20px;
+      }
+      .memory-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        padding-left: 16px;
+      }
+      .memory-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        padding: 14px;
+      }
+      .memory-item-icon {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+      .memory-item-title {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--ink3);
+        margin-bottom: 4px;
+      }
+      .memory-item-text {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
 
-/* ─────────────────── PRICING ─────────────────── */
-.pricing-page{padding:24px;max-width:1000px;margin:0 auto;width:100%}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.price-card{background:var(--card);border:2px solid var(--border);border-radius:var(--r);padding:28px;transition:all .3s;position:relative}
-.price-card.featured{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary),var(--shadow-lg)}
-.featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap}
-.price-name{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink3);margin-bottom:8px}
-.price-amount{font-family:var(--serif);font-size:42px;font-weight:700;margin-bottom:4px}
-.price-period{font-size:12px;color:var(--ink3)}
-.price-divider{height:1px;background:var(--border);margin:20px 0}
-.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.pf{display:flex;align-items:flex-start;gap:8px;font-size:13px}
-.pf-check{color:var(--success);font-size:14px;flex-shrink:0;margin-top:1px}
-.pf-x{color:var(--ink3);font-size:14px;flex-shrink:0;margin-top:1px}
-.pf.locked{opacity:.4}
+      /* ─────────────────── PRICING ─────────────────── */
+      .pricing-page {
+        padding: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+      .price-card {
+        background: var(--card);
+        border: 2px solid var(--border);
+        border-radius: var(--r);
+        padding: 28px;
+        transition: all 0.3s;
+        position: relative;
+      }
+      .price-card.featured {
+        border-color: var(--primary);
+        box-shadow:
+          0 0 0 1px var(--primary),
+          var(--shadow-lg);
+      }
+      .featured-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: #fff;
+        padding: 4px 14px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .price-name {
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--ink3);
+        margin-bottom: 8px;
+      }
+      .price-amount {
+        font-family: var(--serif);
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .price-period {
+        font-size: 12px;
+        color: var(--ink3);
+      }
+      .price-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 20px 0;
+      }
+      .price-features {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .pf {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+      }
+      .pf-check {
+        color: var(--success);
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .pf-x {
+        color: var(--ink3);
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .pf.locked {
+        opacity: 0.4;
+      }
 
-/* ─────────────────── SHARED ─────────────────── */
-.section-header{margin-bottom:24px}
-.section-header h2{font-family:var(--serif);font-size:26px;margin-bottom:4px}
-.section-header p{color:var(--ink3);font-size:13px}
-.divider{height:1px;background:var(--border);margin:20px 0}
-.success-toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--success);color:#fff;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:700;z-index:9999;opacity:0;pointer-events:none;transition:all .4s;white-space:nowrap}
-.success-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.confetti-p{position:fixed;width:8px;height:8px;pointer-events:none;z-index:9998;animation:confettiFall 2.5s ease-in forwards}
-.prog-bar{height:6px;border-radius:3px;background:var(--card2);overflow:hidden;margin-top:6px}
-.prog-fill{height:100%;border-radius:3px;transition:width .6s ease}
+      /* ─────────────────── SHARED ─────────────────── */
+      .section-header {
+        margin-bottom: 24px;
+      }
+      .section-header h2 {
+        font-family: var(--serif);
+        font-size: 26px;
+        margin-bottom: 4px;
+      }
+      .section-header p {
+        color: var(--ink3);
+        font-size: 13px;
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 20px 0;
+      }
+      .success-toast {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-20px);
+        background: var(--success);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 700;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.4s;
+        white-space: nowrap;
+      }
+      .success-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .confetti-p {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        pointer-events: none;
+        z-index: 9998;
+        animation: confettiFall 2.5s ease-in forwards;
+      }
+      .prog-bar {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--card2);
+        overflow: hidden;
+        margin-top: 6px;
+      }
+      .prog-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.6s ease;
+      }
 
-/* ─────────────────── RESPONSIVE ─────────────────── */
-@media(max-width:640px){
-  .nav-tabs{display:none}
-  .dash-grid{grid-template-columns:1fr 1fr}
-  .pricing-grid,.insight-cards{grid-template-columns:1fr}
-  .wheel-wrap{grid-template-columns:1fr}
-}
-</style>
+      /* ─────────────────── RESPONSIVE ─────────────────── */
+      @media (max-width: 640px) {
+        .nav-tabs {
+          display: none;
+        }
+        .dash-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .pricing-grid,
+        .insight-cards {
+          grid-template-columns: 1fr;
+        }
+        .wheel-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
 
-<div class="aurora-bg">
-  <div class="aurora a1"></div><div class="aurora a2"></div>
-  <div class="aurora a3"></div><div class="aurora a4"></div>
-</div>
-
-<div class="app">
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="nav-logo" onclick="go('landing')">
-      <div class="logo-bloom">🌱</div>MindBloom
+    <div class="aurora-bg">
+      <div class="aurora a1"></div>
+      <div class="aurora a2"></div>
+      <div class="aurora a3"></div>
+      <div class="aurora a4"></div>
     </div>
-    <div class="nav-tabs" id="navTabs">
-      <button class="tab" onclick="go('dashboard')">Dasbor</button>
-      <button class="tab" onclick="go('garden')">🌿 Taman</button>
-      <button class="tab" onclick="go('coach')">🤖 AI Coach</button>
-      <button class="tab" onclick="go('sound')">🎵 Soundscape</button>
-      <button class="tab" onclick="go('life')">🎯 Life Wheel</button>
-      <button class="tab" onclick="go('habits')">✅ Kebiasaan</button>
-      <button class="tab" onclick="go('insights')">💡 Wawasan</button>
-      <button class="tab" onclick="go('memory')">📖 Kenangan</button>
-      <button class="tab" onclick="go('pricing')">⭐ Premium</button>
-    </div>
-    <div class="nav-right">
-      <button class="icon-btn" id="darkBtn" onclick="toggleDark()" title="Mode Gelap">🌙</button>
-      <button class="btn btn-primary btn-sm" onclick="go('dashboard')">Mulai</button>
-    </div>
-  </nav>
 
-  <!-- ══════ LANDING ══════ -->
-  <div class="page on" id="page-landing">
-    <div class="landing">
-      <div class="hero">
-        <div class="hero-badge">✨ Platform Kesehatan Mental Berbasis AI</div>
-        <h1 class="h1 hero-title">
-          Tempat Paling Aman<br>
-          <span class="gradient-text">Untuk Bertumbuh</span>
-        </h1>
-        <p class="hero-sub">Jurnal cerdas yang menemanimu memahami emosi, membangun kebiasaan, dan melihat transformasi dirimu dengan kekuatan AI yang empatik.</p>
-        <div class="hero-btns">
-          <button class="btn btn-primary" onclick="go('dashboard')">🌱 Mulai Gratis Sekarang</button>
-          <button class="btn btn-ghost" onclick="go('coach')">✨ Coba AI Coach</button>
+    <div class="app">
+      <!-- NAV -->
+      <nav class="nav">
+        <div class="nav-logo" onclick="go('landing')">
+          <div class="logo-bloom">🌱</div>
+          MindBloom
         </div>
-        <div class="hero-social-proof">
-          <div class="avatar-stack">
-            <div class="avatar">A</div><div class="avatar">R</div><div class="avatar">S</div><div class="avatar">D</div><div class="avatar">+</div>
+        <div class="nav-tabs" id="navTabs">
+          <button class="tab" onclick="go('dashboard')">Dasbor</button>
+          <button class="tab" onclick="go('garden')">🌿 Taman</button>
+          <button class="tab" onclick="go('coach')">🤖 AI Coach</button>
+          <button class="tab" onclick="go('sound')">🎵 Soundscape</button>
+          <button class="tab" onclick="go('life')">🎯 Life Wheel</button>
+          <button class="tab" onclick="go('habits')">✅ Kebiasaan</button>
+          <button class="tab" onclick="go('insights')">💡 Wawasan</button>
+          <button class="tab" onclick="go('memory')">📖 Kenangan</button>
+          <button class="tab" onclick="go('pricing')">⭐ Premium</button>
+        </div>
+        <div class="nav-right">
+          <button
+            class="icon-btn"
+            id="darkBtn"
+            onclick="toggleDark()"
+            title="Mode Gelap"
+          >
+            🌙
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="go('dashboard')">
+            Mulai
+          </button>
+        </div>
+      </nav>
+
+      <!-- ══════ LANDING ══════ -->
+      <div class="page on" id="page-landing">
+        <div class="landing">
+          <div class="hero">
+            <div class="hero-badge">
+              ✨ Platform Kesehatan Mental Berbasis AI
+            </div>
+            <h1 class="h1 hero-title">
+              Tempat Paling Aman<br />
+              <span class="gradient-text">Untuk Bertumbuh</span>
+            </h1>
+            <p class="hero-sub">
+              Jurnal cerdas yang menemanimu memahami emosi, membangun kebiasaan,
+              dan melihat transformasi dirimu dengan kekuatan AI yang empatik.
+            </p>
+            <div class="hero-btns">
+              <button class="btn btn-primary" onclick="go('dashboard')">
+                🌱 Mulai Gratis Sekarang
+              </button>
+              <button class="btn btn-ghost" onclick="go('coach')">
+                ✨ Coba AI Coach
+              </button>
+            </div>
+            <div class="hero-social-proof">
+              <div class="avatar-stack">
+                <div class="avatar">A</div>
+                <div class="avatar">R</div>
+                <div class="avatar">S</div>
+                <div class="avatar">D</div>
+                <div class="avatar">+</div>
+              </div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600">
+                  12.000+ pengguna aktif
+                </div>
+                <div style="font-size: 11px; color: var(--ink3)">
+                  ⭐⭐⭐⭐⭐ 4.9 rating
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 8px 16px;
+                  background: rgba(29, 185, 122, 0.1);
+                  border-radius: 100px;
+                  color: var(--success);
+                  font-size: 12px;
+                  font-weight: 700;
+                "
+              >
+                🔥 #1 Aplikasi Jurnal Indonesia
+              </div>
+            </div>
           </div>
-          <div>
-            <div style="font-size:13px;font-weight:600;">12.000+ pengguna aktif</div>
-            <div style="font-size:11px;color:var(--ink3);">⭐⭐⭐⭐⭐ 4.9 rating</div>
-          </div>
-          <div style="padding:8px 16px;background:rgba(29,185,122,.1);border-radius:100px;color:var(--success);font-size:12px;font-weight:700;">🔥 #1 Aplikasi Jurnal Indonesia</div>
-        </div>
-      </div>
 
-      <div class="features-strip">
-        <div class="strip-card" onclick="go('garden')">
-          <div class="strip-icon">🌿</div>
-          <div class="h4">Taman Emosional</div>
-          <p class="muted" style="margin-top:4px">Taman virtual yang tumbuh setiap kali kamu menulis jurnal</p>
-        </div>
-        <div class="strip-card" onclick="go('coach')">
-          <div class="strip-icon">🤖</div>
-          <div class="h4">AI Reflection Coach</div>
-          <p class="muted" style="margin-top:4px">Percakapan reflektif yang empatik dan tidak menghakimi</p>
-        </div>
-        <div class="strip-card" onclick="go('sound')">
-          <div class="strip-icon">🎵</div>
-          <div class="h4">Soundscape Premium</div>
-          <p class="muted" style="margin-top:4px">Mixer suara ambient saat menulis: hujan, hutan, kafe</p>
-        </div>
-        <div class="strip-card" onclick="go('life')">
-          <div class="strip-icon">🎯</div>
-          <div class="h4">Life Wheel AI</div>
-          <p class="muted" style="margin-top:4px">Visualisasi 8 dimensi kehidupanmu + analisis AI otomatis</p>
-        </div>
-        <div class="strip-card" onclick="go('insights')">
-          <div class="strip-icon">💡</div>
-          <div class="h4">Wawasan Premium AI</div>
-          <p class="muted" style="margin-top:4px">Insight harian, mingguan, dan bulanan yang dipersonalisasi</p>
-        </div>
-        <div class="strip-card" onclick="go('memory')">
-          <div class="strip-icon">📖</div>
-          <div class="h4">Ruang Kenangan</div>
-          <p class="muted" style="margin-top:4px">Buku refleksi bulanan yang dikurasi AI dari jurnalmu</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════ DASHBOARD ══════ -->
-  <div class="page" id="page-dashboard">
-    <div class="dashboard">
-      <div class="dash-header" style="animation:fadeUp .5s ease both">
-        <div class="greeting" id="greetTxt">Selamat Pagi, Asmawati ☀️</div>
-        <div class="muted" id="greetSub">Sabtu, 24 Mei 2025 · Hari ke-14 perjalananmu</div>
-      </div>
-
-      <div class="write-banner" onclick="showToast('Membuka jurnal...')">
-        <div class="write-banner-text">
-          <h3>✍️ Tulis Jurnal Sekarang</h3>
-          <p>Luangkan 10 menit untuk dirimu sendiri hari ini</p>
-        </div>
-        <div class="write-banner-arrow">→</div>
-      </div>
-
-      <div class="dash-grid">
-        <div class="widget widget-streak" style="animation-delay:.05s">
-          <div class="wlabel">Streak Harian</div>
-          <div class="wvalue"><span class="streak-fire">🔥</span> <span id="streakN">14</span></div>
-          <div class="wsub">Hari berturut-turut</div>
-        </div>
-        <div class="widget" style="animation-delay:.1s;text-align:center">
-          <div class="wlabel">Skor Refleksi</div>
-          <div class="mood-ring-wrap">
-            <svg width="80" height="80"><circle cx="40" cy="40" r="33" fill="none" stroke="var(--border)" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="url(#rg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="207" stroke-dashoffset="52" transform="rotate(-90 40 40)"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5B4FE8"/><stop offset="100%" stop-color="#FF7B8A"/></linearGradient></defs></svg>
-            <div class="mood-ring-center">78<div class="mood-ring-score">/ 100</div></div>
+          <div class="features-strip">
+            <div class="strip-card" onclick="go('garden')">
+              <div class="strip-icon">🌿</div>
+              <div class="h4">Taman Emosional</div>
+              <p class="muted" style="margin-top: 4px">
+                Taman virtual yang tumbuh setiap kali kamu menulis jurnal
+              </p>
+            </div>
+            <div class="strip-card" onclick="go('coach')">
+              <div class="strip-icon">🤖</div>
+              <div class="h4">AI Reflection Coach</div>
+              <p class="muted" style="margin-top: 4px">
+                Percakapan reflektif yang empatik dan tidak menghakimi
+              </p>
+            </div>
+            <div class="strip-card" onclick="go('sound')">
+              <div class="strip-icon">🎵</div>
+              <div class="h4">Soundscape Premium</div>
+              <p class="muted" style="margin-top: 4px">
+                Mixer suara ambient saat menulis: hujan, hutan, kafe
+              </p>
+            </div>
+            <div class="strip-card" onclick="go('life')">
+              <div class="strip-icon">🎯</div>
+              <div class="h4">Life Wheel AI</div>
+              <p class="muted" style="margin-top: 4px">
+                Visualisasi 8 dimensi kehidupanmu + analisis AI otomatis
+              </p>
+            </div>
+            <div class="strip-card" onclick="go('insights')">
+              <div class="strip-icon">💡</div>
+              <div class="h4">Wawasan Premium AI</div>
+              <p class="muted" style="margin-top: 4px">
+                Insight harian, mingguan, dan bulanan yang dipersonalisasi
+              </p>
+            </div>
+            <div class="strip-card" onclick="go('memory')">
+              <div class="strip-icon">📖</div>
+              <div class="h4">Ruang Kenangan</div>
+              <p class="muted" style="margin-top: 4px">
+                Buku refleksi bulanan yang dikurasi AI dari jurnalmu
+              </p>
+            </div>
           </div>
         </div>
-        <div class="widget" style="animation-delay:.15s">
-          <div class="wlabel">Mood Hari Ini</div>
-          <div class="wvalue" id="dashMoodVal">😊</div>
-          <div class="wsub">Baik · Level 7</div>
-        </div>
-        <div class="widget" style="animation-delay:.2s">
-          <div class="wlabel">Energi</div>
-          <div class="wvalue" style="color:var(--success)">⚡ 72%</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:72%;background:linear-gradient(90deg,var(--success),#34D399)"></div></div>
-        </div>
-        <div class="widget" style="animation-delay:.25s">
-          <div class="wlabel">Skor Syukur</div>
-          <div class="wvalue" style="color:var(--warn)">💛 85</div>
-          <div class="wsub">+12 minggu ini</div>
-        </div>
-        <div class="widget" style="animation-delay:.3s">
-          <div class="wlabel">Taman Level</div>
-          <div class="wvalue">🌳 Pohon</div>
-          <div class="wsub">3 jurnal lagi → Hutan</div>
-        </div>
       </div>
 
-      <div class="ai-banner" style="animation:fadeUp .5s .3s ease both">
-        <div class="ai-header">
-          <div class="ai-dot"></div>
-          <span class="pill pill-ai">✨ AI Insight Hari Ini</span>
-          <span class="muted">Diperbarui 08:30</span>
-        </div>
-        <div class="insight-text">
-          🌟 <strong>72% hari bahagiamu terjadi saat kamu menghabiskan waktu dengan keluarga.</strong> Stres tertinggi muncul Senin pagi — pertimbangkan rutinitas relaksasi 10 menit sebelum bekerja. Mood naik 18% di minggu ini dibanding minggu lalu. Terus pertahankan kebiasaan olahragamu! 💪
-        </div>
-      </div>
+      <!-- ══════ DASHBOARD ══════ -->
+      <div class="page" id="page-dashboard">
+        <div class="dashboard">
+          <div class="dash-header" style="animation: fadeUp 0.5s ease both">
+            <div class="greeting" id="greetTxt">Selamat Pagi, Asmawati ☀️</div>
+            <div class="muted" id="greetSub">
+              Sabtu, 24 Mei 2025 · Hari ke-14 perjalananmu
+            </div>
+          </div>
 
-      <div class="heatmap-wrap" style="animation:fadeUp .5s .35s ease both">
-        <div class="heatmap-title">
-          <span>📅 Heatmap Aktivitas — 2025</span>
-          <div style="display:flex;gap:6px;align-items:center">
-            <span class="muted" style="font-size:11px">Lebih sedikit</span>
-            <div class="hm-cell hm-0"></div><div class="hm-cell hm-1"></div><div class="hm-cell hm-2"></div><div class="hm-cell hm-3"></div><div class="hm-cell hm-4"></div><div class="hm-cell hm-5"></div>
-            <span class="muted" style="font-size:11px">Lebih banyak</span>
+          <div class="write-banner" onclick="showToast('Membuka jurnal...')">
+            <div class="write-banner-text">
+              <h3>✍️ Tulis Jurnal Sekarang</h3>
+              <p>Luangkan 10 menit untuk dirimu sendiri hari ini</p>
+            </div>
+            <div class="write-banner-arrow">→</div>
+          </div>
+
+          <div class="dash-grid">
+            <div class="widget widget-streak" style="animation-delay: 0.05s">
+              <div class="wlabel">Streak Harian</div>
+              <div class="wvalue">
+                <span class="streak-fire">🔥</span> <span id="streakN">14</span>
+              </div>
+              <div class="wsub">Hari berturut-turut</div>
+            </div>
+            <div
+              class="widget"
+              style="animation-delay: 0.1s; text-align: center"
+            >
+              <div class="wlabel">Skor Refleksi</div>
+              <div class="mood-ring-wrap">
+                <svg width="80" height="80">
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="33"
+                    fill="none"
+                    stroke="var(--border)"
+                    stroke-width="7"
+                  />
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r="33"
+                    fill="none"
+                    stroke="url(#rg)"
+                    stroke-width="7"
+                    stroke-linecap="round"
+                    stroke-dasharray="207"
+                    stroke-dashoffset="52"
+                    transform="rotate(-90 40 40)"
+                  />
+                  <defs>
+                    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#5B4FE8" />
+                      <stop offset="100%" stop-color="#FF7B8A" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="mood-ring-center">
+                  78
+                  <div class="mood-ring-score">/ 100</div>
+                </div>
+              </div>
+            </div>
+            <div class="widget" style="animation-delay: 0.15s">
+              <div class="wlabel">Mood Hari Ini</div>
+              <div class="wvalue" id="dashMoodVal">😊</div>
+              <div class="wsub">Baik · Level 7</div>
+            </div>
+            <div class="widget" style="animation-delay: 0.2s">
+              <div class="wlabel">Energi</div>
+              <div class="wvalue" style="color: var(--success)">⚡ 72%</div>
+              <div class="prog-bar">
+                <div
+                  class="prog-fill"
+                  style="
+                    width: 72%;
+                    background: linear-gradient(90deg, var(--success), #34d399);
+                  "
+                ></div>
+              </div>
+            </div>
+            <div class="widget" style="animation-delay: 0.25s">
+              <div class="wlabel">Skor Syukur</div>
+              <div class="wvalue" style="color: var(--warn)">💛 85</div>
+              <div class="wsub">+12 minggu ini</div>
+            </div>
+            <div class="widget" style="animation-delay: 0.3s">
+              <div class="wlabel">Taman Level</div>
+              <div class="wvalue">🌳 Pohon</div>
+              <div class="wsub">3 jurnal lagi → Hutan</div>
+            </div>
+          </div>
+
+          <div class="ai-banner" style="animation: fadeUp 0.5s 0.3s ease both">
+            <div class="ai-header">
+              <div class="ai-dot"></div>
+              <span class="pill pill-ai">✨ AI Insight Hari Ini</span>
+              <span class="muted">Diperbarui 08:30</span>
+            </div>
+            <div class="insight-text">
+              🌟
+              <strong
+                >72% hari bahagiamu terjadi saat kamu menghabiskan waktu dengan
+                keluarga.</strong
+              >
+              Stres tertinggi muncul Senin pagi — pertimbangkan rutinitas
+              relaksasi 10 menit sebelum bekerja. Mood naik 18% di minggu ini
+              dibanding minggu lalu. Terus pertahankan kebiasaan olahragamu! 💪
+            </div>
+          </div>
+
+          <div
+            class="heatmap-wrap"
+            style="animation: fadeUp 0.5s 0.35s ease both"
+          >
+            <div class="heatmap-title">
+              <span>📅 Heatmap Aktivitas — 2025</span>
+              <div style="display: flex; gap: 6px; align-items: center">
+                <span class="muted" style="font-size: 11px">Lebih sedikit</span>
+                <div class="hm-cell hm-0"></div>
+                <div class="hm-cell hm-1"></div>
+                <div class="hm-cell hm-2"></div>
+                <div class="hm-cell hm-3"></div>
+                <div class="hm-cell hm-4"></div>
+                <div class="hm-cell hm-5"></div>
+                <span class="muted" style="font-size: 11px">Lebih banyak</span>
+              </div>
+            </div>
+            <div class="heatmap-grid" id="heatGrid"></div>
           </div>
         </div>
-        <div class="heatmap-grid" id="heatGrid"></div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ══════ EMOTIONAL GARDEN ══════ -->
-  <div class="page" id="page-garden">
-    <div class="garden-page">
-      <div class="section-header">
-        <h2 class="h2">🌿 Taman Emosionalku</h2>
-        <p class="muted">Setiap jurnal menumbuhkan tanaman baru. Rawat dirimu, rawat tamanmu.</p>
-      </div>
-
-      <div class="garden-container">
-        <div class="garden-sky"></div>
-        <div class="sun"></div>
-        <div class="cloud c1"></div><div class="cloud c2"></div>
-        <div class="garden-content" id="gardenContent"></div>
-        <div class="garden-ground"></div>
-      </div>
-
-      <div class="ai-banner" style="margin-bottom:20px">
-        <div class="ai-header"><div class="ai-dot"></div><span class="pill pill-ai">🌱 Garden AI</span></div>
-        <div class="insight-text">Tamanmu tumbuh 2 pohon minggu ini! Mood biru (Tenang) mendominasi — refleksi mendalam menghasilkan <strong>3 bunga langka</strong> bulan ini. Lanjutkan streak untuk membuka Hutan! 🌲</div>
-      </div>
-
-      <div class="garden-stats" id="gardenStats"></div>
-    </div>
-  </div>
-
-  <!-- ══════ AI COACH ══════ -->
-  <div class="page" id="page-coach">
-    <div class="coach-page">
-      <div class="section-header">
-        <h2 class="h2">🤖 AI Reflection Coach</h2>
-        <p class="muted">Percakapan reflektif yang empatik, tidak menghakimi, dan selalu siap menemanimu.</p>
-      </div>
-      <div class="coach-card">
-        <div class="coach-header">
-          <div class="coach-avatar">🌸</div>
-          <div>
-            <div class="coach-name">Bloom — AI Coach MindBloom</div>
-            <div class="coach-status"><div class="coach-online"></div> Online · Siap menemanimu</div>
+      <!-- ══════ EMOTIONAL GARDEN ══════ -->
+      <div class="page" id="page-garden">
+        <div class="garden-page">
+          <div class="section-header">
+            <h2 class="h2">🌿 Taman Emosionalku</h2>
+            <p class="muted">
+              Setiap jurnal menumbuhkan tanaman baru. Rawat dirimu, rawat
+              tamanmu.
+            </p>
           </div>
-          <div style="margin-left:auto"><span class="pill" style="background:rgba(255,255,255,.2);color:#fff;font-size:10px">✨ Powered by GPT-4o</span></div>
-        </div>
-        <div class="chat-area" id="chatArea"></div>
-        <div class="quick-prompts" id="quickPrompts"></div>
-        <div class="chat-input-wrap">
-          <input class="chat-input" id="chatInput" placeholder="Ceritakan sesuatu padaku... 🌿" onkeydown="if(event.key==='Enter')sendMsg()">
-          <button class="btn btn-primary btn-icon" onclick="sendMsg()">→</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ══════ SOUNDSCAPE ══════ -->
-  <div class="page" id="page-sound">
-    <div class="sound-page">
-      <div class="section-header">
-        <h2 class="h2">🎵 Soundscape Premium</h2>
-        <p class="muted">Suara ambient yang menenangkan untuk menemanimu saat menulis jurnal.</p>
-      </div>
-      <div class="sound-grid" id="soundGrid"></div>
-      <div class="mixer">
-        <div class="mixer-title">🎚️ Audio Mixer <span class="pill pill-primary">LIVE</span></div>
-        <div id="mixerRows"></div>
-        <div class="timer-row">
-          <span style="font-size:12px;font-weight:600;color:var(--ink2)">⏱ Timer:</span>
-          <button class="timer-btn on" onclick="setTimer(this,15)">15 mnt</button>
-          <button class="timer-btn" onclick="setTimer(this,30)">30 mnt</button>
-          <button class="timer-btn" onclick="setTimer(this,45)">45 mnt</button>
-          <button class="timer-btn" onclick="setTimer(this,60)">1 jam</button>
-          <span id="timerDisplay" style="font-size:13px;font-weight:700;color:var(--primary);margin-left:auto">15:00</span>
+          <div class="garden-container">
+            <div class="garden-sky"></div>
+            <div class="sun"></div>
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+            <div class="garden-content" id="gardenContent"></div>
+            <div class="garden-ground"></div>
+          </div>
+
+          <div class="ai-banner" style="margin-bottom: 20px">
+            <div class="ai-header">
+              <div class="ai-dot"></div>
+              <span class="pill pill-ai">🌱 Garden AI</span>
+            </div>
+            <div class="insight-text">
+              Tamanmu tumbuh 2 pohon minggu ini! Mood biru (Tenang) mendominasi
+              — refleksi mendalam menghasilkan
+              <strong>3 bunga langka</strong> bulan ini. Lanjutkan streak untuk
+              membuka Hutan! 🌲
+            </div>
+          </div>
+
+          <div class="garden-stats" id="gardenStats"></div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ══════ LIFE WHEEL ══════ -->
-  <div class="page" id="page-life">
-    <div class="life-page">
-      <div class="section-header">
-        <h2 class="h2">🎯 Roda Kehidupan</h2>
-        <p class="muted">Seberapa seimbang 8 dimensi hidupmu? Geser slider dan lihat visualisasinya.</p>
-      </div>
-      <div class="wheel-wrap">
-        <div class="wheel-canvas-wrap">
-          <canvas id="lifeCanvas" width="320" height="320"></canvas>
+      <!-- ══════ AI COACH ══════ -->
+      <div class="page" id="page-coach">
+        <div class="coach-page">
+          <div class="section-header">
+            <h2 class="h2">🤖 AI Reflection Coach</h2>
+            <p class="muted">
+              Percakapan reflektif yang empatik, tidak menghakimi, dan selalu
+              siap menemanimu.
+            </p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-header">
+              <div class="coach-avatar">🌸</div>
+              <div>
+                <div class="coach-name">Bloom — AI Coach MindBloom</div>
+                <div class="coach-status">
+                  <div class="coach-online"></div>
+                  Online · Siap menemanimu
+                </div>
+              </div>
+              <div style="margin-left: auto">
+                <span
+                  class="pill"
+                  style="
+                    background: rgba(255, 255, 255, 0.2);
+                    color: #fff;
+                    font-size: 10px;
+                  "
+                  >✨ Powered by GPT-4o</span
+                >
+              </div>
+            </div>
+            <div class="chat-area" id="chatArea"></div>
+            <div class="quick-prompts" id="quickPrompts"></div>
+            <div class="chat-input-wrap">
+              <input
+                class="chat-input"
+                id="chatInput"
+                placeholder="Ceritakan sesuatu padaku... 🌿"
+                onkeydown="if (event.key === 'Enter') sendMsg();"
+              />
+              <button class="btn btn-primary btn-icon" onclick="sendMsg()">
+                →
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="life-controls" id="lifeControls"></div>
       </div>
-      <div class="life-ai">
-        <div class="ai-header" style="margin-bottom:8px"><div class="ai-dot"></div><span class="pill pill-ai">🎯 AI Life Analysis</span></div>
-        <div class="insight-text" id="lifeAnalysis">Karier dan Pembelajaran sangat tinggi — kamu fokus pada pertumbuhan profesional. Namun, perhatikan Kesehatan dan Spiritualitas yang masih rendah. Keseimbangan hidup yang lebih baik dapat meningkatkan kebahagiaan jangka panjang sebesar 34%. 💫</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ══════ HABITS ══════ -->
-  <div class="page" id="page-habits">
-    <div class="habit-page">
-      <div class="section-header">
-        <h2 class="h2">✅ Habit Tracker</h2>
-        <p class="muted">AI menemukan korelasi antara kebiasaanmu dan suasana hatimu.</p>
+      <!-- ══════ SOUNDSCAPE ══════ -->
+      <div class="page" id="page-sound">
+        <div class="sound-page">
+          <div class="section-header">
+            <h2 class="h2">🎵 Soundscape Premium</h2>
+            <p class="muted">
+              Suara ambient yang menenangkan untuk menemanimu saat menulis
+              jurnal.
+            </p>
+          </div>
+          <div class="sound-grid" id="soundGrid"></div>
+          <div class="mixer">
+            <div class="mixer-title">
+              🎚️ Audio Mixer <span class="pill pill-primary">LIVE</span>
+            </div>
+            <div id="mixerRows"></div>
+            <div class="timer-row">
+              <span
+                style="font-size: 12px; font-weight: 600; color: var(--ink2)"
+                >⏱ Timer:</span
+              >
+              <button class="timer-btn on" onclick="setTimer(this, 15)">
+                15 mnt
+              </button>
+              <button class="timer-btn" onclick="setTimer(this, 30)">
+                30 mnt
+              </button>
+              <button class="timer-btn" onclick="setTimer(this, 45)">
+                45 mnt
+              </button>
+              <button class="timer-btn" onclick="setTimer(this, 60)">
+                1 jam
+              </button>
+              <span
+                id="timerDisplay"
+                style="
+                  font-size: 13px;
+                  font-weight: 700;
+                  color: var(--primary);
+                  margin-left: auto;
+                "
+                >15:00</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="habit-grid" id="habitGrid"></div>
-      <div class="habit-correlation">
-        <div style="font-size:24px">🧠</div>
-        <div>
-          <div class="h4" style="margin-bottom:4px">Korelasi AI Ditemukan</div>
-          <div style="font-size:13px;color:var(--ink2);line-height:1.6">Pada hari kamu <strong>berolahraga</strong>, rata-rata mood naik <strong>+18%</strong>. Tidur &gt;7 jam meningkatkan produktivitasmu <strong>+24%</strong>. Ibadah pagi berkorelasi dengan <strong>stres lebih rendah</strong> sepanjang hari.</div>
+
+      <!-- ══════ LIFE WHEEL ══════ -->
+      <div class="page" id="page-life">
+        <div class="life-page">
+          <div class="section-header">
+            <h2 class="h2">🎯 Roda Kehidupan</h2>
+            <p class="muted">
+              Seberapa seimbang 8 dimensi hidupmu? Geser slider dan lihat
+              visualisasinya.
+            </p>
+          </div>
+          <div class="wheel-wrap">
+            <div class="wheel-canvas-wrap">
+              <canvas id="lifeCanvas" width="320" height="320"></canvas>
+            </div>
+            <div class="life-controls" id="lifeControls"></div>
+          </div>
+          <div class="life-ai">
+            <div class="ai-header" style="margin-bottom: 8px">
+              <div class="ai-dot"></div>
+              <span class="pill pill-ai">🎯 AI Life Analysis</span>
+            </div>
+            <div class="insight-text" id="lifeAnalysis">
+              Karier dan Pembelajaran sangat tinggi — kamu fokus pada
+              pertumbuhan profesional. Namun, perhatikan Kesehatan dan
+              Spiritualitas yang masih rendah. Keseimbangan hidup yang lebih
+              baik dapat meningkatkan kebahagiaan jangka panjang sebesar 34%. 💫
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ HABITS ══════ -->
+      <div class="page" id="page-habits">
+        <div class="habit-page">
+          <div class="section-header">
+            <h2 class="h2">✅ Habit Tracker</h2>
+            <p class="muted">
+              AI menemukan korelasi antara kebiasaanmu dan suasana hatimu.
+            </p>
+          </div>
+          <div class="habit-grid" id="habitGrid"></div>
+          <div class="habit-correlation">
+            <div style="font-size: 24px">🧠</div>
+            <div>
+              <div class="h4" style="margin-bottom: 4px">
+                Korelasi AI Ditemukan
+              </div>
+              <div
+                style="font-size: 13px; color: var(--ink2); line-height: 1.6"
+              >
+                Pada hari kamu <strong>berolahraga</strong>, rata-rata mood naik
+                <strong>+18%</strong>. Tidur &gt;7 jam meningkatkan
+                produktivitasmu <strong>+24%</strong>. Ibadah pagi berkorelasi
+                dengan <strong>stres lebih rendah</strong> sepanjang hari.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ INSIGHTS ══════ -->
+      <div class="page" id="page-insights">
+        <div class="insights-page">
+          <div class="section-header">
+            <h2 class="h2">💡 Wawasan AI Premium</h2>
+            <p class="muted">
+              Insight mendalam tentang pola emosi, kebiasaan, dan pertumbuhan
+              dirimu.
+            </p>
+          </div>
+          <div class="insight-tabs">
+            <button class="ins-tab on" onclick="setInsTab(this, 'harian')">
+              Harian
+            </button>
+            <button class="ins-tab" onclick="setInsTab(this, 'mingguan')">
+              Mingguan
+            </button>
+            <button class="ins-tab" onclick="setInsTab(this, 'bulanan')">
+              Bulanan
+            </button>
+            <button class="ins-tab" onclick="setInsTab(this, 'tahunan')">
+              Tahunan
+            </button>
+          </div>
+          <div class="insight-cards" id="insightCards"></div>
+        </div>
+      </div>
+
+      <!-- ══════ MEMORY ROOM ══════ -->
+      <div class="page" id="page-memory">
+        <div class="memory-page">
+          <div class="section-header">
+            <h2 class="h2">📖 Ruang Kenangan</h2>
+            <p class="muted">
+              AI mengumpulkan momen terbaikmu menjadi buku refleksi yang indah.
+            </p>
+          </div>
+          <div class="memory-book" style="animation: fadeUp 0.5s ease both">
+            <div class="memory-month">Mei 2025</div>
+            <div class="memory-year">
+              Buku Refleksi Bulanan · 24 entri tersimpan
+            </div>
+            <div class="memory-highlights" id="memHighlights"></div>
+          </div>
+          <div
+            class="memory-book"
+            style="animation: fadeUp 0.5s 0.1s ease both; opacity: 0.7"
+          >
+            <div class="memory-month">April 2025</div>
+            <div class="memory-year">
+              Buku Refleksi Bulanan · 21 entri tersimpan
+            </div>
+            <div class="memory-highlights" id="memHighlights2"></div>
+          </div>
+          <button
+            class="btn btn-primary"
+            style="margin-top: 4px"
+            onclick="showToast('Mengunduh PDF Buku Kenangan...')"
+          >
+            📄 Unduh PDF Buku Kenangan
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════ PRICING ══════ -->
+      <div class="page" id="page-pricing">
+        <div class="pricing-page">
+          <div
+            class="section-header"
+            style="text-align: center; margin-bottom: 36px"
+          >
+            <h2 class="h2">Pilih Paket Terbaikmu</h2>
+            <p class="muted">Mulai gratis, upgrade kapanpun kamu mau</p>
+          </div>
+          <div class="pricing-grid" id="pricingGrid"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ══════ INSIGHTS ══════ -->
-  <div class="page" id="page-insights">
-    <div class="insights-page">
-      <div class="section-header">
-        <h2 class="h2">💡 Wawasan AI Premium</h2>
-        <p class="muted">Insight mendalam tentang pola emosi, kebiasaan, dan pertumbuhan dirimu.</p>
-      </div>
-      <div class="insight-tabs">
-        <button class="ins-tab on" onclick="setInsTab(this,'harian')">Harian</button>
-        <button class="ins-tab" onclick="setInsTab(this,'mingguan')">Mingguan</button>
-        <button class="ins-tab" onclick="setInsTab(this,'bulanan')">Bulanan</button>
-        <button class="ins-tab" onclick="setInsTab(this,'tahunan')">Tahunan</button>
-      </div>
-      <div class="insight-cards" id="insightCards"></div>
-    </div>
-  </div>
+    <div class="success-toast" id="toast"></div>
 
-  <!-- ══════ MEMORY ROOM ══════ -->
-  <div class="page" id="page-memory">
-    <div class="memory-page">
-      <div class="section-header">
-        <h2 class="h2">📖 Ruang Kenangan</h2>
-        <p class="muted">AI mengumpulkan momen terbaikmu menjadi buku refleksi yang indah.</p>
-      </div>
-      <div class="memory-book" style="animation:fadeUp .5s ease both">
-        <div class="memory-month">Mei 2025</div>
-        <div class="memory-year">Buku Refleksi Bulanan · 24 entri tersimpan</div>
-        <div class="memory-highlights" id="memHighlights"></div>
-      </div>
-      <div class="memory-book" style="animation:fadeUp .5s .1s ease both;opacity:.7">
-        <div class="memory-month">April 2025</div>
-        <div class="memory-year">Buku Refleksi Bulanan · 21 entri tersimpan</div>
-        <div class="memory-highlights" id="memHighlights2"></div>
-      </div>
-      <button class="btn btn-primary" style="margin-top:4px" onclick="showToast('Mengunduh PDF Buku Kenangan...')">📄 Unduh PDF Buku Kenangan</button>
-    </div>
-  </div>
+    <script>
+      const SOUNDS = [
+        { icon: "🌧️", name: "Hujan Deras", key: "rain" },
+        { icon: "🌲", name: "Hutan Tropis", key: "forest" },
+        { icon: "🌊", name: "Ombak Laut", key: "ocean" },
+        { icon: "☕", name: "Kedai Kopi", key: "cafe" },
+        { icon: "🌙", name: "Malam Tenang", key: "night" },
+        { icon: "🔥", name: "Api Unggun", key: "fire" },
+      ];
+      const HABITS = [
+        {
+          icon: "🏃",
+          name: "Olahraga",
+          streak: 12,
+          days: [1, 1, 0, 1, 1, 0, 1],
+          corr: "+18% mood",
+        },
+        {
+          icon: "📚",
+          name: "Membaca",
+          streak: 8,
+          days: [1, 1, 1, 0, 1, 1, 0],
+          corr: "+12% fokus",
+        },
+        {
+          icon: "💧",
+          name: "Minum Air",
+          streak: 14,
+          days: [1, 1, 1, 1, 1, 1, 1],
+          corr: "+9% energi",
+        },
+        {
+          icon: "😴",
+          name: "Tidur 8 Jam",
+          streak: 5,
+          days: [1, 0, 1, 1, 0, 1, 1],
+          corr: "+24% produktif",
+        },
+        {
+          icon: "🙏",
+          name: "Ibadah Pagi",
+          streak: 10,
+          days: [1, 1, 1, 0, 1, 1, 1],
+          corr: "Stres lebih rendah",
+        },
+        {
+          icon: "🧘",
+          name: "Meditasi",
+          streak: 3,
+          days: [0, 1, 0, 1, 0, 0, 1],
+          corr: "+15% tenang",
+        },
+      ];
+      const LIFE_CATS = [
+        { e: "💼", n: "Karier", v: 85, c: "#5B4FE8" },
+        { e: "🏃", n: "Kesehatan", v: 60, c: "#1DB97A" },
+        { e: "👨‍👩‍👧", n: "Keluarga", v: 75, c: "#FF7B8A" },
+        { e: "💰", n: "Keuangan", v: 65, c: "#F0A500" },
+        { e: "🙏", n: "Spiritual", v: 55, c: "#9B8DFF" },
+        { e: "❤️", n: "Hubungan", v: 70, c: "#FF6B35" },
+        { e: "📚", n: "Belajar", v: 80, c: "#06B6D4" },
+        { e: "😄", n: "Kebahagiaan", v: 72, c: "#FFD93D" },
+      ];
+      const INSIGHTS_DATA = {
+        harian: [
+          {
+            icon: "🌟",
+            title: "Mood Hari Ini",
+            stat: "+18%",
+            body: "Mood lebih baik dibanding rata-rata 7 hari terakhir. Hari yang produktif!",
+          },
+          {
+            icon: "😰",
+            title: "Pemicu Stres",
+            stat: "Rendah",
+            body: "Tidak ada pemicu stres signifikan hari ini. Energimu sangat stabil.",
+          },
+          {
+            icon: "💛",
+            title: "Rasa Syukur",
+            stat: "5 item",
+            body: "Kamu mensyukuri keluarga, kesehatan, dan pekerjaan hari ini.",
+          },
+          {
+            icon: "🎯",
+            title: "Fokus Harian",
+            stat: "8/10",
+            body: "Produktivitas tinggi — kamu menyelesaikan 8 dari 10 rencana harian.",
+          },
+        ],
+        mingguan: [
+          {
+            icon: "📈",
+            title: "Tren Mood",
+            stat: "+14%",
+            body: "Mood meningkat 14% dibanding minggu lalu. Konsistensi jurnal membuat perbedaan!",
+          },
+          {
+            icon: "🔥",
+            title: "Streak Terbaik",
+            stat: "14 hari",
+            body: "Streak terpanjangmu! Kamu baru mencapai milestone baru.",
+          },
+          {
+            icon: "🧠",
+            title: "Pola Pikir",
+            stat: "Positif",
+            body: "72% pikiran yang kamu catat minggu ini bersifat konstruktif dan berorientasi solusi.",
+          },
+          {
+            icon: "🌱",
+            title: "Pertumbuhan",
+            stat: "+2 skill",
+            body: "Kamu mengidentifikasi 2 area pertumbuhan baru: kesabaran dan komunikasi.",
+          },
+        ],
+        bulanan: [
+          {
+            icon: "🏆",
+            title: "Pencapaian Bulan Ini",
+            stat: "24 jurnal",
+            body: "Kamu menulis 24 kali bulan ini — rata-rata terbaik sepanjang waktu!",
+          },
+          {
+            icon: "💖",
+            title: "Tema Syukur",
+            stat: "Keluarga",
+            body: "Keluarga muncul 34 kali sebagai topik syukur — ini sumber kebahagiaanmu.",
+          },
+          {
+            icon: "📉",
+            title: "Stres Berkurang",
+            stat: "-22%",
+            body: "Level stres rata-rata turun 22% dibanding bulan lalu berkat latihan pernapasan.",
+          },
+          {
+            icon: "🌍",
+            title: "Dampak Kebiasaan",
+            stat: "+29%",
+            body: "Kombinasi olahraga + tidur cukup meningkatkan mood rata-rata 29%.",
+          },
+        ],
+        tahunan: [
+          {
+            icon: "✨",
+            title: "Transformasi 2025",
+            stat: "164 hari",
+            body: "Kamu telah menulis 164 hari di tahun ini — luar biasa!",
+          },
+          {
+            icon: "📊",
+            title: "Emosi Dominan",
+            stat: "Bahagia 40%",
+            body: "40% hari kamu merasa bahagia — ini peningkatan 15% dari tahun lalu.",
+          },
+          {
+            icon: "🎯",
+            title: "Goal Tercapai",
+            stat: "7 dari 10",
+            body: "7 dari 10 tujuan tahun ini sudah tercapai atau dalam progress baik.",
+          },
+          {
+            icon: "🌱",
+            title: "Versi Terbaik",
+            stat: "Level 14",
+            body: "Kamu telah menjadi versi yang lebih sadar, empatik, dan seimbang dari dirimu.",
+          },
+        ],
+      };
+      const MEMORY_ITEMS = [
+        {
+          icon: "⭐",
+          title: "Momen Terbaik",
+          text: "Makan malam bersama keluarga tanggal 18 Mei",
+        },
+        {
+          icon: "📚",
+          title: "Pelajaran Terbesar",
+          text: '"Konsistensi lebih penting dari kesempurnaan"',
+        },
+        {
+          icon: "👥",
+          title: "Orang Tersering",
+          text: "Ibu (28 sebutan), Rekan Kerja (19 sebutan)",
+        },
+        {
+          icon: "💛",
+          title: "Syukur Terbanyak",
+          text: "Kesehatan keluarga — 34 kali disebut",
+        },
+        {
+          icon: "🏆",
+          title: "Pencapaian Terbesar",
+          text: "Streak 14 hari pertama dalam hidupmu!",
+        },
+        {
+          icon: "🌱",
+          title: "Pertumbuhan",
+          text: "Lebih sabar dan lebih hadir saat bersama orang yang dicintai",
+        },
+      ];
 
-  <!-- ══════ PRICING ══════ -->
-  <div class="page" id="page-pricing">
-    <div class="pricing-page">
-      <div class="section-header" style="text-align:center;margin-bottom:36px">
-        <h2 class="h2">Pilih Paket Terbaikmu</h2>
-        <p class="muted">Mulai gratis, upgrade kapanpun kamu mau</p>
-      </div>
-      <div class="pricing-grid" id="pricingGrid"></div>
-    </div>
-  </div>
+      let lifeVals = {};
+      LIFE_CATS.forEach((c) => (lifeVals[c.n] = c.v));
+      let playingSounds = {};
+      let timerMins = 15;
+      let timerInterval = null;
 
-</div>
+      function go(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("on"));
+        const pg = document.getElementById("page-" + id);
+        if (pg) pg.classList.add("on");
+        document
+          .querySelectorAll(".tab")
+          .forEach((t) => t.classList.remove("on"));
+        document.querySelectorAll(".tab").forEach((t) => {
+          if (t.textContent.toLowerCase().includes(id.substring(0, 3)))
+            t.classList.add("on");
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-<div class="success-toast" id="toast"></div>
+      function toggleDark() {
+        const d = document.documentElement;
+        const isDark = d.hasAttribute("data-dark");
+        isDark
+          ? d.removeAttribute("data-dark")
+          : d.setAttribute("data-dark", "");
+        document.getElementById("darkBtn").textContent = isDark ? "🌙" : "☀️";
+      }
 
-<script>
-const SOUNDS=[
-  {icon:'🌧️',name:'Hujan Deras',key:'rain'},
-  {icon:'🌲',name:'Hutan Tropis',key:'forest'},
-  {icon:'🌊',name:'Ombak Laut',key:'ocean'},
-  {icon:'☕',name:'Kedai Kopi',key:'cafe'},
-  {icon:'🌙',name:'Malam Tenang',key:'night'},
-  {icon:'🔥',name:'Api Unggun',key:'fire'},
-];
-const HABITS=[
-  {icon:'🏃',name:'Olahraga',streak:12,days:[1,1,0,1,1,0,1],corr:'+18% mood'},
-  {icon:'📚',name:'Membaca',streak:8,days:[1,1,1,0,1,1,0],corr:'+12% fokus'},
-  {icon:'💧',name:'Minum Air',streak:14,days:[1,1,1,1,1,1,1],corr:'+9% energi'},
-  {icon:'😴',name:'Tidur 8 Jam',streak:5,days:[1,0,1,1,0,1,1],corr:'+24% produktif'},
-  {icon:'🙏',name:'Ibadah Pagi',streak:10,days:[1,1,1,0,1,1,1],corr:'Stres lebih rendah'},
-  {icon:'🧘',name:'Meditasi',streak:3,days:[0,1,0,1,0,0,1],corr:'+15% tenang'},
-];
-const LIFE_CATS=[
-  {e:'💼',n:'Karier',v:85,c:'#5B4FE8'},
-  {e:'🏃',n:'Kesehatan',v:60,c:'#1DB97A'},
-  {e:'👨‍👩‍👧',n:'Keluarga',v:75,c:'#FF7B8A'},
-  {e:'💰',n:'Keuangan',v:65,c:'#F0A500'},
-  {e:'🙏',n:'Spiritual',v:55,c:'#9B8DFF'},
-  {e:'❤️',n:'Hubungan',v:70,c:'#FF6B35'},
-  {e:'📚',n:'Belajar',v:80,c:'#06B6D4'},
-  {e:'😄',n:'Kebahagiaan',v:72,c:'#FFD93D'},
-];
-const INSIGHTS_DATA={
-  harian:[
-    {icon:'🌟',title:'Mood Hari Ini',stat:'+18%',body:'Mood lebih baik dibanding rata-rata 7 hari terakhir. Hari yang produktif!'},
-    {icon:'😰',title:'Pemicu Stres',stat:'Rendah',body:'Tidak ada pemicu stres signifikan hari ini. Energimu sangat stabil.'},
-    {icon:'💛',title:'Rasa Syukur',stat:'5 item',body:'Kamu mensyukuri keluarga, kesehatan, dan pekerjaan hari ini.'},
-    {icon:'🎯',title:'Fokus Harian',stat:'8/10',body:'Produktivitas tinggi — kamu menyelesaikan 8 dari 10 rencana harian.'},
-  ],
-  mingguan:[
-    {icon:'📈',title:'Tren Mood',stat:'+14%',body:'Mood meningkat 14% dibanding minggu lalu. Konsistensi jurnal membuat perbedaan!'},
-    {icon:'🔥',title:'Streak Terbaik',stat:'14 hari',body:'Streak terpanjangmu! Kamu baru mencapai milestone baru.'},
-    {icon:'🧠',title:'Pola Pikir',stat:'Positif',body:'72% pikiran yang kamu catat minggu ini bersifat konstruktif dan berorientasi solusi.'},
-    {icon:'🌱',title:'Pertumbuhan',stat:'+2 skill',body:'Kamu mengidentifikasi 2 area pertumbuhan baru: kesabaran dan komunikasi.'},
-  ],
-  bulanan:[
-    {icon:'🏆',title:'Pencapaian Bulan Ini',stat:'24 jurnal',body:'Kamu menulis 24 kali bulan ini — rata-rata terbaik sepanjang waktu!'},
-    {icon:'💖',title:'Tema Syukur',stat:'Keluarga',body:'Keluarga muncul 34 kali sebagai topik syukur — ini sumber kebahagiaanmu.'},
-    {icon:'📉',title:'Stres Berkurang',stat:'-22%',body:'Level stres rata-rata turun 22% dibanding bulan lalu berkat latihan pernapasan.'},
-    {icon:'🌍',title:'Dampak Kebiasaan',stat:'+29%',body:'Kombinasi olahraga + tidur cukup meningkatkan mood rata-rata 29%.'},
-  ],
-  tahunan:[
-    {icon:'✨',title:'Transformasi 2025',stat:'164 hari',body:'Kamu telah menulis 164 hari di tahun ini — luar biasa!'},
-    {icon:'📊',title:'Emosi Dominan',stat:'Bahagia 40%',body:'40% hari kamu merasa bahagia — ini peningkatan 15% dari tahun lalu.'},
-    {icon:'🎯',title:'Goal Tercapai',stat:'7 dari 10',body:'7 dari 10 tujuan tahun ini sudah tercapai atau dalam progress baik.'},
-    {icon:'🌱',title:'Versi Terbaik',stat:'Level 14',body:'Kamu telah menjadi versi yang lebih sadar, empatik, dan seimbang dari dirimu.'},
-  ]
-};
-const MEMORY_ITEMS=[
-  {icon:'⭐',title:'Momen Terbaik',text:'Makan malam bersama keluarga tanggal 18 Mei'},
-  {icon:'📚',title:'Pelajaran Terbesar',text:'"Konsistensi lebih penting dari kesempurnaan"'},
-  {icon:'👥',title:'Orang Tersering',text:'Ibu (28 sebutan), Rekan Kerja (19 sebutan)'},
-  {icon:'💛',title:'Syukur Terbanyak',text:'Kesehatan keluarga — 34 kali disebut'},
-  {icon:'🏆',title:'Pencapaian Terbesar',text:'Streak 14 hari pertama dalam hidupmu!'},
-  {icon:'🌱',title:'Pertumbuhan',text:'Lebih sabar dan lebih hadir saat bersama orang yang dicintai'},
-];
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2500);
+      }
 
-let lifeVals={};LIFE_CATS.forEach(c=>lifeVals[c.n]=c.v);
-let playingSounds={};
-let timerMins=15;let timerInterval=null;
+      function confetti() {
+        const colors = [
+          "#5B4FE8",
+          "#7C6EF5",
+          "#FF7B8A",
+          "#1DB97A",
+          "#F0A500",
+          "#9ECFFF",
+        ];
+        for (let i = 0; i < 40; i++) {
+          setTimeout(() => {
+            const c = document.createElement("div");
+            c.className = "confetti-p";
+            c.style.cssText = `left:${Math.random() * 100}vw;top:-10px;background:${colors[Math.floor(Math.random() * colors.length)]};transform:rotate(${Math.random() * 360}deg);animation-duration:${1.8 + Math.random()}s;animation-delay:${Math.random() * 0.4}s;border-radius:${Math.random() > 0.5 ? "50%" : "2px"}`;
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 3e3);
+          }, i * 40);
+        }
+      }
 
-function go(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  const pg=document.getElementById('page-'+id);
-  if(pg) pg.classList.add('on');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.toLowerCase().includes(id.substring(0,3)))t.classList.add('on')});
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+      // ── Greeting ──
+      function setGreeting() {
+        const h = new Date().getHours(),
+          now = new Date();
+        const greet =
+          h < 12 ? "Pagi" : h < 17 ? "Siang" : h < 20 ? "Sore" : "Malam";
+        const em = h < 12 ? "☀️" : h < 17 ? "🌤️" : h < 20 ? "🌅" : "🌙";
+        const days = [
+          "Minggu",
+          "Senin",
+          "Selasa",
+          "Rabu",
+          "Kamis",
+          "Jumat",
+          "Sabtu",
+        ];
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mei",
+          "Jun",
+          "Jul",
+          "Agu",
+          "Sep",
+          "Okt",
+          "Nov",
+          "Des",
+        ];
+        const gt = document.getElementById("greetTxt"),
+          gs = document.getElementById("greetSub");
+        if (gt) gt.textContent = `Selamat ${greet}, Asmawati ${em}`;
+        if (gs)
+          gs.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · Hari ke-14 perjalananmu`;
+      }
 
-function toggleDark(){
-  const d=document.documentElement;
-  const isDark=d.hasAttribute('data-dark');
-  isDark?d.removeAttribute('data-dark'):d.setAttribute('data-dark','');
-  document.getElementById('darkBtn').textContent=isDark?'🌙':'☀️';
-}
+      // ── Heatmap ──
+      function buildHeatmap() {
+        const g = document.getElementById("heatGrid");
+        if (!g) return;
+        for (let i = 0; i < 180; i++) {
+          const c = document.createElement("div");
+          const rnd = Math.random();
+          const lvl =
+            rnd < 0.2
+              ? 0
+              : rnd < 0.35
+                ? 1
+                : rnd < 0.55
+                  ? 2
+                  : rnd < 0.75
+                    ? 3
+                    : rnd < 0.9
+                      ? 4
+                      : 5;
+          c.className = `hm-cell hm-${lvl}`;
+          c.title = `${Math.floor(Math.random() * 10) + 1} entri`;
+          g.appendChild(c);
+        }
+      }
 
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-function confetti(){
-  const colors=['#5B4FE8','#7C6EF5','#FF7B8A','#1DB97A','#F0A500','#9ECFFF'];
-  for(let i=0;i<40;i++){
-    setTimeout(()=>{
-      const c=document.createElement('div');c.className='confetti-p';
-      c.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);animation-duration:${1.8+Math.random()}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
-      document.body.appendChild(c);setTimeout(()=>c.remove(),3e3);
-    },i*40);
-  }
-}
-
-// ── Greeting ──
-function setGreeting(){
-  const h=new Date().getHours(),now=new Date();
-  const greet=h<12?'Pagi':h<17?'Siang':h<20?'Sore':'Malam';
-  const em=h<12?'☀️':h<17?'🌤️':h<20?'🌅':'🌙';
-  const days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-  const months=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-  const gt=document.getElementById('greetTxt'),gs=document.getElementById('greetSub');
-  if(gt) gt.textContent=`Selamat ${greet}, Asmawati ${em}`;
-  if(gs) gs.textContent=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · Hari ke-14 perjalananmu`;
-}
-
-// ── Heatmap ──
-function buildHeatmap(){
-  const g=document.getElementById('heatGrid');if(!g)return;
-  for(let i=0;i<180;i++){
-    const c=document.createElement('div');
-    const rnd=Math.random();
-    const lvl=rnd<.2?0:rnd<.35?1:rnd<.55?2:rnd<.75?3:rnd<.9?4:5;
-    c.className=`hm-cell hm-${lvl}`;
-    c.title=`${Math.floor(Math.random()*10)+1} entri`;
-    g.appendChild(c);
-  }
-}
-
-// ── Garden ──
-function buildGarden(){
-  const c=document.getElementById('gardenContent');if(!c)return;
-  const plants=[
-    {s:90,color:'#388E3C',name:'Refleksi Mendalam'},
-    {s:70,color:'#1976D2',name:'Hari Tenang'},
-    {s:110,color:'#5B4FE8',name:'Kreativitas'},
-    {s:60,color:'#F57F17',name:'Semangat Pagi'},
-    {s:80,color:'#C62828',name:'Keberanian'},
-    {s:50,color:'#00897B',name:'Ketenangan'},
-    {s:95,color:'#6A1B9A',name:'Introspeksi'},
-    {s:65,color:'#2E7D32',name:'Rasa Syukur'},
-  ];
-  plants.forEach(p=>{
-    const div=document.createElement('div');div.className='plant';
-    div.style.transform=`scale(${0.5+p.s/200})`;
-    div.innerHTML=`
-      <svg class="plant-svg" width="${p.s*0.5}" height="${p.s}" viewBox="0 0 50 100">
+      // ── Garden ──
+      function buildGarden() {
+        const c = document.getElementById("gardenContent");
+        if (!c) return;
+        const plants = [
+          { s: 90, color: "#388E3C", name: "Refleksi Mendalam" },
+          { s: 70, color: "#1976D2", name: "Hari Tenang" },
+          { s: 110, color: "#5B4FE8", name: "Kreativitas" },
+          { s: 60, color: "#F57F17", name: "Semangat Pagi" },
+          { s: 80, color: "#C62828", name: "Keberanian" },
+          { s: 50, color: "#00897B", name: "Ketenangan" },
+          { s: 95, color: "#6A1B9A", name: "Introspeksi" },
+          { s: 65, color: "#2E7D32", name: "Rasa Syukur" },
+        ];
+        plants.forEach((p) => {
+          const div = document.createElement("div");
+          div.className = "plant";
+          div.style.transform = `scale(${0.5 + p.s / 200})`;
+          div.innerHTML = `
+      <svg class="plant-svg" width="${p.s * 0.5}" height="${p.s}" viewBox="0 0 50 100">
         <rect x="23" y="60" width="4" height="40" fill="#6D4C41" rx="2"/>
         <ellipse cx="25" cy="50" rx="16" ry="22" fill="${p.color}" opacity=".9"/>
         <ellipse cx="15" cy="60" rx="12" ry="16" fill="${p.color}" opacity=".7"/>
         <ellipse cx="35" cy="60" rx="12" ry="16" fill="${p.color}" opacity=".7"/>
         <ellipse cx="25" cy="38" rx="10" ry="14" fill="${p.color}" opacity=".95"/>
-        ${p.s>80?`<circle cx="${20+Math.random()*10}" cy="${35+Math.random()*10}" r="4" fill="#FFD54F" opacity=".9"/>`:``}
+        ${p.s > 80 ? `<circle cx="${20 + Math.random() * 10}" cy="${35 + Math.random() * 10}" r="4" fill="#FFD54F" opacity=".9"/>` : ``}
       </svg>
       <div class="plant-label" style="font-size:9px;color:var(--ink3)">${p.name}</div>
     `;
-    div.onclick=()=>showToast(`🌱 ${p.name} tumbuh dari jurnalmu!`);
-    c.appendChild(div);
-  });
-  const stats=[
-    {e:'🌿',v:'27',l:'Tanaman Total'},
-    {e:'🌸',v:'3',l:'Bunga Langka'},
-    {e:'🔥',v:'14',l:'Hari Streak'},
-    {e:'🌳',v:'8',l:'Pohon Dewasa'},
-  ];
-  const sg=document.getElementById('gardenStats');if(!sg)return;
-  stats.forEach(s=>{
-    const d=document.createElement('div');d.className='garden-stat';
-    d.innerHTML=`<div class="garden-emoji">${s.e}</div><div class="garden-stat-val">${s.v}</div><div class="garden-stat-label">${s.l}</div>`;
-    sg.appendChild(d);
-  });
-}
+          div.onclick = () => showToast(`🌱 ${p.name} tumbuh dari jurnalmu!`);
+          c.appendChild(div);
+        });
+        const stats = [
+          { e: "🌿", v: "27", l: "Tanaman Total" },
+          { e: "🌸", v: "3", l: "Bunga Langka" },
+          { e: "🔥", v: "14", l: "Hari Streak" },
+          { e: "🌳", v: "8", l: "Pohon Dewasa" },
+        ];
+        const sg = document.getElementById("gardenStats");
+        if (!sg) return;
+        stats.forEach((s) => {
+          const d = document.createElement("div");
+          d.className = "garden-stat";
+          d.innerHTML = `<div class="garden-emoji">${s.e}</div><div class="garden-stat-val">${s.v}</div><div class="garden-stat-label">${s.l}</div>`;
+          sg.appendChild(d);
+        });
+      }
 
-// ── AI Coach Chat ──
-const AI_RESPONSES=[
-  "Ceritamu sangat berharga. Apa yang paling membuatmu merasa seperti itu hari ini? 🌿",
-  "Aku mendengarmu. Apakah ada pola yang kamu sadari dari situasi ini? ✨",
-  "Bagaimana jika kita coba lihat dari sudut pandang yang berbeda? Apa yang mungkin kamu pelajari dari ini? 💭",
-  "Langkah kecil apa yang bisa kamu lakukan besok untuk merasa lebih baik? 🌱",
-  "Itu butuh keberanian untuk diakui. Aku bangga kamu mau jujur dengan dirimu sendiri. 💛",
-  "Pola ini menarik. Kapan terakhir kali kamu merasa benar-benar damai? Apa yang berbeda saat itu? 🕊️",
-  "Kamu sudah melakukan yang terbaik dengan apa yang kamu punya. Bagaimana kamu bisa lebih lembut pada dirimu sendiri? 🌸",
-];
-let aiMsgIdx=0;
+      // ── AI Coach Chat ──
+      const AI_RESPONSES = [
+        "Ceritamu sangat berharga. Apa yang paling membuatmu merasa seperti itu hari ini? 🌿",
+        "Aku mendengarmu. Apakah ada pola yang kamu sadari dari situasi ini? ✨",
+        "Bagaimana jika kita coba lihat dari sudut pandang yang berbeda? Apa yang mungkin kamu pelajari dari ini? 💭",
+        "Langkah kecil apa yang bisa kamu lakukan besok untuk merasa lebih baik? 🌱",
+        "Itu butuh keberanian untuk diakui. Aku bangga kamu mau jujur dengan dirimu sendiri. 💛",
+        "Pola ini menarik. Kapan terakhir kali kamu merasa benar-benar damai? Apa yang berbeda saat itu? 🕊️",
+        "Kamu sudah melakukan yang terbaik dengan apa yang kamu punya. Bagaimana kamu bisa lebih lembut pada dirimu sendiri? 🌸",
+      ];
+      let aiMsgIdx = 0;
 
-function buildCoach(){
-  const ca=document.getElementById('chatArea');if(!ca)return;
-  const msgs=[
-    {ai:true,text:'Hai! Aku Bloom, AI Coach MindBloom. Aku di sini untuk menemanimu berefleksi — tanpa menghakimi, penuh empati. 🌸'},
-    {ai:true,text:'Setelah membaca jurnalmu hari ini, aku ingin bertanya: <strong>Apa yang paling berat kamu rasakan hari ini?</strong> Ceritakan apapun, aku siap mendengar. 💙'},
-  ];
-  msgs.forEach(m=>addMsg(m.text,m.ai,false));
-  const qp=document.getElementById('quickPrompts');if(!qp)return;
-  ['Aku merasa cemas','Aku sedang stres','Aku ingin bersyukur','Bantu aku refleksi','Aku tidak tahu harus mulai dari mana'].forEach(t=>{
-    const b=document.createElement('button');b.className='qp';b.textContent=t;
-    b.onclick=()=>{document.getElementById('chatInput').value=t;sendMsg()};
-    qp.appendChild(b);
-  });
-}
+      function buildCoach() {
+        const ca = document.getElementById("chatArea");
+        if (!ca) return;
+        const msgs = [
+          {
+            ai: true,
+            text: "Hai! Aku Bloom, AI Coach MindBloom. Aku di sini untuk menemanimu berefleksi — tanpa menghakimi, penuh empati. 🌸",
+          },
+          {
+            ai: true,
+            text: "Setelah membaca jurnalmu hari ini, aku ingin bertanya: <strong>Apa yang paling berat kamu rasakan hari ini?</strong> Ceritakan apapun, aku siap mendengar. 💙",
+          },
+        ];
+        msgs.forEach((m) => addMsg(m.text, m.ai, false));
+        const qp = document.getElementById("quickPrompts");
+        if (!qp) return;
+        [
+          "Aku merasa cemas",
+          "Aku sedang stres",
+          "Aku ingin bersyukur",
+          "Bantu aku refleksi",
+          "Aku tidak tahu harus mulai dari mana",
+        ].forEach((t) => {
+          const b = document.createElement("button");
+          b.className = "qp";
+          b.textContent = t;
+          b.onclick = () => {
+            document.getElementById("chatInput").value = t;
+            sendMsg();
+          };
+          qp.appendChild(b);
+        });
+      }
 
-function addMsg(text,isAI,animate=true){
-  const ca=document.getElementById('chatArea');if(!ca)return;
-  const div=document.createElement('div');div.className=`msg msg-${isAI?'ai':'user'}`;
-  if(isAI) div.innerHTML=`<div class="msg-avatar">🌸</div><div class="msg-bubble">${text}</div>`;
-  else div.innerHTML=`<div class="msg-bubble">${text}</div>`;
-  if(animate) div.style.opacity='0';
-  ca.appendChild(div);
-  if(animate) requestAnimationFrame(()=>{div.style.transition='all .3s';div.style.opacity='1'});
-  ca.scrollTop=ca.scrollHeight;
-}
+      function addMsg(text, isAI, animate = true) {
+        const ca = document.getElementById("chatArea");
+        if (!ca) return;
+        const div = document.createElement("div");
+        div.className = `msg msg-${isAI ? "ai" : "user"}`;
+        if (isAI)
+          div.innerHTML = `<div class="msg-avatar">🌸</div><div class="msg-bubble">${text}</div>`;
+        else div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+        if (animate) div.style.opacity = "0";
+        ca.appendChild(div);
+        if (animate)
+          requestAnimationFrame(() => {
+            div.style.transition = "all .3s";
+            div.style.opacity = "1";
+          });
+        ca.scrollTop = ca.scrollHeight;
+      }
 
-function sendMsg(){
-  const inp=document.getElementById('chatInput');if(!inp||!inp.value.trim())return;
-  const msg=inp.value.trim();inp.value='';
-  addMsg(msg,false);
-  const ca=document.getElementById('chatArea');
-  const typing=document.createElement('div');typing.className='msg msg-ai';
-  typing.innerHTML=`<div class="msg-avatar">🌸</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
-  ca.appendChild(typing);ca.scrollTop=ca.scrollHeight;
-  setTimeout(()=>{
-    ca.removeChild(typing);
-    addMsg(AI_RESPONSES[aiMsgIdx%AI_RESPONSES.length],true);
-    aiMsgIdx++;
-  },1400);
-}
+      function sendMsg() {
+        const inp = document.getElementById("chatInput");
+        if (!inp || !inp.value.trim()) return;
+        const msg = inp.value.trim();
+        inp.value = "";
+        addMsg(msg, false);
+        const ca = document.getElementById("chatArea");
+        const typing = document.createElement("div");
+        typing.className = "msg msg-ai";
+        typing.innerHTML = `<div class="msg-avatar">🌸</div><div class="msg-bubble"><div class="typing-wrap"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
+        ca.appendChild(typing);
+        ca.scrollTop = ca.scrollHeight;
+        setTimeout(() => {
+          ca.removeChild(typing);
+          addMsg(AI_RESPONSES[aiMsgIdx % AI_RESPONSES.length], true);
+          aiMsgIdx++;
+        }, 1400);
+      }
 
-// ── Soundscape ──
-function buildSoundscape(){
-  const sg=document.getElementById('soundGrid');if(!sg)return;
-  SOUNDS.forEach(s=>{
-    const d=document.createElement('div');d.className='sound-btn';d.id=`snd-${s.key}`;
-    d.innerHTML=`<div class="sound-waves"><div class="sw"></div><div class="sw"></div><div class="sw"></div></div><div class="sound-icon">${s.icon}</div><div class="sound-name">${s.name}</div>`;
-    d.onclick=()=>toggleSound(s.key,d);
-    sg.appendChild(d);
-  });
-  const mr=document.getElementById('mixerRows');if(!mr)return;
-  SOUNDS.forEach(s=>{
-    const r=document.createElement('div');r.className='mix-row';
-    r.innerHTML=`<div class="mix-icon">${s.icon}</div><div class="mix-name">${s.name}</div><input class="mix-slider" type="range" min="0" max="100" value="${s.key==='rain'?70:s.key==='forest'?40:0}" oninput="document.getElementById('mv-${s.key}').textContent=this.value+'%'"><span class="mix-val" id="mv-${s.key}">${s.key==='rain'?'70%':s.key==='forest'?'40%':'0%'}</span>`;
-    mr.appendChild(r);
-  });
-}
-function toggleSound(key,el){
-  el.classList.toggle('playing');
-  showToast(el.classList.contains('playing')?`🎵 ${key} diputar...`:`⏹ ${key} dihentikan`);
-}
-function setTimer(btn,mins){
-  document.querySelectorAll('.timer-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');timerMins=mins;
-  document.getElementById('timerDisplay').textContent=`${mins}:00`;
-}
+      // ── Soundscape ──
+      function buildSoundscape() {
+        const sg = document.getElementById("soundGrid");
+        if (!sg) return;
+        SOUNDS.forEach((s) => {
+          const d = document.createElement("div");
+          d.className = "sound-btn";
+          d.id = `snd-${s.key}`;
+          d.innerHTML = `<div class="sound-waves"><div class="sw"></div><div class="sw"></div><div class="sw"></div></div><div class="sound-icon">${s.icon}</div><div class="sound-name">${s.name}</div>`;
+          d.onclick = () => toggleSound(s.key, d);
+          sg.appendChild(d);
+        });
+        const mr = document.getElementById("mixerRows");
+        if (!mr) return;
+        SOUNDS.forEach((s) => {
+          const r = document.createElement("div");
+          r.className = "mix-row";
+          r.innerHTML = `<div class="mix-icon">${s.icon}</div><div class="mix-name">${s.name}</div><input class="mix-slider" type="range" min="0" max="100" value="${s.key === "rain" ? 70 : s.key === "forest" ? 40 : 0}" oninput="document.getElementById('mv-${s.key}').textContent=this.value+'%'"><span class="mix-val" id="mv-${s.key}">${s.key === "rain" ? "70%" : s.key === "forest" ? "40%" : "0%"}</span>`;
+          mr.appendChild(r);
+        });
+      }
+      function toggleSound(key, el) {
+        el.classList.toggle("playing");
+        showToast(
+          el.classList.contains("playing")
+            ? `🎵 ${key} diputar...`
+            : `⏹ ${key} dihentikan`,
+        );
+      }
+      function setTimer(btn, mins) {
+        document
+          .querySelectorAll(".timer-btn")
+          .forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        timerMins = mins;
+        document.getElementById("timerDisplay").textContent = `${mins}:00`;
+      }
 
-// ── Life Wheel ──
-function buildLifeControls(){
-  const lc=document.getElementById('lifeControls');if(!lc)return;lc.innerHTML='';
-  LIFE_CATS.forEach(cat=>{
-    const r=document.createElement('div');r.className='life-row';
-    r.innerHTML=`<div class="life-emoji">${cat.e}</div><div class="life-name">${cat.n}</div><input class="life-slider" type="range" min="0" max="100" value="${lifeVals[cat.n]}" oninput="updateLife('${cat.n}',+this.value)"><div class="life-val" id="lv-${cat.n}">${lifeVals[cat.n]}</div>`;
-    lc.appendChild(r);
-  });
-  drawLifeWheel();
-}
-function updateLife(name,val){
-  lifeVals[name]=val;
-  const el=document.getElementById('lv-'+name);if(el) el.textContent=val;
-  drawLifeWheel();
-}
-function drawLifeWheel(){
-  const cv=document.getElementById('lifeCanvas');if(!cv||!cv.getContext)return;
-  const ctx=cv.getContext('2d'),W=320,cx=160,cy=160,r=130;
-  ctx.clearRect(0,0,W,W);
-  const n=LIFE_CATS.length,step=(Math.PI*2)/n;
-  const isDark=document.documentElement.hasAttribute('data-dark');
-  const gridColor=isDark?'rgba(255,255,255,0.08)':'rgba(91,79,232,0.1)';
-  const textColor=isDark?'#EEF0FF':'#2D3056';
-  for(let ring=2;ring<=10;ring+=2){
-    ctx.beginPath();ctx.strokeStyle=gridColor;ctx.lineWidth=1;
-    for(let i=0;i<n;i++){
-      const a=i*step-Math.PI/2;const pr=(ring/10)*r;
-      i===0?ctx.moveTo(cx+pr*Math.cos(a),cy+pr*Math.sin(a)):ctx.lineTo(cx+pr*Math.cos(a),cy+pr*Math.sin(a));
-    }
-    ctx.closePath();ctx.stroke();
-  }
-  for(let i=0;i<n;i++){const a=i*step-Math.PI/2;ctx.beginPath();ctx.strokeStyle=gridColor;ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.stroke();}
-  const grad=ctx.createLinearGradient(cx-r,cy-r,cx+r,cy+r);
-  grad.addColorStop(0,'rgba(91,79,232,0.35)');grad.addColorStop(1,'rgba(255,123,138,0.35)');
-  ctx.beginPath();
-  LIFE_CATS.forEach((cat,i)=>{
-    const a=i*step-Math.PI/2;const pr=(lifeVals[cat.n]/100)*r;
-    i===0?ctx.moveTo(cx+pr*Math.cos(a),cy+pr*Math.sin(a)):ctx.lineTo(cx+pr*Math.cos(a),cy+pr*Math.sin(a));
-  });
-  ctx.closePath();ctx.fillStyle=grad;ctx.fill();
-  ctx.strokeStyle='rgba(91,79,232,0.7)';ctx.lineWidth=2;ctx.stroke();
-  ctx.font='bold 11px Outfit,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  LIFE_CATS.forEach((cat,i)=>{
-    const a=i*step-Math.PI/2;const lr=r+22;
-    ctx.fillStyle=textColor;ctx.fillText(cat.e+' '+cat.n,cx+lr*Math.cos(a),cy+lr*Math.sin(a));
-  });
-}
+      // ── Life Wheel ──
+      function buildLifeControls() {
+        const lc = document.getElementById("lifeControls");
+        if (!lc) return;
+        lc.innerHTML = "";
+        LIFE_CATS.forEach((cat) => {
+          const r = document.createElement("div");
+          r.className = "life-row";
+          r.innerHTML = `<div class="life-emoji">${cat.e}</div><div class="life-name">${cat.n}</div><input class="life-slider" type="range" min="0" max="100" value="${lifeVals[cat.n]}" oninput="updateLife('${cat.n}',+this.value)"><div class="life-val" id="lv-${cat.n}">${lifeVals[cat.n]}</div>`;
+          lc.appendChild(r);
+        });
+        drawLifeWheel();
+      }
+      function updateLife(name, val) {
+        lifeVals[name] = val;
+        const el = document.getElementById("lv-" + name);
+        if (el) el.textContent = val;
+        drawLifeWheel();
+      }
+      function drawLifeWheel() {
+        const cv = document.getElementById("lifeCanvas");
+        if (!cv || !cv.getContext) return;
+        const ctx = cv.getContext("2d"),
+          W = 320,
+          cx = 160,
+          cy = 160,
+          r = 130;
+        ctx.clearRect(0, 0, W, W);
+        const n = LIFE_CATS.length,
+          step = (Math.PI * 2) / n;
+        const isDark = document.documentElement.hasAttribute("data-dark");
+        const gridColor = isDark
+          ? "rgba(255,255,255,0.08)"
+          : "rgba(91,79,232,0.1)";
+        const textColor = isDark ? "#EEF0FF" : "#2D3056";
+        for (let ring = 2; ring <= 10; ring += 2) {
+          ctx.beginPath();
+          ctx.strokeStyle = gridColor;
+          ctx.lineWidth = 1;
+          for (let i = 0; i < n; i++) {
+            const a = i * step - Math.PI / 2;
+            const pr = (ring / 10) * r;
+            i === 0
+              ? ctx.moveTo(cx + pr * Math.cos(a), cy + pr * Math.sin(a))
+              : ctx.lineTo(cx + pr * Math.cos(a), cy + pr * Math.sin(a));
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+        for (let i = 0; i < n; i++) {
+          const a = i * step - Math.PI / 2;
+          ctx.beginPath();
+          ctx.strokeStyle = gridColor;
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+          ctx.stroke();
+        }
+        const grad = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+        grad.addColorStop(0, "rgba(91,79,232,0.35)");
+        grad.addColorStop(1, "rgba(255,123,138,0.35)");
+        ctx.beginPath();
+        LIFE_CATS.forEach((cat, i) => {
+          const a = i * step - Math.PI / 2;
+          const pr = (lifeVals[cat.n] / 100) * r;
+          i === 0
+            ? ctx.moveTo(cx + pr * Math.cos(a), cy + pr * Math.sin(a))
+            : ctx.lineTo(cx + pr * Math.cos(a), cy + pr * Math.sin(a));
+        });
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(91,79,232,0.7)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.font = "bold 11px Outfit,sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        LIFE_CATS.forEach((cat, i) => {
+          const a = i * step - Math.PI / 2;
+          const lr = r + 22;
+          ctx.fillStyle = textColor;
+          ctx.fillText(
+            cat.e + " " + cat.n,
+            cx + lr * Math.cos(a),
+            cy + lr * Math.sin(a),
+          );
+        });
+      }
 
-// ── Habits ──
-function buildHabits(){
-  const g=document.getElementById('habitGrid');if(!g)return;
-  const dayNames=['S','S','R','K','J','S','M'];
-  HABITS.forEach(h=>{
-    const row=document.createElement('div');row.className='habit-row';
-    const daysHtml=h.days.map((d,i)=>`<div class="hday ${d?'done':''}" onclick="toggleHDay(this)">${dayNames[i]}</div>`).join('');
-    row.innerHTML=`
+      // ── Habits ──
+      function buildHabits() {
+        const g = document.getElementById("habitGrid");
+        if (!g) return;
+        const dayNames = ["S", "S", "R", "K", "J", "S", "M"];
+        HABITS.forEach((h) => {
+          const row = document.createElement("div");
+          row.className = "habit-row";
+          const daysHtml = h.days
+            .map(
+              (d, i) =>
+                `<div class="hday ${d ? "done" : ""}" onclick="toggleHDay(this)">${dayNames[i]}</div>`,
+            )
+            .join("");
+          row.innerHTML = `
       <div class="habit-icon">${h.icon}</div>
       <div class="habit-info">
         <div class="habit-name">${h.name}</div>
@@ -982,110 +2940,180 @@ function buildHabits(){
       </div>
       <div class="habit-days">${daysHtml}</div>
     `;
-    g.appendChild(row);
-  });
-}
-function toggleHDay(el){
-  el.classList.toggle('done');
-  if(el.classList.contains('done')){el.style.transform='scale(1.3)';setTimeout(()=>el.style.transform='',300);showToast('✅ Kebiasaan tercatat!');}
-}
+          g.appendChild(row);
+        });
+      }
+      function toggleHDay(el) {
+        el.classList.toggle("done");
+        if (el.classList.contains("done")) {
+          el.style.transform = "scale(1.3)";
+          setTimeout(() => (el.style.transform = ""), 300);
+          showToast("✅ Kebiasaan tercatat!");
+        }
+      }
 
-// ── Insights ──
-function buildInsights(key='harian'){
-  const ic=document.getElementById('insightCards');if(!ic)return;ic.innerHTML='';
-  (INSIGHTS_DATA[key]||[]).forEach((ins,i)=>{
-    const c=document.createElement('div');c.className='insight-card';c.style.animationDelay=`${i*.08}s`;
-    c.innerHTML=`<div class="insight-icon">${ins.icon}</div><div class="insight-title">${ins.title}</div><div class="insight-stat">${ins.stat}</div><div class="insight-body">${ins.body}</div>`;
-    ic.appendChild(c);
-  });
-}
-function setInsTab(btn,key){
-  document.querySelectorAll('.ins-tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');buildInsights(key);
-}
+      // ── Insights ──
+      function buildInsights(key = "harian") {
+        const ic = document.getElementById("insightCards");
+        if (!ic) return;
+        ic.innerHTML = "";
+        (INSIGHTS_DATA[key] || []).forEach((ins, i) => {
+          const c = document.createElement("div");
+          c.className = "insight-card";
+          c.style.animationDelay = `${i * 0.08}s`;
+          c.innerHTML = `<div class="insight-icon">${ins.icon}</div><div class="insight-title">${ins.title}</div><div class="insight-stat">${ins.stat}</div><div class="insight-body">${ins.body}</div>`;
+          ic.appendChild(c);
+        });
+      }
+      function setInsTab(btn, key) {
+        document
+          .querySelectorAll(".ins-tab")
+          .forEach((t) => t.classList.remove("on"));
+        btn.classList.add("on");
+        buildInsights(key);
+      }
 
-// ── Memory ──
-function buildMemory(){
-  const mh=document.getElementById('memHighlights');if(!mh)return;
-  MEMORY_ITEMS.forEach(m=>{
-    const d=document.createElement('div');d.className='memory-item';
-    d.innerHTML=`<div class="memory-item-icon">${m.icon}</div><div class="memory-item-title">${m.title}</div><div class="memory-item-text">${m.text}</div>`;
-    mh.appendChild(d);
-  });
-  const mh2=document.getElementById('memHighlights2');if(!mh2)return;
-  const april=[
-    {icon:'⭐',title:'Momen Terbaik',text:'Liburan keluarga ke Pantai Losari'},
-    {icon:'📚',title:'Pelajaran Terbesar',text:'"Istirahat adalah bagian dari produktivitas"'},
-    {icon:'👥',title:'Orang Tersering',text:'Ibu (22 sebutan), Sahabat (15 sebutan)'},
-    {icon:'💛',title:'Syukur Terbanyak',text:'Pekerjaan yang bermakna — 21 kali disebut'},
-  ];
-  april.forEach(m=>{
-    const d=document.createElement('div');d.className='memory-item';
-    d.innerHTML=`<div class="memory-item-icon">${m.icon}</div><div class="memory-item-title">${m.title}</div><div class="memory-item-text">${m.text}</div>`;
-    mh2.appendChild(d);
-  });
-}
+      // ── Memory ──
+      function buildMemory() {
+        const mh = document.getElementById("memHighlights");
+        if (!mh) return;
+        MEMORY_ITEMS.forEach((m) => {
+          const d = document.createElement("div");
+          d.className = "memory-item";
+          d.innerHTML = `<div class="memory-item-icon">${m.icon}</div><div class="memory-item-title">${m.title}</div><div class="memory-item-text">${m.text}</div>`;
+          mh.appendChild(d);
+        });
+        const mh2 = document.getElementById("memHighlights2");
+        if (!mh2) return;
+        const april = [
+          {
+            icon: "⭐",
+            title: "Momen Terbaik",
+            text: "Liburan keluarga ke Pantai Losari",
+          },
+          {
+            icon: "📚",
+            title: "Pelajaran Terbesar",
+            text: '"Istirahat adalah bagian dari produktivitas"',
+          },
+          {
+            icon: "👥",
+            title: "Orang Tersering",
+            text: "Ibu (22 sebutan), Sahabat (15 sebutan)",
+          },
+          {
+            icon: "💛",
+            title: "Syukur Terbanyak",
+            text: "Pekerjaan yang bermakna — 21 kali disebut",
+          },
+        ];
+        april.forEach((m) => {
+          const d = document.createElement("div");
+          d.className = "memory-item";
+          d.innerHTML = `<div class="memory-item-icon">${m.icon}</div><div class="memory-item-title">${m.title}</div><div class="memory-item-text">${m.text}</div>`;
+          mh2.appendChild(d);
+        });
+      }
 
-// ── Pricing ──
-function buildPricing(){
-  const pg=document.getElementById('pricingGrid');if(!pg)return;
-  const plans=[
-    {
-      name:'Gratis',price:'Rp 0',period:'Selamanya',featured:false,
-      features:[
-        {t:'Jurnal harian 15 langkah',on:true},{t:'Mood tracker dasar',on:true},{t:'Streak & pencapaian',on:true},
-        {t:'3 soundscape',on:true},{t:'Taman emosional (Benih)',on:true},
-        {t:'AI Coach (3x/hari)',on:false},{t:'Analitik premium',on:false},{t:'Life Wheel',on:false},{t:'Memory Room',on:false},
-      ],
-      cta:'Mulai Gratis',action:()=>showToast('Selamat bergabung! 🎉')
-    },
-    {
-      name:'Premium',price:'Rp 49.000',period:'/bulan',featured:true,
-      features:[
-        {t:'Semua fitur Gratis',on:true},{t:'AI Coach tanpa batas',on:true},{t:'Taman emosional penuh',on:true},
-        {t:'Semua 6 soundscape + mixer',on:true},{t:'Analitik mood & tren',on:true},
-        {t:'Life Wheel + AI Analysis',on:true},{t:'Memory Room bulanan',on:true},{t:'Export PDF',on:true},{t:'Backup cloud',on:true},
-      ],
-      cta:'Coba 7 Hari Gratis',action:()=>{confetti();showToast('Selamat! Trial Premium dimulai 🎉')}
-    },
-    {
-      name:'Pro',price:'Rp 99.000',period:'/bulan',featured:false,
-      features:[
-        {t:'Semua fitur Premium',on:true},{t:'AI Emotional Intelligence Engine',on:true},{t:'Wawasan tahunan mendalam',on:true},
-        {t:'Habit correlation AI',on:true},{t:'Prioritas support',on:true},
-        {t:'API access',on:true},{t:'White-label (untuk klinik)',on:true},{t:'Custom prompts AI',on:true},{t:'Unlimited storage',on:true},
-      ],
-      cta:'Hubungi Sales',action:()=>showToast('Tim kami akan menghubungimu! 📞')
-    },
-  ];
-  plans.forEach(plan=>{
-    const c=document.createElement('div');c.className='price-card'+(plan.featured?' featured':'');
-    if(plan.featured) c.innerHTML=`<div class="featured-badge">⭐ Paling Populer</div>`;
-    c.innerHTML+= `
+      // ── Pricing ──
+      function buildPricing() {
+        const pg = document.getElementById("pricingGrid");
+        if (!pg) return;
+        const plans = [
+          {
+            name: "Gratis",
+            price: "Rp 0",
+            period: "Selamanya",
+            featured: false,
+            features: [
+              { t: "Jurnal harian 15 langkah", on: true },
+              { t: "Mood tracker dasar", on: true },
+              { t: "Streak & pencapaian", on: true },
+              { t: "3 soundscape", on: true },
+              { t: "Taman emosional (Benih)", on: true },
+              { t: "AI Coach (3x/hari)", on: false },
+              { t: "Analitik premium", on: false },
+              { t: "Life Wheel", on: false },
+              { t: "Memory Room", on: false },
+            ],
+            cta: "Mulai Gratis",
+            action: () => showToast("Selamat bergabung! 🎉"),
+          },
+          {
+            name: "Premium",
+            price: "Rp 49.000",
+            period: "/bulan",
+            featured: true,
+            features: [
+              { t: "Semua fitur Gratis", on: true },
+              { t: "AI Coach tanpa batas", on: true },
+              { t: "Taman emosional penuh", on: true },
+              { t: "Semua 6 soundscape + mixer", on: true },
+              { t: "Analitik mood & tren", on: true },
+              { t: "Life Wheel + AI Analysis", on: true },
+              { t: "Memory Room bulanan", on: true },
+              { t: "Export PDF", on: true },
+              { t: "Backup cloud", on: true },
+            ],
+            cta: "Coba 7 Hari Gratis",
+            action: () => {
+              confetti();
+              showToast("Selamat! Trial Premium dimulai 🎉");
+            },
+          },
+          {
+            name: "Pro",
+            price: "Rp 99.000",
+            period: "/bulan",
+            featured: false,
+            features: [
+              { t: "Semua fitur Premium", on: true },
+              { t: "AI Emotional Intelligence Engine", on: true },
+              { t: "Wawasan tahunan mendalam", on: true },
+              { t: "Habit correlation AI", on: true },
+              { t: "Prioritas support", on: true },
+              { t: "API access", on: true },
+              { t: "White-label (untuk klinik)", on: true },
+              { t: "Custom prompts AI", on: true },
+              { t: "Unlimited storage", on: true },
+            ],
+            cta: "Hubungi Sales",
+            action: () => showToast("Tim kami akan menghubungimu! 📞"),
+          },
+        ];
+        plans.forEach((plan) => {
+          const c = document.createElement("div");
+          c.className = "price-card" + (plan.featured ? " featured" : "");
+          if (plan.featured)
+            c.innerHTML = `<div class="featured-badge">⭐ Paling Populer</div>`;
+          c.innerHTML += `
       <div class="price-name">${plan.name}</div>
       <div class="price-amount">${plan.price}</div>
       <div class="price-period">${plan.period}</div>
       <div class="price-divider"></div>
-      <div class="price-features">${plan.features.map(f=>`<div class="pf ${f.on?'':'locked'}"><div class="${f.on?'pf-check':'pf-x'}">${f.on?'✓':'✕'}</div><span>${f.t}</span></div>`).join('')}</div>
-      <button class="btn ${plan.featured?'btn-primary':'btn-ghost'}" style="width:100%" onclick="(${plan.action})()">${plan.cta}</button>
+      <div class="price-features">${plan.features.map((f) => `<div class="pf ${f.on ? "" : "locked"}"><div class="${f.on ? "pf-check" : "pf-x"}">${f.on ? "✓" : "✕"}</div><span>${f.t}</span></div>`).join("")}</div>
+      <button class="btn ${plan.featured ? "btn-primary" : "btn-ghost"}" style="width:100%" onclick="(${plan.action})()">${plan.cta}</button>
     `;
-    pg.appendChild(c);
-  });
-}
+          pg.appendChild(c);
+        });
+      }
 
-// ── INIT ──
-function init(){
-  setGreeting();
-  buildHeatmap();
-  buildGarden();
-  buildCoach();
-  buildSoundscape();
-  buildLifeControls();
-  buildHabits();
-  buildInsights('harian');
-  buildMemory();
-  buildPricing();
-}
+      // ── INIT ──
+      function init() {
+        setGreeting();
+        buildHeatmap();
+        buildGarden();
+        buildCoach();
+        buildSoundscape();
+        buildLifeControls();
+        buildHabits();
+        buildInsights("harian");
+        buildMemory();
+        buildPricing();
+      }
 
-init();
-</script>
+      init();
+    </script>
+    js
+  </head>
+</html>
