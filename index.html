@@ -1,375 +1,1508 @@
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-:root {
-  --primary: #6366F1;
-  --secondary: #8B5CF6;
-  --accent: #06B6D4;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-  --bg: #F8FAFC;
-  --card: #FFFFFF;
-  --text: #0F172A;
-  --text2: #475569;
-  --text3: #94A3B8;
-  --border: rgba(99,102,241,0.15);
-  --glass: rgba(255,255,255,0.7);
-  --shadow: 0 8px 32px rgba(99,102,241,0.12);
-  --shadow-hover: 0 20px 60px rgba(99,102,241,0.2);
-  --font: 'Plus Jakarta Sans', sans-serif;
-  --serif: 'DM Serif Display', serif;
-  --radius: 20px;
-  --radius-sm: 12px;
-  --glow: 0 0 40px rgba(99,102,241,0.3);
-}
+  :root {
+    --primary: #6366f1;
+    --secondary: #8b5cf6;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text2: #475569;
+    --text3: #94a3b8;
+    --border: rgba(99, 102, 241, 0.15);
+    --glass: rgba(255, 255, 255, 0.7);
+    --shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
+    --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
+    --font: "Plus Jakarta Sans", sans-serif;
+    --serif: "DM Serif Display", serif;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --glow: 0 0 40px rgba(99, 102, 241, 0.3);
+  }
 
-[data-theme="dark"] {
-  --bg: #0F172A;
-  --card: #1E293B;
-  --text: #F8FAFC;
-  --text2: #94A3B8;
-  --text3: #475569;
-  --border: rgba(139,92,246,0.2);
-  --glass: rgba(30,41,59,0.8);
-  --shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f8fafc;
+    --text2: #94a3b8;
+    --text3: #475569;
+    --border: rgba(139, 92, 246, 0.2);
+    --glass: rgba(30, 41, 59, 0.8);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
 
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* ─── ANIMATED BG ─── */
-.animated-bg {
-  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
-}
-.orb {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: floatOrb 8s ease-in-out infinite;
-}
-.orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, #6366F1, transparent); top: -100px; left: -100px; animation-delay: 0s; }
-.orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, #8B5CF6, transparent); top: 50%; right: -80px; animation-delay: 3s; }
-.orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, #06B6D4, transparent); bottom: -50px; left: 30%; animation-delay: 6s; }
-.particle {
-  position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--primary); opacity: 0.3; animation: particleFloat linear infinite;
-}
-@keyframes floatOrb { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-20px) scale(1.1); } 66% { transform: translate(-20px,30px) scale(0.9); } }
-@keyframes particleFloat { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-@keyframes bounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes breathe { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }
-@keyframes streakFire { 0%,100% { transform: scaleY(1) rotate(-5deg); } 50% { transform: scaleY(1.2) rotate(5deg); } }
-@keyframes confettiFall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-@keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); } 50% { box-shadow: 0 0 50px rgba(99,102,241,0.6); } }
-@keyframes typingDot { 0%,100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
-@keyframes progressRing { from { stroke-dashoffset: 251; } }
+  /* ─── ANIMATED BG ─── */
+  .animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: floatOrb 8s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #6366f1, transparent);
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #8b5cf6, transparent);
+    top: 50%;
+    right: -80px;
+    animation-delay: 3s;
+  }
+  .orb-3 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #06b6d4, transparent);
+    bottom: -50px;
+    left: 30%;
+    animation-delay: 6s;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.3;
+    animation: particleFloat linear infinite;
+  }
+  @keyframes floatOrb {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -20px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 30px) scale(0.9);
+    }
+  }
+  @keyframes particleFloat {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.3;
+    }
+    90% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-100px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 1;
+    }
+  }
+  @keyframes streakFire {
+    0%,
+    100% {
+      transform: scaleY(1) rotate(-5deg);
+    }
+    50% {
+      transform: scaleY(1.2) rotate(5deg);
+    }
+  }
+  @keyframes confettiFall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  @keyframes glowPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 50px rgba(99, 102, 241, 0.6);
+    }
+  }
+  @keyframes typingDot {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-4px);
+    }
+  }
+  @keyframes progressRing {
+    from {
+      stroke-dashoffset: 251;
+    }
+  }
 
-/* ─── LAYOUT ─── */
-.app { position: relative; z-index: 1; min-height: 100vh; }
-.page { display: none; animation: fadeIn 0.5s ease; }
-.page.active { display: block; }
+  /* ─── LAYOUT ─── */
+  .app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+  .page {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  .page.active {
+    display: block;
+  }
 
-/* ─── NAV ─── */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo { font-family: var(--serif); font-size: 22px; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 8px; }
-.nav-logo .logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.nav-links { display: flex; align-items: center; gap: 8px; }
-.nav-btn {
-  padding: 8px 16px; border-radius: 10px; border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500;
-  transition: all 0.2s; background: transparent; color: var(--text2);
-}
-.nav-btn:hover { background: rgba(99,102,241,0.1); color: var(--primary); }
-.nav-btn.active { background: rgba(99,102,241,0.1); color: var(--primary); }
-.nav-btn.primary { background: var(--primary); color: white; }
-.nav-btn.primary:hover { background: var(--secondary); transform: translateY(-1px); }
-.theme-toggle { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; }
-.theme-toggle:hover { transform: scale(1.1); }
+  /* ─── NAV ─── */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text2);
+  }
+  .nav-btn:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+  }
+  .nav-btn.active {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+  }
+  .nav-btn.primary {
+    background: var(--primary);
+    color: white;
+  }
+  .nav-btn.primary:hover {
+    background: var(--secondary);
+    transform: translateY(-1px);
+  }
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover {
+    transform: scale(1.1);
+  }
 
-/* ─── HERO ─── */
-.hero {
-  min-height: calc(100vh - 64px); display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 60px 24px;
-}
-.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.3); color: var(--primary); padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 32px; animation: fadeUp 0.6s ease; text-transform: uppercase; letter-spacing: 1px; }
-.hero-title { font-family: var(--serif); font-size: clamp(40px,6vw,72px); line-height: 1.15; color: var(--text); margin-bottom: 24px; animation: fadeUp 0.6s ease 0.1s both; }
-.hero-title .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero-sub { font-size: 18px; line-height: 1.7; color: var(--text2); max-width: 560px; margin: 0 auto 40px; animation: fadeUp 0.6s ease 0.2s both; }
-.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s ease 0.3s both; }
-.btn-primary {
-  padding: 16px 32px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white; border: none; font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font);
-  transition: all 0.3s; animation: glowPulse 2s ease-in-out infinite;
-}
-.btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(99,102,241,0.4); }
-.btn-ghost { padding: 16px 32px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.3s; }
-.btn-ghost:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
-.hero-stats { display: flex; gap: 48px; margin-top: 64px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s ease 0.4s both; }
-.stat-item { text-align: center; }
-.stat-num { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.stat-label { font-size: 13px; color: var(--text3); margin-top: 2px; }
-.floating-emoji { position: absolute; font-size: 28px; animation: particleFloat linear infinite; pointer-events: none; opacity: 0.6; }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      var(--secondary),
+      var(--accent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+  .btn-primary {
+    padding: 16px 32px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.3s;
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+  }
+  .btn-ghost {
+    padding: 16px 32px;
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--text3);
+    margin-top: 2px;
+  }
+  .floating-emoji {
+    position: absolute;
+    font-size: 28px;
+    animation: particleFloat linear infinite;
+    pointer-events: none;
+    opacity: 0.6;
+  }
 
-/* ─── FEATURES SECTION ─── */
-.section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-.section-title { font-family: var(--serif); font-size: 42px; text-align: center; margin-bottom: 16px; }
-.section-sub { text-align: center; color: var(--text2); font-size: 16px; margin-bottom: 56px; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-.feature-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;
-  transition: all 0.3s; cursor: default;
-}
-.feature-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
-.feature-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
-.feature-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-.feature-desc { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  /* ─── FEATURES SECTION ─── */
+  .section {
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 42px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--text2);
+    font-size: 16px;
+    margin-bottom: 56px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+  }
+  .feature-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  .feature-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .feature-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
 
-/* ─── DASHBOARD ─── */
-.dashboard { padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
-.greeting-section { margin-bottom: 32px; animation: fadeUp 0.5s ease; }
-.greeting { font-family: var(--serif); font-size: 32px; margin-bottom: 4px; }
-.greeting-sub { color: var(--text2); font-size: 16px; }
-.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px; }
-.widget {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;
-  animation: scaleIn 0.4s ease; transition: all 0.3s;
-}
-.widget:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-.widget-label { font-size: 12px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
-.widget-value { font-size: 28px; font-weight: 700; color: var(--text); }
-.widget-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+  /* ─── DASHBOARD ─── */
+  .dashboard {
+    padding: 32px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .greeting-section {
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s ease;
+  }
+  .greeting {
+    font-family: var(--serif);
+    font-size: 32px;
+    margin-bottom: 4px;
+  }
+  .greeting-sub {
+    color: var(--text2);
+    font-size: 16px;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .widget {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    animation: scaleIn 0.4s ease;
+    transition: all 0.3s;
+  }
+  .widget:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+  }
+  .widget-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .widget-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .widget-sub {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 4px;
+  }
 
-/* Streak Widget */
-.streak-widget { background: linear-gradient(135deg, #FF6B35, #FF8E3C); color: white; }
-.streak-widget .widget-label { color: rgba(255,255,255,0.7); }
-.streak-widget .widget-value { color: white; display: flex; align-items: center; gap: 8px; }
-.fire { display: inline-block; animation: streakFire 1s ease-in-out infinite; }
+  /* Streak Widget */
+  .streak-widget {
+    background: linear-gradient(135deg, #ff6b35, #ff8e3c);
+    color: white;
+  }
+  .streak-widget .widget-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .streak-widget .widget-value {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fire {
+    display: inline-block;
+    animation: streakFire 1s ease-in-out infinite;
+  }
 
-/* Mood Widget */
-.mood-emoji-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-.mood-btn { font-size: 24px; cursor: pointer; transition: all 0.2s; padding: 4px; border-radius: 8px; border: 2px solid transparent; }
-.mood-btn:hover { transform: scale(1.3); }
-.mood-btn.selected { border-color: var(--primary); background: rgba(99,102,241,0.1); animation: bounce 0.3s ease; }
+  /* Mood Widget */
+  .mood-emoji-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .mood-btn {
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 4px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+  }
+  .mood-btn:hover {
+    transform: scale(1.3);
+  }
+  .mood-btn.selected {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    animation: bounce 0.3s ease;
+  }
 
-/* Progress Ring */
-.progress-ring-container { display: flex; align-items: center; justify-content: center; position: relative; }
-.progress-ring-text { position: absolute; font-size: 20px; font-weight: 700; color: var(--primary); }
+  /* Progress Ring */
+  .progress-ring-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .progress-ring-text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+  }
 
-/* Quick Write */
-.quick-write {
-  background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: var(--radius); padding: 28px; color: white; margin-bottom: 32px;
-  cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.5s ease 0.2s both;
-}
-.quick-write:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(99,102,241,0.4); }
-.quick-write-text h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.quick-write-text p { font-size: 14px; opacity: 0.8; }
-.quick-write-arrow { font-size: 32px; animation: fadeIn 0.3s ease; }
+  /* Quick Write */
+  .quick-write {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--radius);
+    padding: 28px;
+    color: white;
+    margin-bottom: 32px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+  .quick-write:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+  }
+  .quick-write-text h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .quick-write-text p {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  .quick-write-arrow {
+    font-size: 32px;
+    animation: fadeIn 0.3s ease;
+  }
 
-/* Mood Calendar */
-.mood-calendar { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; }
-.calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.calendar-title { font-size: 18px; font-weight: 700; }
-.calendar-nav { display: flex; gap: 8px; }
-.cal-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--text2); transition: all 0.2s; }
-.cal-btn:hover { background: var(--primary); color: white; }
-.calendar-days-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
-.calendar-day-name { text-align: center; font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; padding: 4px; }
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.cal-day {
-  aspect-ratio: 1; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; color: var(--text2);
-  border: 1px solid transparent;
-}
-.cal-day:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
-.cal-day.today { border-color: var(--primary); color: var(--primary); font-weight: 700; }
-.cal-day.empty { opacity: 0; pointer-events: none; }
-.cal-day.mood-happy { background: rgba(16,185,129,0.2); color: #059669; }
-.cal-day.mood-calm { background: rgba(6,182,212,0.2); color: #0891B2; }
-.cal-day.mood-excited { background: rgba(245,158,11,0.2); color: #D97706; }
-.cal-day.mood-anxious { background: rgba(249,115,22,0.2); color: #EA580C; }
-.cal-day.mood-stressed { background: rgba(239,68,68,0.2); color: #DC2626; }
-.cal-day.mood-sad { background: rgba(99,102,241,0.2); color: #4F46E5; }
+  /* Mood Calendar */
+  .mood-calendar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .calendar-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .calendar-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .cal-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text2);
+    transition: all 0.2s;
+  }
+  .cal-btn:hover {
+    background: var(--primary);
+    color: white;
+  }
+  .calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .calendar-day-name {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    padding: 4px;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .cal-day {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text2);
+    border: 1px solid transparent;
+  }
+  .cal-day:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: scale(1.1);
+  }
+  .cal-day.today {
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .cal-day.empty {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .cal-day.mood-happy {
+    background: rgba(16, 185, 129, 0.2);
+    color: #059669;
+  }
+  .cal-day.mood-calm {
+    background: rgba(6, 182, 212, 0.2);
+    color: #0891b2;
+  }
+  .cal-day.mood-excited {
+    background: rgba(245, 158, 11, 0.2);
+    color: #d97706;
+  }
+  .cal-day.mood-anxious {
+    background: rgba(249, 115, 22, 0.2);
+    color: #ea580c;
+  }
+  .cal-day.mood-stressed {
+    background: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+  }
+  .cal-day.mood-sad {
+    background: rgba(99, 102, 241, 0.2);
+    color: #4f46e5;
+  }
 
-/* ─── JOURNAL FORM ─── */
-.journal-page { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
-.journal-header { text-align: center; margin-bottom: 40px; animation: fadeUp 0.5s ease; }
-.journal-header h2 { font-family: var(--serif); font-size: 32px; margin-bottom: 8px; }
-.journal-header p { color: var(--text2); }
-.step-indicator { display: flex; align-items: center; gap: 4px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
-.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s; cursor: pointer; }
-.step-dot.active { background: var(--primary); transform: scale(1.3); }
-.step-dot.done { background: var(--success); }
-.journal-step { display: none; animation: fadeUp 0.4s ease; }
-.journal-step.active { display: block; }
-.step-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 20px; }
-.step-num { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.step-title { font-family: var(--serif); font-size: 24px; margin-bottom: 6px; }
-.step-prompt { font-size: 14px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
-.journal-textarea {
-  width: 100%; min-height: 140px; padding: 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
-  background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.7;
-  resize: vertical; transition: all 0.2s; outline: none;
-}
-.journal-textarea:focus { border-color: var(--primary); background: var(--card); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
-.journal-textarea::placeholder { color: var(--text3); }
+  /* ─── JOURNAL FORM ─── */
+  .journal-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .journal-header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeUp 0.5s ease;
+  }
+  .journal-header h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .journal-header p {
+    color: var(--text2);
+  }
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .step-dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
+  }
+  .step-dot.done {
+    background: var(--success);
+  }
+  .journal-step {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  .journal-step.active {
+    display: block;
+  }
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 20px;
+  }
+  .step-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .step-prompt {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .journal-textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.7;
+    resize: vertical;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .journal-textarea:focus {
+    border-color: var(--primary);
+    background: var(--card);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+  .journal-textarea::placeholder {
+    color: var(--text3);
+  }
 
-/* Mood Slider */
-.mood-slider-wrap { margin: 8px 0 24px; }
-.mood-emoji-big { text-align: center; font-size: 56px; margin-bottom: 16px; transition: all 0.2s; }
-.slider-track { position: relative; margin: 0 12px; }
-input[type=range] {
-  width: 100%; -webkit-appearance: none; appearance: none; height: 8px;
-  border-radius: 4px; background: linear-gradient(to right, #6366F1 0%, #6366F1 var(--val,50%), var(--border) var(--val,50%), var(--border) 100%);
-  outline: none; cursor: pointer;
-}
-input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: white; border: 3px solid var(--primary); cursor: pointer; box-shadow: 0 2px 8px rgba(99,102,241,0.3); transition: all 0.2s; }
-input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-.slider-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--text3); margin-top: 8px; }
+  /* Mood Slider */
+  .mood-slider-wrap {
+    margin: 8px 0 24px;
+  }
+  .mood-emoji-big {
+    text-align: center;
+    font-size: 56px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  .slider-track {
+    position: relative;
+    margin: 0 12px;
+  }
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(
+      to right,
+      #6366f1 0%,
+      #6366f1 var(--val, 50%),
+      var(--border) var(--val, 50%),
+      var(--border) 100%
+    );
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 8px;
+  }
 
-/* Emotion Picker */
-.emotion-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.emotion-tag {
-  padding: 8px 14px; border-radius: 100px; border: 1.5px solid var(--border);
-  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; background: var(--bg);
-  display: flex; align-items: center; gap: 6px;
-}
-.emotion-tag:hover { transform: translateY(-2px); }
-.emotion-tag.selected { transform: scale(1.05); }
-.emotion-cat { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin: 16px 0 8px; }
+  /* Emotion Picker */
+  .emotion-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .emotion-tag {
+    padding: 8px 14px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .emotion-tag:hover {
+    transform: translateY(-2px);
+  }
+  .emotion-tag.selected {
+    transform: scale(1.05);
+  }
+  .emotion-cat {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 16px 0 8px;
+  }
 
-/* Battery */
-.battery-wrap { margin: 12px 0 24px; }
-.battery-outer { width: 100%; height: 40px; border-radius: 8px; border: 2px solid var(--border); padding: 4px; position: relative; overflow: hidden; }
-.battery-fill { height: 100%; border-radius: 5px; transition: all 0.5s ease; background: linear-gradient(90deg, var(--success), #34D399); }
-.battery-tip { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 8px; height: 20px; background: var(--border); border-radius: 0 4px 4px 0; }
-.battery-label { text-align: center; font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 8px; }
+  /* Battery */
+  .battery-wrap {
+    margin: 12px 0 24px;
+  }
+  .battery-outer {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    padding: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .battery-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+    background: linear-gradient(90deg, var(--success), #34d399);
+  }
+  .battery-tip {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 20px;
+    background: var(--border);
+    border-radius: 0 4px 4px 0;
+  }
+  .battery-label {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 8px;
+  }
 
-/* Gratitude */
-.gratitude-list { display: flex; flex-direction: column; gap: 10px; }
-.gratitude-item { display: flex; align-items: center; gap: 10px; }
-.gratitude-input { flex: 1; padding: 12px 16px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; outline: none; transition: all 0.2s; }
-.gratitude-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
-.gratitude-num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-.add-gratitude { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; border: 1.5px dashed var(--border); background: transparent; cursor: pointer; font-size: 13px; color: var(--text3); font-family: var(--font); transition: all 0.2s; margin-top: 4px; width: 100%; }
-.add-gratitude:hover { border-color: var(--primary); color: var(--primary); background: rgba(99,102,241,0.05); }
+  /* Gratitude */
+  .gratitude-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gratitude-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .gratitude-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .gratitude-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+  .gratitude-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .add-gratitude {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1.5px dashed var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text3);
+    font-family: var(--font);
+    transition: all 0.2s;
+    margin-top: 4px;
+    width: 100%;
+  }
+  .add-gratitude:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.05);
+  }
 
-/* Affirmations */
-.affirmation-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.affirmation-btn { padding: 8px 16px; border-radius: 100px; border: 1.5px solid var(--border); background: var(--bg); cursor: pointer; font-size: 13px; font-family: var(--font); transition: all 0.2s; color: var(--text2); }
-.affirmation-btn:hover { border-color: var(--secondary); color: var(--secondary); }
-.affirmation-btn.selected { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-color: transparent; }
+  /* Affirmations */
+  .affirmation-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .affirmation-btn {
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--font);
+    transition: all 0.2s;
+    color: var(--text2);
+  }
+  .affirmation-btn:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+  }
+  .affirmation-btn.selected {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-color: transparent;
+  }
 
-/* Step Nav */
-.step-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
-.step-progress-text { font-size: 13px; color: var(--text3); }
-.step-nav-btns { display: flex; gap: 10px; }
-.btn-next { padding: 12px 28px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.2s; }
-.btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.3); }
-.btn-prev { padding: 12px 24px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); color: var(--text2); font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.2s; }
-.btn-prev:hover { border-color: var(--primary); color: var(--primary); }
+  /* Step Nav */
+  .step-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .step-progress-text {
+    font-size: 13px;
+    color: var(--text3);
+  }
+  .step-nav-btns {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-next {
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.2s;
+  }
+  .btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+  }
+  .btn-prev {
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.2s;
+  }
+  .btn-prev:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
 
-/* ─── BREATHING ─── */
-.breathing-page { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px; min-height: calc(100vh - 64px); }
-.breathing-title { font-family: var(--serif); font-size: 36px; margin-bottom: 8px; text-align: center; }
-.breathing-sub { color: var(--text2); margin-bottom: 56px; text-align: center; }
-.breathing-circle-wrap { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 48px; }
-.breathing-circle {
-  width: 220px; height: 220px; border-radius: 50%;
-  background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2));
-  border: 3px solid rgba(99,102,241,0.4);
-  display: flex; align-items: center; justify-content: center; flex-direction: column;
-  animation: breathe 8s ease-in-out infinite;
-  cursor: pointer;
-}
-.breathing-circle.running { animation: none; }
-.breath-phase { font-size: 18px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
-.breath-count { font-size: 48px; font-weight: 700; color: var(--text); }
-.breathing-rings { position: absolute; width: 280px; height: 280px; border-radius: 50%; border: 1px solid rgba(99,102,241,0.2); animation: breathe 8s ease-in-out infinite 0.5s; pointer-events: none; }
-.breathing-rings-2 { position: absolute; width: 320px; height: 320px; border-radius: 50%; border: 1px solid rgba(99,102,241,0.1); animation: breathe 8s ease-in-out infinite 1s; pointer-events: none; }
-.breath-phases { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
-.phase-item { text-align: center; padding: 16px 24px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); min-width: 100px; }
-.phase-num { font-size: 28px; font-weight: 700; color: var(--primary); }
-.phase-name { font-size: 12px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px; }
-.breath-controls { display: flex; gap: 12px; margin-top: 32px; }
+  /* ─── BREATHING ─── */
+  .breathing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    min-height: calc(100vh - 64px);
+  }
+  .breathing-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .breathing-sub {
+    color: var(--text2);
+    margin-bottom: 56px;
+    text-align: center;
+  }
+  .breathing-circle-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  .breathing-circle {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.2),
+      rgba(139, 92, 246, 0.2)
+    );
+    border: 3px solid rgba(99, 102, 241, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    animation: breathe 8s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .breathing-circle.running {
+    animation: none;
+  }
+  .breath-phase {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .breath-count {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .breathing-rings {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    animation: breathe 8s ease-in-out infinite 0.5s;
+    pointer-events: none;
+  }
+  .breathing-rings-2 {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    animation: breathe 8s ease-in-out infinite 1s;
+    pointer-events: none;
+  }
+  .breath-phases {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .phase-item {
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    border: 1px solid var(--border);
+    min-width: 100px;
+  }
+  .phase-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .phase-name {
+    font-size: 12px;
+    color: var(--text3);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+  }
+  .breath-controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
 
-/* ─── ANALYTICS ─── */
-.analytics-page { padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
-.analytics-header { margin-bottom: 32px; }
-.analytics-header h2 { font-family: var(--serif); font-size: 32px; }
-.chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
-.chart-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
-.chart-title { font-size: 15px; font-weight: 700; margin-bottom: 20px; color: var(--text); }
-.mini-bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; }
-.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
-.bar { border-radius: 6px 6px 0 0; width: 100%; transition: all 0.5s ease; min-width: 20px; }
-.bar-label { font-size: 10px; color: var(--text3); }
-.donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.legend { display: flex; flex-direction: column; gap: 8px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.line-chart { position: relative; height: 120px; overflow: hidden; }
-.line-chart svg { width: 100%; height: 100%; }
+  /* ─── ANALYTICS ─── */
+  .analytics-page {
+    padding: 32px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .analytics-header {
+    margin-bottom: 32px;
+  }
+  .analytics-header h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+  }
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+  }
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .chart-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .mini-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 120px;
+  }
+  .bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .bar {
+    border-radius: 6px 6px 0 0;
+    width: 100%;
+    transition: all 0.5s ease;
+    min-width: 20px;
+  }
+  .bar-label {
+    font-size: 10px;
+    color: var(--text3);
+  }
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .line-chart {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+  }
+  .line-chart svg {
+    width: 100%;
+    height: 100%;
+  }
 
-/* ─── ACHIEVEMENTS ─── */
-.achievements-page { padding: 32px 24px; max-width: 900px; margin: 0 auto; }
-.badges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
-.badge-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center;
-  transition: all 0.3s; cursor: default;
-}
-.badge-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-.badge-card.locked { opacity: 0.4; }
-.badge-icon { font-size: 40px; margin-bottom: 12px; display: block; }
-.badge-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-.badge-desc { font-size: 11px; color: var(--text3); }
-.badge-card.earned .badge-icon { animation: bounce 0.5s ease; }
+  /* ─── ACHIEVEMENTS ─── */
+  .achievements-page {
+    padding: 32px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .badge-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .badge-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+  }
+  .badge-card.locked {
+    opacity: 0.4;
+  }
+  .badge-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .badge-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .badge-desc {
+    font-size: 11px;
+    color: var(--text3);
+  }
+  .badge-card.earned .badge-icon {
+    animation: bounce 0.5s ease;
+  }
 
-/* ─── SAVE SUCCESS ─── */
-.save-success {
-  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
-  background: var(--card); border: 1px solid var(--success); border-radius: var(--radius); padding: 40px 60px;
-  text-align: center; z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.4s;
-  box-shadow: 0 20px 60px rgba(16,185,129,0.3);
-}
-.save-success.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all; }
-.save-success-icon { font-size: 48px; animation: bounce 0.5s ease; }
-.save-success h3 { font-family: var(--serif); font-size: 24px; margin: 12px 0 8px; }
-.save-success p { color: var(--text2); font-size: 14px; }
+  /* ─── SAVE SUCCESS ─── */
+  .save-success {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: var(--card);
+    border: 1px solid var(--success);
+    border-radius: var(--radius);
+    padding: 40px 60px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s;
+    box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+  }
+  .save-success.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: all;
+  }
+  .save-success-icon {
+    font-size: 48px;
+    animation: bounce 0.5s ease;
+  }
+  .save-success h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    margin: 12px 0 8px;
+  }
+  .save-success p {
+    color: var(--text2);
+    font-size: 14px;
+  }
 
-/* Confetti */
-.confetti-piece { position: fixed; width: 10px; height: 10px; border-radius: 2px; pointer-events: none; z-index: 9999; animation: confettiFall 2.5s ease-in forwards; }
+  /* Confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 2.5s ease-in forwards;
+  }
 
-/* AI Insight */
-.ai-insight { background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(139,92,246,0.05)); border: 1px solid rgba(99,102,241,0.2); border-radius: var(--radius); padding: 24px; margin: 20px 0; }
-.ai-insight-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.ai-badge { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
-.insight-text { font-size: 14px; line-height: 1.7; color: var(--text2); }
-.typing-indicator { display: flex; gap: 4px; align-items: center; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); animation: typingDot 1.2s ease-in-out infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
+  /* AI Insight */
+  .ai-insight {
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.05),
+      rgba(139, 92, 246, 0.05)
+    );
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .ai-insight-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .ai-badge {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .insight-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: typingDot 1.2s ease-in-out infinite;
+  }
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
 
-/* Intensity slider group */
-.intensity-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
-.intensity-label { font-size: 13px; color: var(--text2); font-weight: 500; white-space: nowrap; }
-.intensity-val { font-size: 16px; font-weight: 700; color: var(--primary); min-width: 24px; text-align: center; }
+  /* Intensity slider group */
+  .intensity-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .intensity-label {
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .intensity-val {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 24px;
+    text-align: center;
+  }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 640px) {
-  .hero-title { font-size: 36px; }
-  .hero-stats { gap: 32px; }
-  .dashboard-grid { grid-template-columns: 1fr 1fr; }
-  .breath-phases { gap: 12px; }
-  .chart-grid { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr; }
-}
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: 36px;
+    }
+    .hero-stats {
+      gap: 32px;
+    }
+    .dashboard-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .breath-phases {
+      gap: 12px;
+    }
+    .chart-grid {
+      grid-template-columns: 1fr;
+    }
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <div class="animated-bg" id="animBg">
@@ -389,64 +1522,125 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
       <button class="nav-btn" onclick="showPage('journal')">Jurnal</button>
       <button class="nav-btn" onclick="showPage('analytics')">Analitik</button>
       <button class="nav-btn" onclick="showPage('breathing')">Bernapas</button>
-      <button class="nav-btn" onclick="showPage('achievements')">Pencapaian</button>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <button class="nav-btn" onclick="showPage('achievements')">
+        Pencapaian
+      </button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        🌙
+      </button>
     </div>
   </nav>
 
   <!-- ─── LANDING ─── -->
   <div class="page active" id="page-landing">
-    <div class="hero" style="position:relative; overflow:hidden;">
-      <div class="hero-badge">✨ Jurnal Harian Modern untuk Kesehatan Mental</div>
+    <div class="hero" style="position: relative; overflow: hidden">
+      <div class="hero-badge">
+        ✨ Jurnal Harian Modern untuk Kesehatan Mental
+      </div>
       <h1 class="hero-title">
-        Tempat Aman<br>Untuk <span class="highlight">Mendengar</span><br>Dirimu Sendiri
+        Tempat Aman<br />Untuk <span class="highlight">Mendengar</span
+        ><br />Dirimu Sendiri
       </h1>
-      <p class="hero-sub">Tuliskan pikiran, emosi, dan refleksi hidupmu setiap hari. Bangun kesadaran diri dan kebiasaan positif melalui journaling yang menyenangkan.</p>
+      <p class="hero-sub">
+        Tuliskan pikiran, emosi, dan refleksi hidupmu setiap hari. Bangun
+        kesadaran diri dan kebiasaan positif melalui journaling yang
+        menyenangkan.
+      </p>
       <div class="hero-cta">
-        <button class="btn-primary" onclick="showPage('journal')">✍️ Mulai Menulis Hari Ini</button>
-        <button class="btn-ghost" onclick="showPage('dashboard')">Lihat Dasbor →</button>
+        <button class="btn-primary" onclick="showPage('journal')">
+          ✍️ Mulai Menulis Hari Ini
+        </button>
+        <button class="btn-ghost" onclick="showPage('dashboard')">
+          Lihat Dasbor →
+        </button>
       </div>
       <div class="hero-stats">
-        <div class="stat-item"><div class="stat-num">10K+</div><div class="stat-label">Pengguna Aktif</div></div>
-        <div class="stat-item"><div class="stat-num">95%</div><div class="stat-label">Merasa Lebih Baik</div></div>
-        <div class="stat-item"><div class="stat-num">4.9⭐</div><div class="stat-label">Rating Pengguna</div></div>
-        <div class="stat-item"><div class="stat-num">50K+</div><div class="stat-label">Jurnal Ditulis</div></div>
+        <div class="stat-item">
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Pengguna Aktif</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">95%</div>
+          <div class="stat-label">Merasa Lebih Baik</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9⭐</div>
+          <div class="stat-label">Rating Pengguna</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Jurnal Ditulis</div>
+        </div>
       </div>
     </div>
 
     <div class="section">
-      <h2 class="section-title">Kenapa <span style="color:var(--primary)">MindBloom</span>?</h2>
-      <p class="section-sub">Lebih dari sekedar aplikasi jurnal — ini adalah teman refleksi hidupmu.</p>
+      <h2 class="section-title">
+        Kenapa <span style="color: var(--primary)">MindBloom</span>?
+      </h2>
+      <p class="section-sub">
+        Lebih dari sekedar aplikasi jurnal — ini adalah teman refleksi hidupmu.
+      </p>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(99,102,241,0.1)">🧠</div>
+          <div class="feature-icon" style="background: rgba(99, 102, 241, 0.1)">
+            🧠
+          </div>
           <div class="feature-title">15 Langkah Refleksi Mendalam</div>
-          <div class="feature-desc">Panduan bertahap dari mood check-in hingga afirmasi diri. Setiap langkah dirancang oleh pakar kesehatan mental.</div>
+          <div class="feature-desc">
+            Panduan bertahap dari mood check-in hingga afirmasi diri. Setiap
+            langkah dirancang oleh pakar kesehatan mental.
+          </div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(16,185,129,0.1)">📊</div>
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1)">
+            📊
+          </div>
           <div class="feature-title">Analitik Emosi Visual</div>
-          <div class="feature-desc">Lihat tren mood, stres, dan energi dalam grafik cantik. Pahami pola pikir dan emosi dari waktu ke waktu.</div>
+          <div class="feature-desc">
+            Lihat tren mood, stres, dan energi dalam grafik cantik. Pahami pola
+            pikir dan emosi dari waktu ke waktu.
+          </div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(245,158,11,0.1)">✨</div>
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1)">
+            ✨
+          </div>
           <div class="feature-title">Wawasan AI Personal</div>
-          <div class="feature-desc">AI menganalisis jurnalmu dan memberikan insight yang dipersonalisasi untuk perkembangan diri.</div>
+          <div class="feature-desc">
+            AI menganalisis jurnalmu dan memberikan insight yang dipersonalisasi
+            untuk perkembangan diri.
+          </div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(6,182,212,0.1)">🧘</div>
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.1)">
+            🧘
+          </div>
           <div class="feature-title">Ruang Bernapas</div>
-          <div class="feature-desc">Latihan napas 4-4-4-4 dengan animasi visual yang menenangkan. Kurangi stres dalam 5 menit.</div>
+          <div class="feature-desc">
+            Latihan napas 4-4-4-4 dengan animasi visual yang menenangkan.
+            Kurangi stres dalam 5 menit.
+          </div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(239,68,68,0.1)">🔥</div>
+          <div class="feature-icon" style="background: rgba(239, 68, 68, 0.1)">
+            🔥
+          </div>
           <div class="feature-title">Streak & Pencapaian</div>
-          <div class="feature-desc">Sistem gamifikasi yang memotivasimu menulis setiap hari dengan badge dan streak reward.</div>
+          <div class="feature-desc">
+            Sistem gamifikasi yang memotivasimu menulis setiap hari dengan badge
+            dan streak reward.
+          </div>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="background:rgba(139,92,246,0.1)">🎨</div>
+          <div class="feature-icon" style="background: rgba(139, 92, 246, 0.1)">
+            🎨
+          </div>
           <div class="feature-title">Mood Calendar Visual</div>
-          <div class="feature-desc">Kalender bulanan berwarna yang menunjukkan mood setiap hari. Satu pandangan untuk memahami sebulan penuh.</div>
+          <div class="feature-desc">
+            Kalender bulanan berwarna yang menunjukkan mood setiap hari. Satu
+            pandangan untuk memahami sebulan penuh.
+          </div>
         </div>
       </div>
     </div>
@@ -457,54 +1651,128 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
     <div class="dashboard">
       <div class="greeting-section">
         <div class="greeting" id="greeting">Selamat Pagi, Asmawati ☀️</div>
-        <div class="greeting-sub" id="greetingDate">Sabtu, 24 Mei 2025 · Bagaimana perasaanmu hari ini?</div>
+        <div class="greeting-sub" id="greetingDate">
+          Sabtu, 24 Mei 2025 · Bagaimana perasaanmu hari ini?
+        </div>
       </div>
 
       <div class="quick-write" onclick="showPage('journal')">
         <div class="quick-write-text">
           <h3>Tulis Jurnal Hari Ini ✍️</h3>
-          <p>Kamu belum menulis jurnal hari ini. Yuk, luangkan 10 menit untuk dirimu sendiri.hehe</p>
+          <p>
+            Kamu belum menulis jurnal hari ini. Yuk, luangkan 10 menit untuk
+            dirimu sendiri.
+          </p>
         </div>
         <div class="quick-write-arrow">→</div>
       </div>
 
       <div class="dashboard-grid">
         <!-- Mood Widget -->
-        <div class="widget" style="grid-column: span 2;" id="moodWidget">
+        <div class="widget" style="grid-column: span 2" id="moodWidget">
           <div class="widget-label">Suasana Hati Hari Ini</div>
           <div class="mood-emoji-row" id="dashMoodRow">
-            <span class="mood-btn" onclick="selectMood(this,'😄')" title="Sangat Bahagia">😄</span>
-            <span class="mood-btn" onclick="selectMood(this,'😊')" title="Bahagia">😊</span>
-            <span class="mood-btn" onclick="selectMood(this,'😐')" title="Biasa">😐</span>
-            <span class="mood-btn" onclick="selectMood(this,'😔')" title="Sedih">😔</span>
-            <span class="mood-btn" onclick="selectMood(this,'😢')" title="Sangat Sedih">😢</span>
-            <span class="mood-btn" onclick="selectMood(this,'😡')" title="Marah">😡</span>
-            <span class="mood-btn" onclick="selectMood(this,'😰')" title="Cemas">😰</span>
-            <span class="mood-btn" onclick="selectMood(this,'😴')" title="Lelah">😴</span>
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😄')"
+              title="Sangat Bahagia"
+              >😄</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😊')"
+              title="Bahagia"
+              >😊</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😐')"
+              title="Biasa"
+              >😐</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😔')"
+              title="Sedih"
+              >😔</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😢')"
+              title="Sangat Sedih"
+              >😢</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😡')"
+              title="Marah"
+              >😡</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😰')"
+              title="Cemas"
+              >😰</span
+            >
+            <span
+              class="mood-btn"
+              onclick="selectMood(this, '😴')"
+              title="Lelah"
+              >😴</span
+            >
           </div>
-          <div class="widget-sub" id="moodSubText">Klik emoji untuk mencatat mood</div>
+          <div class="widget-sub" id="moodSubText">
+            Klik emoji untuk mencatat mood
+          </div>
         </div>
 
         <!-- Streak -->
         <div class="widget streak-widget">
           <div class="widget-label">Rentetan Harian</div>
-          <div class="widget-value"><span class="fire">🔥</span> <span id="streakNum">14</span> Hari</div>
-          <div class="widget-sub" style="color:rgba(255,255,255,0.6)">Konsistensi terbaikmu!</div>
+          <div class="widget-value">
+            <span class="fire">🔥</span> <span id="streakNum">14</span> Hari
+          </div>
+          <div class="widget-sub" style="color: rgba(255, 255, 255, 0.6)">
+            Konsistensi terbaikmu!
+          </div>
         </div>
 
         <!-- Score -->
-        <div class="widget" style="text-align:center">
+        <div class="widget" style="text-align: center">
           <div class="widget-label">Skor Refleksi AI</div>
           <div class="progress-ring-container">
             <svg width="90" height="90" viewBox="0 0 90 90">
-              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--border)" stroke-width="8"/>
-              <circle cx="45" cy="45" r="38" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-linecap="round"
-                stroke-dasharray="239" stroke-dashoffset="60" transform="rotate(-90 45 45)"
-                style="animation: progressRing 1.5s ease"/>
+              <circle
+                cx="45"
+                cy="45"
+                r="38"
+                fill="none"
+                stroke="var(--border)"
+                stroke-width="8"
+              />
+              <circle
+                cx="45"
+                cy="45"
+                r="38"
+                fill="none"
+                stroke="url(#scoreGrad)"
+                stroke-width="8"
+                stroke-linecap="round"
+                stroke-dasharray="239"
+                stroke-dashoffset="60"
+                transform="rotate(-90 45 45)"
+                style="animation: progressRing 1.5s ease"
+              />
               <defs>
-                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#6366F1"/>
-                  <stop offset="100%" stop-color="#8B5CF6"/>
+                <linearGradient
+                  id="scoreGrad"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stop-color="#6366F1" />
+                  <stop offset="100%" stop-color="#8B5CF6" />
                 </linearGradient>
               </defs>
             </svg>
@@ -514,20 +1782,30 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         </div>
 
         <!-- Gratitude Score -->
-        <div class="widget" style="text-align:center">
+        <div class="widget" style="text-align: center">
           <div class="widget-label">Skor Syukur</div>
-          <div class="widget-value" style="color:var(--warning)">💛 82</div>
+          <div class="widget-value" style="color: var(--warning)">💛 82</div>
           <div class="widget-sub">+5 dari kemarin</div>
         </div>
 
         <!-- Energy -->
         <div class="widget">
           <div class="widget-label">Energi Hari Ini</div>
-          <div class="battery-outer" style="height:28px; margin-top:8px;">
-            <div class="battery-fill" style="width:70%"></div>
+          <div class="battery-outer" style="height: 28px; margin-top: 8px">
+            <div class="battery-fill" style="width: 70%"></div>
             <div class="battery-tip"></div>
           </div>
-          <div style="font-size:20px; font-weight:700; color:var(--success); text-align:center; margin-top:6px;">70%</div>
+          <div
+            style="
+              font-size: 20px;
+              font-weight: 700;
+              color: var(--success);
+              text-align: center;
+              margin-top: 6px;
+            "
+          >
+            70%
+          </div>
         </div>
       </div>
 
@@ -550,8 +1828,18 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
           <div class="calendar-day-name">Sab</div>
         </div>
         <div class="calendar-grid" id="calGrid"></div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; font-size:12px; color:var(--text3);">
-          <span>🟢 Bahagia</span><span>🔵 Tenang</span><span>🟡 Semangat</span><span>🟠 Cemas</span><span>🔴 Stres</span><span>🟣 Emosional</span>
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text3);
+          "
+        >
+          <span>🟢 Bahagia</span><span>🔵 Tenang</span><span>🟡 Semangat</span
+          ><span>🟠 Cemas</span><span>🔴 Stres</span><span>🟣 Emosional</span>
         </div>
       </div>
 
@@ -559,10 +1847,16 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
       <div class="ai-insight">
         <div class="ai-insight-header">
           <span class="ai-badge">✨ AI Insight</span>
-          <span style="font-size:13px; color:var(--text3);">Diperbarui hari ini</span>
+          <span style="font-size: 13px; color: var(--text3)"
+            >Diperbarui hari ini</span
+          >
         </div>
         <div class="insight-text">
-          🌟 <strong>Pola minggu ini:</strong> Kamu lebih sering merasa cemas pada hari Senin–Rabu dibanding akhir pekan. Rasa syukur muncul 8 kali minggu ini — naik 33% dari minggu lalu! Kualitas mood meningkat 18% dibanding bulan kemarin. Terus pertahankan rutinitas pagi yang sudah kamu bangun. 💪
+          🌟 <strong>Pola minggu ini:</strong> Kamu lebih sering merasa cemas
+          pada hari Senin–Rabu dibanding akhir pekan. Rasa syukur muncul 8 kali
+          minggu ini — naik 33% dari minggu lalu! Kualitas mood meningkat 18%
+          dibanding bulan kemarin. Terus pertahankan rutinitas pagi yang sudah
+          kamu bangun. 💪
         </div>
       </div>
     </div>
@@ -584,11 +1878,27 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
           <div class="step-num">Langkah 1 dari 15</div>
           <div class="step-title">Tanggal & Waktu</div>
           <div class="step-prompt">Kapan kamu menulis ini?</div>
-          <div style="display:flex; gap:12px; align-items:center; padding:16px; background:var(--bg); border-radius:12px; border:1px solid var(--border);">
-            <span style="font-size:24px;">🗓️</span>
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              align-items: center;
+              padding: 16px;
+              background: var(--bg);
+              border-radius: 12px;
+              border: 1px solid var(--border);
+            "
+          >
+            <span style="font-size: 24px">🗓️</span>
             <div>
-              <div style="font-size:18px; font-weight:700;" id="entryDate"></div>
-              <div style="font-size:13px; color:var(--text3);" id="entryTime"></div>
+              <div
+                style="font-size: 18px; font-weight: 700"
+                id="entryDate"
+              ></div>
+              <div
+                style="font-size: 13px; color: var(--text3)"
+                id="entryTime"
+              ></div>
             </div>
           </div>
         </div>
@@ -599,14 +1909,37 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 2 dari 15</div>
           <div class="step-title">Pengecekan Suasana Hati</div>
-          <div class="step-prompt">Seberapa baik perasaanmu hari ini? Geser untuk memilih.</div>
+          <div class="step-prompt">
+            Seberapa baik perasaanmu hari ini? Geser untuk memilih.
+          </div>
           <div class="mood-slider-wrap">
             <div class="mood-emoji-big" id="moodEmojiBig">😊</div>
             <div class="slider-track">
-              <input type="range" id="moodSlider" min="1" max="10" value="5" step="1" oninput="updateMoodSlider(this.value)">
-              <div class="slider-labels"><span>😭 1</span><span>5</span><span>10 😍</span></div>
+              <input
+                type="range"
+                id="moodSlider"
+                min="1"
+                max="10"
+                value="5"
+                step="1"
+                oninput="updateMoodSlider(this.value)"
+              />
+              <div class="slider-labels">
+                <span>😭 1</span><span>5</span><span>10 😍</span>
+              </div>
             </div>
-            <div style="text-align:center; margin-top:12px; font-size:16px; font-weight:600; color:var(--primary)" id="moodSliderLabel">5 — Biasa</div>
+            <div
+              style="
+                text-align: center;
+                margin-top: 12px;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--primary);
+              "
+              id="moodSliderLabel"
+            >
+              5 — Biasa
+            </div>
           </div>
         </div>
       </div>
@@ -616,7 +1949,9 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 3 dari 15</div>
           <div class="step-title">Pemilih Emosi</div>
-          <div class="step-prompt">Pilih semua emosi yang kamu rasakan hari ini. Boleh lebih dari satu.</div>
+          <div class="step-prompt">
+            Pilih semua emosi yang kamu rasakan hari ini. Boleh lebih dari satu.
+          </div>
           <div class="emotion-cat">😊 Positif</div>
           <div class="emotion-grid" id="emoGrid1"></div>
           <div class="emotion-cat">😔 Negatif</div>
@@ -633,15 +1968,30 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 4 dari 15</div>
           <div class="step-title">Energi Hari Ini</div>
-          <div class="step-prompt">Seberapa berenergi kamu hari ini? 0 = kehabisan, 100 = penuh semangat.</div>
+          <div class="step-prompt">
+            Seberapa berenergi kamu hari ini? 0 = kehabisan, 100 = penuh
+            semangat.
+          </div>
           <div class="battery-wrap">
-            <div class="battery-outer" style="position:relative">
-              <div class="battery-fill" id="batteryFill" style="width:60%"></div>
+            <div class="battery-outer" style="position: relative">
+              <div
+                class="battery-fill"
+                id="batteryFill"
+                style="width: 60%"
+              ></div>
               <div class="battery-tip"></div>
             </div>
             <div class="battery-label" id="batteryLabel">60%</div>
           </div>
-          <input type="range" min="0" max="100" value="60" step="5" oninput="updateBattery(this.value)" style="margin-top:8px;">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="60"
+            step="5"
+            oninput="updateBattery(this.value)"
+            style="margin-top: 8px"
+          />
         </div>
       </div>
 
@@ -650,8 +2000,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 5 dari 15</div>
           <div class="step-title">Peristiwa Penting Hari Ini</div>
-          <div class="step-prompt">Apa yang paling berkesan hari ini? Tuliskan cerita lengkapmu.</div>
-          <textarea class="journal-textarea" placeholder="Ceritakan pengalamanmu hari ini... Tidak ada yang menghakimimu di sini. 🌿" rows="6"></textarea>
+          <div class="step-prompt">
+            Apa yang paling berkesan hari ini? Tuliskan cerita lengkapmu.
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Ceritakan pengalamanmu hari ini... Tidak ada yang menghakimimu di sini. 🌿"
+            rows="6"
+          ></textarea>
         </div>
       </div>
 
@@ -660,8 +2016,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 6 dari 15</div>
           <div class="step-title">Apa yang Sedang Kumikul?</div>
-          <div class="step-prompt">Pikiran apa yang paling sering muncul hari ini?</div>
-          <textarea class="journal-textarea" placeholder="Pikiran yang berulang, kekhawatiran, atau hal yang tidak bisa lepas dari pikiranmu..." rows="5"></textarea>
+          <div class="step-prompt">
+            Pikiran apa yang paling sering muncul hari ini?
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Pikiran yang berulang, kekhawatiran, atau hal yang tidak bisa lepas dari pikiranmu..."
+            rows="5"
+          ></textarea>
         </div>
       </div>
 
@@ -670,11 +2032,25 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 7 dari 15</div>
           <div class="step-title">Apa yang Membuatku Stres?</div>
-          <div class="step-prompt">Hal apa yang paling menguras energi emosimu hari ini?</div>
-          <textarea class="journal-textarea" placeholder="Ceritakan sumber stresmu hari ini..." rows="4"></textarea>
+          <div class="step-prompt">
+            Hal apa yang paling menguras energi emosimu hari ini?
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Ceritakan sumber stresmu hari ini..."
+            rows="4"
+          ></textarea>
           <div class="intensity-row">
             <span class="intensity-label">⚡ Intensitas stres:</span>
-            <input type="range" min="1" max="10" value="5" step="1" style="flex:1" oninput="this.nextElementSibling.textContent=this.value">
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value="5"
+              step="1"
+              style="flex: 1"
+              oninput="this.nextElementSibling.textContent = this.value"
+            />
             <span class="intensity-val">5</span>
           </div>
         </div>
@@ -685,8 +2061,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 8 dari 15</div>
           <div class="step-title">Apa yang Membuatku Bahagia? 😊</div>
-          <div class="step-prompt">Hal apa yang membuatmu tersenyum hari ini?</div>
-          <textarea class="journal-textarea" placeholder="Momen kecil, hal lucu, atau hal indah yang kamu alami hari ini..." rows="5"></textarea>
+          <div class="step-prompt">
+            Hal apa yang membuatmu tersenyum hari ini?
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Momen kecil, hal lucu, atau hal indah yang kamu alami hari ini..."
+            rows="5"
+          ></textarea>
         </div>
       </div>
 
@@ -695,9 +2077,13 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 9 dari 15</div>
           <div class="step-title">Jurnal Rasa Syukur 💛</div>
-          <div class="step-prompt">Tuliskan minimal 3 hal yang kamu syukuri hari ini.</div>
+          <div class="step-prompt">
+            Tuliskan minimal 3 hal yang kamu syukuri hari ini.
+          </div>
           <div class="gratitude-list" id="gratitudeList"></div>
-          <button class="add-gratitude" onclick="addGratitude()">+ Tambah hal lain</button>
+          <button class="add-gratitude" onclick="addGratitude()">
+            + Tambah hal lain
+          </button>
         </div>
       </div>
 
@@ -706,8 +2092,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 10 dari 15</div>
           <div class="step-title">Pelajaran Hari Ini 📚</div>
-          <div class="step-prompt">Apa yang kamu pelajari dari pengalaman hari ini?</div>
-          <textarea class="journal-textarea" placeholder="Insight, pelajaran hidup, atau hal baru yang kamu sadari hari ini..." rows="5"></textarea>
+          <div class="step-prompt">
+            Apa yang kamu pelajari dari pengalaman hari ini?
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Insight, pelajaran hidup, atau hal baru yang kamu sadari hari ini..."
+            rows="5"
+          ></textarea>
         </div>
       </div>
 
@@ -716,19 +2108,70 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 11 dari 15</div>
           <div class="step-title">Refleksi Diri 🪞</div>
-          <div class="step-prompt">Luangkan waktu sejenak untuk melihat dirimu dengan jujur.</div>
-          <div style="display:flex; flex-direction:column; gap:16px; margin-top:8px;">
+          <div class="step-prompt">
+            Luangkan waktu sejenak untuk melihat dirimu dengan jujur.
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+              margin-top: 8px;
+            "
+          >
             <div>
-              <div style="font-size:13px; font-weight:600; color:var(--success); margin-bottom:8px;">✅ Apa yang sudah kulakukan dengan baik?</div>
-              <textarea class="journal-textarea" placeholder="Apresiasi usaha dan pencapaianmu hari ini..." rows="3" style="min-height:80px;"></textarea>
+              <div
+                style="
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: var(--success);
+                  margin-bottom: 8px;
+                "
+              >
+                ✅ Apa yang sudah kulakukan dengan baik?
+              </div>
+              <textarea
+                class="journal-textarea"
+                placeholder="Apresiasi usaha dan pencapaianmu hari ini..."
+                rows="3"
+                style="min-height: 80px"
+              ></textarea>
             </div>
             <div>
-              <div style="font-size:13px; font-weight:600; color:var(--warning); margin-bottom:8px;">🔧 Apa yang bisa kuperbaiki?</div>
-              <textarea class="journal-textarea" placeholder="Area pertumbuhan yang ingin kamu kembangkan..." rows="3" style="min-height:80px;"></textarea>
+              <div
+                style="
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: var(--warning);
+                  margin-bottom: 8px;
+                "
+              >
+                🔧 Apa yang bisa kuperbaiki?
+              </div>
+              <textarea
+                class="journal-textarea"
+                placeholder="Area pertumbuhan yang ingin kamu kembangkan..."
+                rows="3"
+                style="min-height: 80px"
+              ></textarea>
             </div>
             <div>
-              <div style="font-size:13px; font-weight:600; color:var(--primary); margin-bottom:8px;">🔄 Apa yang akan kulakukan berbeda besok?</div>
-              <textarea class="journal-textarea" placeholder="Niat konkret untuk perbaikan..." rows="3" style="min-height:80px;"></textarea>
+              <div
+                style="
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: var(--primary);
+                  margin-bottom: 8px;
+                "
+              >
+                🔄 Apa yang akan kulakukan berbeda besok?
+              </div>
+              <textarea
+                class="journal-textarea"
+                placeholder="Niat konkret untuk perbaikan..."
+                rows="3"
+                style="min-height: 80px"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -739,8 +2182,15 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 12 dari 15</div>
           <div class="step-title">Belas Kasih pada Diri Sendiri 💗</div>
-          <div class="step-prompt">Jika sahabatmu mengalami hal yang sama hari ini, apa yang akan kamu katakan kepadanya? Sekarang, katakan hal itu pada dirimu sendiri.</div>
-          <textarea class="journal-textarea" placeholder="Tulis pesan yang hangat dan penuh kasih untuk dirimu sendiri... 💌" rows="5"></textarea>
+          <div class="step-prompt">
+            Jika sahabatmu mengalami hal yang sama hari ini, apa yang akan kamu
+            katakan kepadanya? Sekarang, katakan hal itu pada dirimu sendiri.
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Tulis pesan yang hangat dan penuh kasih untuk dirimu sendiri... 💌"
+            rows="5"
+          ></textarea>
         </div>
       </div>
 
@@ -749,8 +2199,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 13 dari 15</div>
           <div class="step-title">Niat untuk Besok 🌅</div>
-          <div class="step-prompt">Apa yang ingin kamu capai atau rasakan besok?</div>
-          <textarea class="journal-textarea" placeholder="Besok aku ingin... (bebas dan konkret, tidak perlu sempurna)" rows="5"></textarea>
+          <div class="step-prompt">
+            Apa yang ingin kamu capai atau rasakan besok?
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Besok aku ingin... (bebas dan konkret, tidak perlu sempurna)"
+            rows="5"
+          ></textarea>
         </div>
       </div>
 
@@ -759,9 +2215,17 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 14 dari 15</div>
           <div class="step-title">Afirmasi Positif ⭐</div>
-          <div class="step-prompt">Pilih afirmasi yang paling kamu butuhkan hari ini, atau tulis sendiri.</div>
+          <div class="step-prompt">
+            Pilih afirmasi yang paling kamu butuhkan hari ini, atau tulis
+            sendiri.
+          </div>
           <div class="affirmation-grid" id="affirmGrid"></div>
-          <textarea class="journal-textarea" placeholder="Atau tulis afirmasimu sendiri..." rows="2" style="min-height:60px; margin-top:12px;"></textarea>
+          <textarea
+            class="journal-textarea"
+            placeholder="Atau tulis afirmasimu sendiri..."
+            rows="2"
+            style="min-height: 60px; margin-top: 12px"
+          ></textarea>
         </div>
       </div>
 
@@ -770,29 +2234,55 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         <div class="step-card">
           <div class="step-num">Langkah 15 dari 15</div>
           <div class="step-title">Doa & Harapan 🙏</div>
-          <div class="step-prompt">Tuliskan doa, harapan, atau hal yang ingin kamu serahkan kepada yang lebih besar dari dirimu.</div>
-          <textarea class="journal-textarea" placeholder="Harapan, doa, atau hal yang ingin kamu lepaskan hari ini..." rows="6"></textarea>
+          <div class="step-prompt">
+            Tuliskan doa, harapan, atau hal yang ingin kamu serahkan kepada yang
+            lebih besar dari dirimu.
+          </div>
+          <textarea
+            class="journal-textarea"
+            placeholder="Harapan, doa, atau hal yang ingin kamu lepaskan hari ini..."
+            rows="6"
+          ></textarea>
         </div>
 
         <!-- AI Insight (live on step 15) -->
-        <div class="ai-insight" id="journalInsight" style="display:none">
+        <div class="ai-insight" id="journalInsight" style="display: none">
           <div class="ai-insight-header">
             <span class="ai-badge">✨ MindBloom AI</span>
-            <span style="font-size:13px; color:var(--text3);">Menganalisis jurnalmu...</span>
+            <span style="font-size: 13px; color: var(--text3)"
+              >Menganalisis jurnalmu...</span
+            >
           </div>
           <div class="typing-indicator" id="typingIndicator">
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
           </div>
-          <div class="insight-text" id="insightContent" style="display:none"></div>
+          <div
+            class="insight-text"
+            id="insightContent"
+            style="display: none"
+          ></div>
         </div>
       </div>
 
       <!-- Navigation -->
       <div class="step-nav">
-        <div class="step-progress-text" id="stepProgressText">Langkah 1 dari 15</div>
+        <div class="step-progress-text" id="stepProgressText">
+          Langkah 1 dari 15
+        </div>
         <div class="step-nav-btns">
-          <button class="btn-prev" id="btnPrev" onclick="prevStep()" style="display:none">← Kembali</button>
-          <button class="btn-next" id="btnNext" onclick="nextStep()">Lanjut →</button>
+          <button
+            class="btn-prev"
+            id="btnPrev"
+            onclick="prevStep()"
+            style="display: none"
+          >
+            ← Kembali
+          </button>
+          <button class="btn-next" id="btnNext" onclick="nextStep()">
+            Lanjut →
+          </button>
         </div>
       </div>
     </div>
@@ -802,30 +2292,60 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
   <div class="page" id="page-breathing">
     <div class="breathing-page">
       <div class="breathing-title">Ruang Bernapas 🧘</div>
-      <div class="breathing-sub">Teknik 4-4-4-4 untuk menenangkan pikiran dan tubuh</div>
+      <div class="breathing-sub">
+        Teknik 4-4-4-4 untuk menenangkan pikiran dan tubuh
+      </div>
 
       <div class="breathing-circle-wrap">
         <div class="breathing-rings-2"></div>
         <div class="breathing-rings"></div>
-        <div class="breathing-circle" id="breathCircle" onclick="toggleBreath()">
+        <div
+          class="breathing-circle"
+          id="breathCircle"
+          onclick="toggleBreath()"
+        >
           <div class="breath-phase" id="breathPhase">Klik untuk mulai</div>
           <div class="breath-count" id="breathCount">4</div>
         </div>
       </div>
 
       <div class="breath-phases">
-        <div class="phase-item"><div class="phase-num">4</div><div class="phase-name">Tarik Nafas</div></div>
-        <div class="phase-item"><div class="phase-num">4</div><div class="phase-name">Tahan</div></div>
-        <div class="phase-item"><div class="phase-num">4</div><div class="phase-name">Buang Nafas</div></div>
-        <div class="phase-item"><div class="phase-num">4</div><div class="phase-name">Tahan</div></div>
+        <div class="phase-item">
+          <div class="phase-num">4</div>
+          <div class="phase-name">Tarik Nafas</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">4</div>
+          <div class="phase-name">Tahan</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">4</div>
+          <div class="phase-name">Buang Nafas</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">4</div>
+          <div class="phase-name">Tahan</div>
+        </div>
       </div>
 
       <div class="breath-controls">
-        <button class="btn-primary" id="breathBtn" onclick="toggleBreath()">▶ Mulai Bernapas</button>
+        <button class="btn-primary" id="breathBtn" onclick="toggleBreath()">
+          ▶ Mulai Bernapas
+        </button>
         <button class="btn-ghost" onclick="resetBreath()">↺ Reset</button>
       </div>
 
-      <div style="margin-top:32px; text-align:center; color:var(--text3); font-size:13px;" id="breathCycles">Sesi: 0 siklus selesai</div>
+      <div
+        style="
+          margin-top: 32px;
+          text-align: center;
+          color: var(--text3);
+          font-size: 13px;
+        "
+        id="breathCycles"
+      >
+        Sesi: 0 siklus selesai
+      </div>
     </div>
   </div>
 
@@ -834,7 +2354,9 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
     <div class="analytics-page">
       <div class="analytics-header">
         <h2>Analitik & Wawasan 📊</h2>
-        <p style="color:var(--text2); margin-top:4px;">Gambaran emosi dan perkembanganmu</p>
+        <p style="color: var(--text2); margin-top: 4px">
+          Gambaran emosi dan perkembanganmu
+        </p>
       </div>
 
       <div class="chart-grid">
@@ -849,16 +2371,68 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
           <div class="chart-title">🎯 Distribusi Emosi Bulan Ini</div>
           <div class="donut-wrap">
             <svg width="120" height="120" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="45" fill="none" stroke="#6366F1" stroke-width="18" stroke-dasharray="113 170" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-              <circle cx="60" cy="60" r="45" fill="none" stroke="#8B5CF6" stroke-width="18" stroke-dasharray="68 170" stroke-dashoffset="-113" transform="rotate(-90 60 60)"/>
-              <circle cx="60" cy="60" r="45" fill="none" stroke="#06B6D4" stroke-width="18" stroke-dasharray="51 170" stroke-dashoffset="-181" transform="rotate(-90 60 60)"/>
-              <circle cx="60" cy="60" r="45" fill="none" stroke="#F59E0B" stroke-width="18" stroke-dasharray="39 170" stroke-dashoffset="-232" transform="rotate(-90 60 60)"/>
+              <circle
+                cx="60"
+                cy="60"
+                r="45"
+                fill="none"
+                stroke="#6366F1"
+                stroke-width="18"
+                stroke-dasharray="113 170"
+                stroke-dashoffset="0"
+                transform="rotate(-90 60 60)"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="45"
+                fill="none"
+                stroke="#8B5CF6"
+                stroke-width="18"
+                stroke-dasharray="68 170"
+                stroke-dashoffset="-113"
+                transform="rotate(-90 60 60)"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="45"
+                fill="none"
+                stroke="#06B6D4"
+                stroke-width="18"
+                stroke-dasharray="51 170"
+                stroke-dashoffset="-181"
+                transform="rotate(-90 60 60)"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="45"
+                fill="none"
+                stroke="#F59E0B"
+                stroke-width="18"
+                stroke-dasharray="39 170"
+                stroke-dashoffset="-232"
+                transform="rotate(-90 60 60)"
+              />
             </svg>
             <div class="legend">
-              <div class="legend-item"><div class="legend-dot" style="background:#6366F1"></div><span>Bahagia 40%</span></div>
-              <div class="legend-item"><div class="legend-dot" style="background:#8B5CF6"></div><span>Tenang 24%</span></div>
-              <div class="legend-item"><div class="legend-dot" style="background:#06B6D4"></div><span>Cemas 18%</span></div>
-              <div class="legend-item"><div class="legend-dot" style="background:#F59E0B"></div><span>Lainnya 18%</span></div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #6366f1"></div>
+                <span>Bahagia 40%</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #8b5cf6"></div>
+                <span>Tenang 24%</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #06b6d4"></div>
+                <span>Cemas 18%</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #f59e0b"></div>
+                <span>Lainnya 18%</span>
+              </div>
             </div>
           </div>
         </div>
@@ -868,14 +2442,32 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
           <div class="chart-title">📉 Tren Tingkat Stres</div>
           <div class="line-chart">
             <svg viewBox="0 0 300 100" preserveAspectRatio="none">
-              <polyline fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                points="0,70 42,60 85,75 127,40 170,55 212,35 255,45 300,30"/>
-              <polyline fill="rgba(239,68,68,0.1)" stroke="none"
-                points="0,70 42,60 85,75 127,40 170,55 212,35 255,45 300,30 300,100 0,100"/>
+              <polyline
+                fill="none"
+                stroke="#EF4444"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="0,70 42,60 85,75 127,40 170,55 212,35 255,45 300,30"
+              />
+              <polyline
+                fill="rgba(239,68,68,0.1)"
+                stroke="none"
+                points="0,70 42,60 85,75 127,40 170,55 212,35 255,45 300,30 300,100 0,100"
+              />
             </svg>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text3); margin-top:4px;">
-            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 10px;
+              color: var(--text3);
+              margin-top: 4px;
+            "
+          >
+            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span
+            ><span>Jum</span><span>Sab</span><span>Min</span>
           </div>
         </div>
 
@@ -884,48 +2476,161 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
           <div class="chart-title">⚡ Tren Energi</div>
           <div class="line-chart">
             <svg viewBox="0 0 300 100" preserveAspectRatio="none">
-              <polyline fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                points="0,50 42,40 85,45 127,20 170,35 212,25 255,30 300,15"/>
-              <polyline fill="rgba(16,185,129,0.1)" stroke="none"
-                points="0,50 42,40 85,45 127,20 170,35 212,25 255,30 300,15 300,100 0,100"/>
+              <polyline
+                fill="none"
+                stroke="#10B981"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                points="0,50 42,40 85,45 127,20 170,35 212,25 255,30 300,15"
+              />
+              <polyline
+                fill="rgba(16,185,129,0.1)"
+                stroke="none"
+                points="0,50 42,40 85,45 127,20 170,35 212,25 255,30 300,15 300,100 0,100"
+              />
             </svg>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text3); margin-top:4px;">
-            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 10px;
+              color: var(--text3);
+              margin-top: 4px;
+            "
+          >
+            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span
+            ><span>Jum</span><span>Sab</span><span>Min</span>
           </div>
         </div>
 
         <!-- Top Gratitude -->
-        <div class="chart-card" style="grid-column: span 2;">
+        <div class="chart-card" style="grid-column: span 2">
           <div class="chart-title">💛 Topik Syukur Paling Sering</div>
-          <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <span style="font-size:13px; color:var(--text2); min-width:120px;">Keluarga</span>
-              <div style="flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden;">
-                <div style="width:85%; height:100%; background:linear-gradient(90deg,var(--primary),var(--secondary)); border-radius:4px;"></div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+              margin-top: 8px;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span
+                style="font-size: 13px; color: var(--text2); min-width: 120px"
+                >Keluarga</span
+              >
+              <div
+                style="
+                  flex: 1;
+                  height: 8px;
+                  background: var(--border);
+                  border-radius: 4px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    width: 85%;
+                    height: 100%;
+                    background: linear-gradient(
+                      90deg,
+                      var(--primary),
+                      var(--secondary)
+                    );
+                    border-radius: 4px;
+                  "
+                ></div>
               </div>
-              <span style="font-size:12px; color:var(--text3); min-width:30px;">34x</span>
+              <span
+                style="font-size: 12px; color: var(--text3); min-width: 30px"
+                >34x</span
+              >
             </div>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <span style="font-size:13px; color:var(--text2); min-width:120px;">Kesehatan</span>
-              <div style="flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden;">
-                <div style="width:70%; height:100%; background:linear-gradient(90deg,var(--success),#34D399); border-radius:4px;"></div>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span
+                style="font-size: 13px; color: var(--text2); min-width: 120px"
+                >Kesehatan</span
+              >
+              <div
+                style="
+                  flex: 1;
+                  height: 8px;
+                  background: var(--border);
+                  border-radius: 4px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    width: 70%;
+                    height: 100%;
+                    background: linear-gradient(90deg, var(--success), #34d399);
+                    border-radius: 4px;
+                  "
+                ></div>
               </div>
-              <span style="font-size:12px; color:var(--text3); min-width:30px;">28x</span>
+              <span
+                style="font-size: 12px; color: var(--text3); min-width: 30px"
+                >28x</span
+              >
             </div>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <span style="font-size:13px; color:var(--text2); min-width:120px;">Pekerjaan</span>
-              <div style="flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden;">
-                <div style="width:50%; height:100%; background:linear-gradient(90deg,var(--accent),#22D3EE); border-radius:4px;"></div>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span
+                style="font-size: 13px; color: var(--text2); min-width: 120px"
+                >Pekerjaan</span
+              >
+              <div
+                style="
+                  flex: 1;
+                  height: 8px;
+                  background: var(--border);
+                  border-radius: 4px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    width: 50%;
+                    height: 100%;
+                    background: linear-gradient(90deg, var(--accent), #22d3ee);
+                    border-radius: 4px;
+                  "
+                ></div>
               </div>
-              <span style="font-size:12px; color:var(--text3); min-width:30px;">20x</span>
+              <span
+                style="font-size: 12px; color: var(--text3); min-width: 30px"
+                >20x</span
+              >
             </div>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <span style="font-size:13px; color:var(--text2); min-width:120px;">Teman</span>
-              <div style="flex:1; height:8px; background:var(--border); border-radius:4px; overflow:hidden;">
-                <div style="width:40%; height:100%; background:linear-gradient(90deg,var(--warning),#FCD34D); border-radius:4px;"></div>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span
+                style="font-size: 13px; color: var(--text2); min-width: 120px"
+                >Teman</span
+              >
+              <div
+                style="
+                  flex: 1;
+                  height: 8px;
+                  background: var(--border);
+                  border-radius: 4px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    width: 40%;
+                    height: 100%;
+                    background: linear-gradient(90deg, var(--warning), #fcd34d);
+                    border-radius: 4px;
+                  "
+                ></div>
               </div>
-              <span style="font-size:12px; color:var(--text3); min-width:30px;">16x</span>
+              <span
+                style="font-size: 12px; color: var(--text3); min-width: 30px"
+                >16x</span
+              >
             </div>
           </div>
         </div>
@@ -936,9 +2641,13 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
   <!-- ─── ACHIEVEMENTS ─── -->
   <div class="page" id="page-achievements">
     <div class="achievements-page">
-      <div style="margin-bottom:32px;">
-        <h2 style="font-family:var(--serif); font-size:32px;">Pencapaianku 🏆</h2>
-        <p style="color:var(--text2); margin-top:4px;">Setiap lencana adalah bukti perjalananmu</p>
+      <div style="margin-bottom: 32px">
+        <h2 style="font-family: var(--serif); font-size: 32px">
+          Pencapaianku 🏆
+        </h2>
+        <p style="color: var(--text2); margin-top: 4px">
+          Setiap lencana adalah bukti perjalananmu
+        </p>
       </div>
       <div class="badges-grid" id="badgesGrid"></div>
     </div>
@@ -953,354 +2662,600 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 </div>
 
 <script>
-const MOODS = ['😭','😢','😔','😟','😐','🙂','😊','😄','🤩','😍'];
-const MOOD_LABELS = ['Sangat Sedih','Sedih','Kurang Baik','Tidak Nyaman','Biasa Saja','Cukup Baik','Baik','Senang','Sangat Senang','Sempurna!'];
-const EMOTIONS = {
-  pos: [['😊','Senang','#10B981'],['🙏','Bersyukur','#059669'],['🎉','Gembira','#34D399'],['🕊️','Tenang','#06B6D4'],['☮️','Damai','#0891B2'],['💡','Terinspirasi','#8B5CF6']],
-  neg: [['😢','Sedih','#6366F1'],['😶','Kesepian','#4F46E5'],['😤','Frustrasi','#F59E0B'],['😡','Marah','#EF4444'],['😞','Kecewa','#EC4899']],
-  anx: [['😰','Cemas','#F97316'],['🌀','Overthinking','#8B5CF6'],['😨','Takut','#DC2626'],['😵','Bingung','#A855F7']],
-  ene: [['😴','Lelah','#94A3B8'],['🪫','Kelelahan','#64748B'],['⚡','Habis Energi','#475569']]
-};
-const AFFIRMATIONS = ['Aku cukup 💫','Aku berkembang setiap hari 🌱','Aku pantas bahagia 💛','Aku kuat dan berani 💪','Aku dipenuhi kasih sayang ❤️','Aku percaya pada prosesnya 🌊','Aku berharga ✨','Aku mampu melewati ini 🦋'];
-const BADGES = [
-  {icon:'🔥',name:'Streak 7 Hari',desc:'Tulis 7 hari berturut',earned:true},
-  {icon:'🔥',name:'Streak 30 Hari',desc:'Tulis 30 hari berturut',earned:false},
-  {icon:'🌱',name:'Refleksi Pemula',desc:'Jurnal pertamamu',earned:true},
-  {icon:'🌳',name:'Pemikir Mendalam',desc:'Isi semua 15 langkah',earned:true},
-  {icon:'💖',name:'Guru Rasa Syukur',desc:'100 entri syukur',earned:false},
-  {icon:'🧘',name:'Pikiran Tenang',desc:'10 sesi bernapas',earned:true},
-  {icon:'🏆',name:'Juara Konsistensi',desc:'90 hari streak',earned:false},
-  {icon:'🌟',name:'Bintang Refleksi',desc:'50 jurnal selesai',earned:false},
-  {icon:'🦋',name:'Transformasi Diri',desc:'1 bulan perjalanan',earned:true},
-];
-const MOODS_CAL = ['mood-happy','mood-calm','mood-excited','mood-anxious','mood-stressed','mood-sad','',''];
-let currentStep = 1; const totalSteps = 15;
-let breathRunning = false; let breathPhaseIdx = 0; let breathTimer = null; let breathCount = 4; let breathCycles = 0;
-let gratitudeCount = 3;
+  const MOODS = ["😭", "😢", "😔", "😟", "😐", "🙂", "😊", "😄", "🤩", "😍"];
+  const MOOD_LABELS = [
+    "Sangat Sedih",
+    "Sedih",
+    "Kurang Baik",
+    "Tidak Nyaman",
+    "Biasa Saja",
+    "Cukup Baik",
+    "Baik",
+    "Senang",
+    "Sangat Senang",
+    "Sempurna!",
+  ];
+  const EMOTIONS = {
+    pos: [
+      ["😊", "Senang", "#10B981"],
+      ["🙏", "Bersyukur", "#059669"],
+      ["🎉", "Gembira", "#34D399"],
+      ["🕊️", "Tenang", "#06B6D4"],
+      ["☮️", "Damai", "#0891B2"],
+      ["💡", "Terinspirasi", "#8B5CF6"],
+    ],
+    neg: [
+      ["😢", "Sedih", "#6366F1"],
+      ["😶", "Kesepian", "#4F46E5"],
+      ["😤", "Frustrasi", "#F59E0B"],
+      ["😡", "Marah", "#EF4444"],
+      ["😞", "Kecewa", "#EC4899"],
+    ],
+    anx: [
+      ["😰", "Cemas", "#F97316"],
+      ["🌀", "Overthinking", "#8B5CF6"],
+      ["😨", "Takut", "#DC2626"],
+      ["😵", "Bingung", "#A855F7"],
+    ],
+    ene: [
+      ["😴", "Lelah", "#94A3B8"],
+      ["🪫", "Kelelahan", "#64748B"],
+      ["⚡", "Habis Energi", "#475569"],
+    ],
+  };
+  const AFFIRMATIONS = [
+    "Aku cukup 💫",
+    "Aku berkembang setiap hari 🌱",
+    "Aku pantas bahagia 💛",
+    "Aku kuat dan berani 💪",
+    "Aku dipenuhi kasih sayang ❤️",
+    "Aku percaya pada prosesnya 🌊",
+    "Aku berharga ✨",
+    "Aku mampu melewati ini 🦋",
+  ];
+  const BADGES = [
+    {
+      icon: "🔥",
+      name: "Streak 7 Hari",
+      desc: "Tulis 7 hari berturut",
+      earned: true,
+    },
+    {
+      icon: "🔥",
+      name: "Streak 30 Hari",
+      desc: "Tulis 30 hari berturut",
+      earned: false,
+    },
+    {
+      icon: "🌱",
+      name: "Refleksi Pemula",
+      desc: "Jurnal pertamamu",
+      earned: true,
+    },
+    {
+      icon: "🌳",
+      name: "Pemikir Mendalam",
+      desc: "Isi semua 15 langkah",
+      earned: true,
+    },
+    {
+      icon: "💖",
+      name: "Guru Rasa Syukur",
+      desc: "100 entri syukur",
+      earned: false,
+    },
+    {
+      icon: "🧘",
+      name: "Pikiran Tenang",
+      desc: "10 sesi bernapas",
+      earned: true,
+    },
+    {
+      icon: "🏆",
+      name: "Juara Konsistensi",
+      desc: "90 hari streak",
+      earned: false,
+    },
+    {
+      icon: "🌟",
+      name: "Bintang Refleksi",
+      desc: "50 jurnal selesai",
+      earned: false,
+    },
+    {
+      icon: "🦋",
+      name: "Transformasi Diri",
+      desc: "1 bulan perjalanan",
+      earned: true,
+    },
+  ];
+  const MOODS_CAL = [
+    "mood-happy",
+    "mood-calm",
+    "mood-excited",
+    "mood-anxious",
+    "mood-stressed",
+    "mood-sad",
+    "",
+    "",
+  ];
+  let currentStep = 1;
+  const totalSteps = 15;
+  let breathRunning = false;
+  let breathPhaseIdx = 0;
+  let breathTimer = null;
+  let breathCount = 4;
+  let breathCycles = 0;
+  let gratitudeCount = 3;
 
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  if(id!=='landing') {
-    const btns = document.querySelectorAll('.nav-btn');
-    btns.forEach(b=>{ if(b.textContent.toLowerCase().includes(id.substring(0,4))) b.classList.add('active'); });
+  function showPage(id) {
+    document
+      .querySelectorAll(".page")
+      .forEach((p) => p.classList.remove("active"));
+    document.getElementById("page-" + id).classList.add("active");
+    document
+      .querySelectorAll(".nav-btn")
+      .forEach((b) => b.classList.remove("active"));
+    if (id !== "landing") {
+      const btns = document.querySelectorAll(".nav-btn");
+      btns.forEach((b) => {
+        if (b.textContent.toLowerCase().includes(id.substring(0, 4)))
+          b.classList.add("active");
+      });
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  window.scrollTo({top:0,behavior:'smooth'});
-}
 
-function toggleTheme() {
-  const isDark = document.documentElement.getAttribute('data-theme')==='dark';
-  document.documentElement.setAttribute('data-theme', isDark?'light':'dark');
-  document.getElementById('themeToggle').textContent = isDark ? '🌙' : '☀️';
-}
+  function toggleTheme() {
+    const isDark =
+      document.documentElement.getAttribute("data-theme") === "dark";
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDark ? "light" : "dark",
+    );
+    document.getElementById("themeToggle").textContent = isDark ? "🌙" : "☀️";
+  }
 
-// ── Greeting ──
-function updateGreeting() {
-  const h = new Date().getHours();
-  const g = document.getElementById('greeting');
-  const greet = h<12?'Pagi':h<17?'Siang':h<20?'Sore':'Malam';
-  const emoji = h<12?'☀️':h<17?'🌤️':h<20?'🌅':'🌙';
-  if(g) g.textContent = `Selamat ${greet}, Asmawati ${emoji}`;
-  const now = new Date();
-  const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-  const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-  const d = document.getElementById('greetingDate');
-  if(d) d.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · Bagaimana perasaanmu hari ini?`;
-  const ed = document.getElementById('entryDate');
-  const et = document.getElementById('entryTime');
-  if(ed) ed.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-  if(et) et.textContent = now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-  const jd = document.getElementById('journalDate');
-  if(jd) jd.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-}
+  // ── Greeting ──
+  function updateGreeting() {
+    const h = new Date().getHours();
+    const g = document.getElementById("greeting");
+    const greet =
+      h < 12 ? "Pagi" : h < 17 ? "Siang" : h < 20 ? "Sore" : "Malam";
+    const emoji = h < 12 ? "☀️" : h < 17 ? "🌤️" : h < 20 ? "🌅" : "🌙";
+    if (g) g.textContent = `Selamat ${greet}, Asmawati ${emoji}`;
+    const now = new Date();
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Agu",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ];
+    const d = document.getElementById("greetingDate");
+    if (d)
+      d.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · Bagaimana perasaanmu hari ini?`;
+    const ed = document.getElementById("entryDate");
+    const et = document.getElementById("entryTime");
+    if (ed)
+      ed.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    if (et)
+      et.textContent = now.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    const jd = document.getElementById("journalDate");
+    if (jd)
+      jd.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+  }
 
-// ── Mood Dashboard ──
-function selectMood(el, emoji) {
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-  el.style.animation = 'bounce 0.3s ease';
-  setTimeout(()=>el.style.animation='',400);
-  const sub = document.getElementById('moodSubText');
-  if(sub) sub.textContent = `Mood hari ini: ${emoji} Tersimpan!`;
-}
+  // ── Mood Dashboard ──
+  function selectMood(el, emoji) {
+    document
+      .querySelectorAll(".mood-btn")
+      .forEach((b) => b.classList.remove("selected"));
+    el.classList.add("selected");
+    el.style.animation = "bounce 0.3s ease";
+    setTimeout(() => (el.style.animation = ""), 400);
+    const sub = document.getElementById("moodSubText");
+    if (sub) sub.textContent = `Mood hari ini: ${emoji} Tersimpan!`;
+  }
 
-// ── Mood Slider ──
-function updateMoodSlider(v) {
-  v = parseInt(v);
-  const emojis = document.getElementById('moodEmojiBig');
-  const label = document.getElementById('moodSliderLabel');
-  if(emojis) emojis.textContent = MOODS[v-1];
-  if(label) label.textContent = `${v} — ${MOOD_LABELS[v-1]}`;
-  const sl = document.getElementById('moodSlider');
-  if(sl) sl.style.setProperty('--val', ((v-1)/9*100)+'%');
-}
+  // ── Mood Slider ──
+  function updateMoodSlider(v) {
+    v = parseInt(v);
+    const emojis = document.getElementById("moodEmojiBig");
+    const label = document.getElementById("moodSliderLabel");
+    if (emojis) emojis.textContent = MOODS[v - 1];
+    if (label) label.textContent = `${v} — ${MOOD_LABELS[v - 1]}`;
+    const sl = document.getElementById("moodSlider");
+    if (sl) sl.style.setProperty("--val", ((v - 1) / 9) * 100 + "%");
+  }
 
-// ── Battery ──
-function updateBattery(v) {
-  const fill = document.getElementById('batteryFill');
-  const label = document.getElementById('batteryLabel');
-  if(fill) fill.style.width = v+'%';
-  if(label) label.textContent = v+'%';
-  const hue = Math.round((v/100)*120);
-  if(fill) fill.style.background = `linear-gradient(90deg, hsl(${hue},70%,50%), hsl(${hue+20},70%,60%))`;
-}
+  // ── Battery ──
+  function updateBattery(v) {
+    const fill = document.getElementById("batteryFill");
+    const label = document.getElementById("batteryLabel");
+    if (fill) fill.style.width = v + "%";
+    if (label) label.textContent = v + "%";
+    const hue = Math.round((v / 100) * 120);
+    if (fill)
+      fill.style.background = `linear-gradient(90deg, hsl(${hue},70%,50%), hsl(${hue + 20},70%,60%))`;
+  }
 
-// ── Emotion Grids ──
-function buildEmotions() {
-  const grids = {emoGrid1:'pos',emoGrid2:'neg',emoGrid3:'anx',emoGrid4:'ene'};
-  for(const [id,key] of Object.entries(grids)) {
-    const g = document.getElementById(id);
-    if(!g) continue;
-    EMOTIONS[key].forEach(([icon,label,color])=>{
-      const t = document.createElement('div');
-      t.className = 'emotion-tag';
-      t.innerHTML = `${icon} ${label}`;
-      t.style.cssText = `border-color:${color}30; color:${color};`;
-      t.onclick = ()=>{
-        t.classList.toggle('selected');
-        if(t.classList.contains('selected')) { t.style.background=color+'20'; t.style.borderColor=color; }
-        else { t.style.background=''; t.style.borderColor=color+'30'; }
+  // ── Emotion Grids ──
+  function buildEmotions() {
+    const grids = {
+      emoGrid1: "pos",
+      emoGrid2: "neg",
+      emoGrid3: "anx",
+      emoGrid4: "ene",
+    };
+    for (const [id, key] of Object.entries(grids)) {
+      const g = document.getElementById(id);
+      if (!g) continue;
+      EMOTIONS[key].forEach(([icon, label, color]) => {
+        const t = document.createElement("div");
+        t.className = "emotion-tag";
+        t.innerHTML = `${icon} ${label}`;
+        t.style.cssText = `border-color:${color}30; color:${color};`;
+        t.onclick = () => {
+          t.classList.toggle("selected");
+          if (t.classList.contains("selected")) {
+            t.style.background = color + "20";
+            t.style.borderColor = color;
+          } else {
+            t.style.background = "";
+            t.style.borderColor = color + "30";
+          }
+        };
+        g.appendChild(t);
+      });
+    }
+  }
+
+  // ── Gratitude ──
+  function buildGratitude() {
+    const list = document.getElementById("gratitudeList");
+    if (!list) return;
+    list.innerHTML = "";
+    for (let i = 1; i <= gratitudeCount; i++) {
+      const row = document.createElement("div");
+      row.className = "gratitude-item";
+      row.innerHTML = `<div class="gratitude-num">${i}</div><input class="gratitude-input" placeholder="Aku bersyukur untuk... 🌿" type="text">`;
+      list.appendChild(row);
+    }
+  }
+  function addGratitude() {
+    gratitudeCount++;
+    const list = document.getElementById("gratitudeList");
+    if (!list) return;
+    const row = document.createElement("div");
+    row.className = "gratitude-item";
+    row.style.animation = "fadeUp 0.3s ease";
+    row.innerHTML = `<div class="gratitude-num">${gratitudeCount}</div><input class="gratitude-input" placeholder="Aku bersyukur untuk... 🌿" type="text">`;
+    list.appendChild(row);
+    fireConfetti();
+  }
+
+  // ── Affirmations ──
+  function buildAffirmations() {
+    const grid = document.getElementById("affirmGrid");
+    if (!grid) return;
+    AFFIRMATIONS.forEach((a) => {
+      const b = document.createElement("button");
+      b.className = "affirmation-btn";
+      b.textContent = a;
+      b.onclick = () => {
+        b.classList.toggle("selected");
       };
-      g.appendChild(t);
+      grid.appendChild(b);
     });
   }
-}
 
-// ── Gratitude ──
-function buildGratitude() {
-  const list = document.getElementById('gratitudeList');
-  if(!list) return;
-  list.innerHTML='';
-  for(let i=1;i<=gratitudeCount;i++) {
-    const row = document.createElement('div');
-    row.className='gratitude-item';
-    row.innerHTML = `<div class="gratitude-num">${i}</div><input class="gratitude-input" placeholder="Aku bersyukur untuk... 🌿" type="text">`;
-    list.appendChild(row);
-  }
-}
-function addGratitude() {
-  gratitudeCount++;
-  const list = document.getElementById('gratitudeList');
-  if(!list) return;
-  const row = document.createElement('div');
-  row.className='gratitude-item'; row.style.animation='fadeUp 0.3s ease';
-  row.innerHTML = `<div class="gratitude-num">${gratitudeCount}</div><input class="gratitude-input" placeholder="Aku bersyukur untuk... 🌿" type="text">`;
-  list.appendChild(row);
-  fireConfetti();
-}
-
-// ── Affirmations ──
-function buildAffirmations() {
-  const grid = document.getElementById('affirmGrid');
-  if(!grid) return;
-  AFFIRMATIONS.forEach(a=>{
-    const b = document.createElement('button');
-    b.className='affirmation-btn'; b.textContent=a;
-    b.onclick=()=>{ b.classList.toggle('selected'); };
-    grid.appendChild(b);
-  });
-}
-
-// ── Step Navigation ──
-function buildStepIndicator() {
-  const ind = document.getElementById('stepIndicator');
-  if(!ind) return;
-  ind.innerHTML='';
-  for(let i=1;i<=totalSteps;i++) {
-    const d = document.createElement('div');
-    d.className='step-dot'+(i===currentStep?' active':i<currentStep?' done':'');
-    d.onclick=()=>goToStep(i);
-    ind.appendChild(d);
-  }
-}
-function updateStepDisplay() {
-  document.querySelectorAll('.journal-step').forEach((s,i)=>s.classList.toggle('active',i+1===currentStep));
-  buildStepIndicator();
-  const pt = document.getElementById('stepProgressText');
-  if(pt) pt.textContent=`Langkah ${currentStep} dari ${totalSteps}`;
-  const bp = document.getElementById('btnPrev');
-  const bn = document.getElementById('btnNext');
-  if(bp) bp.style.display=currentStep>1?'block':'none';
-  if(bn) bn.textContent=currentStep===totalSteps?'💾 Simpan Jurnal':'Lanjut →';
-  if(currentStep===15) {
-    setTimeout(()=>{
-      const ji = document.getElementById('journalInsight');
-      if(ji) { ji.style.display='block'; ji.style.animation='fadeUp 0.5s ease'; }
-      setTimeout(()=>{
-        const ti = document.getElementById('typingIndicator');
-        const ic = document.getElementById('insightContent');
-        if(ti) ti.style.display='none';
-        if(ic) { ic.style.display='block'; ic.innerHTML='🌟 <strong>Insight hari ini:</strong> Berdasarkan jurnalmu, energimu cukup baik dan kamu menemukan banyak hal untuk disyukuri. Stres yang kamu rasakan bisa dikurangi dengan istirahat berkualitas. Kamu sudah melakukan langkah luar biasa hari ini. Terus tumbuh! 🌱'; }
-      },2500);
-    },500);
-  }
-}
-function nextStep() {
-  if(currentStep===totalSteps) { saveJournal(); return; }
-  if(currentStep<totalSteps) { currentStep++; updateStepDisplay(); window.scrollTo({top:0,behavior:'smooth'}); }
-}
-function prevStep() {
-  if(currentStep>1) { currentStep--; updateStepDisplay(); window.scrollTo({top:0,behavior:'smooth'}); }
-}
-function goToStep(n) { currentStep=n; updateStepDisplay(); }
-
-function saveJournal() {
-  const ss = document.getElementById('saveSuccess');
-  if(ss) { ss.classList.add('show'); fireConfetti(); setTimeout(()=>ss.classList.remove('show'),3000); }
-  const streak = document.getElementById('streakNum');
-  if(streak) streak.textContent=parseInt(streak.textContent)+1;
-}
-
-// ── Confetti ──
-function fireConfetti() {
-  const colors=['#6366F1','#8B5CF6','#06B6D4','#10B981','#F59E0B','#EF4444','#EC4899'];
-  for(let i=0;i<50;i++){
-    setTimeout(()=>{
-      const c=document.createElement('div');
-      c.className='confetti-piece';
-      c.style.cssText=`left:${Math.random()*100}vw; top:-10px; background:${colors[Math.floor(Math.random()*colors.length)]}; transform:rotate(${Math.random()*360}deg); animation-duration:${1.5+Math.random()}s; animation-delay:${Math.random()*0.5}s; border-radius:${Math.random()>0.5?'50%':'2px'};`;
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(),3000);
-    },i*30);
-  }
-}
-
-// ── Breathing ──
-const BREATH_PHASES = [{name:'Tarik Nafas',dur:4},{name:'Tahan',dur:4},{name:'Buang Nafas',dur:4},{name:'Tahan',dur:4}];
-function toggleBreath() {
-  breathRunning=!breathRunning;
-  const btn=document.getElementById('breathBtn');
-  const circle=document.getElementById('breathCircle');
-  if(breathRunning) {
-    if(btn) btn.textContent='⏸ Pause';
-    if(circle) circle.classList.add('running');
-    runBreath();
-  } else {
-    clearTimeout(breathTimer);
-    if(btn) btn.textContent='▶ Lanjut';
-    if(circle) { circle.classList.remove('running'); circle.style.animation='breathe 8s ease-in-out infinite'; }
-  }
-}
-function runBreath() {
-  if(!breathRunning) return;
-  const phase=BREATH_PHASES[breathPhaseIdx];
-  const phaseEl=document.getElementById('breathPhase');
-  const countEl=document.getElementById('breathCount');
-  const circle=document.getElementById('breathCircle');
-  if(phaseEl) phaseEl.textContent=phase.name;
-  breathCount=phase.dur;
-  if(countEl) countEl.textContent=breathCount;
-  const sizes = {0:'220px',1:'220px',2:'180px',3:'180px'};
-  if(circle) { circle.style.transition=`all ${phase.dur}s ease`; circle.style.width=sizes[breathPhaseIdx]; circle.style.height=sizes[breathPhaseIdx]; }
-  const countDown=setInterval(()=>{
-    breathCount--;
-    if(countEl) countEl.textContent=breathCount;
-    if(breathCount<=0) {
-      clearInterval(countDown);
-      breathPhaseIdx=(breathPhaseIdx+1)%4;
-      if(breathPhaseIdx===0) {
-        breathCycles++;
-        const cyc=document.getElementById('breathCycles');
-        if(cyc) cyc.textContent=`Sesi: ${breathCycles} siklus selesai`;
-      }
-      if(breathRunning) breathTimer=setTimeout(runBreath,200);
+  // ── Step Navigation ──
+  function buildStepIndicator() {
+    const ind = document.getElementById("stepIndicator");
+    if (!ind) return;
+    ind.innerHTML = "";
+    for (let i = 1; i <= totalSteps; i++) {
+      const d = document.createElement("div");
+      d.className =
+        "step-dot" +
+        (i === currentStep ? " active" : i < currentStep ? " done" : "");
+      d.onclick = () => goToStep(i);
+      ind.appendChild(d);
     }
-  },1000);
-}
-function resetBreath() {
-  breathRunning=false; clearTimeout(breathTimer); breathPhaseIdx=0; breathCount=4; breathCycles=0;
-  const phaseEl=document.getElementById('breathPhase'); const countEl=document.getElementById('breathCount');
-  const btn=document.getElementById('breathBtn'); const circle=document.getElementById('breathCircle');
-  const cyc=document.getElementById('breathCycles');
-  if(phaseEl) phaseEl.textContent='Klik untuk mulai';
-  if(countEl) countEl.textContent='4';
-  if(btn) btn.textContent='▶ Mulai Bernapas';
-  if(circle) { circle.classList.remove('running'); circle.style.animation='breathe 8s ease-in-out infinite'; circle.style.width='220px'; circle.style.height='220px'; }
-  if(cyc) cyc.textContent='Sesi: 0 siklus selesai';
-}
-
-// ── Calendar ──
-function buildCalendar() {
-  const grid=document.getElementById('calGrid');
-  if(!grid) return;
-  const now=new Date(); const year=now.getFullYear(); const month=now.getMonth();
-  const firstDay=new Date(year,month,1).getDay();
-  const daysInMonth=new Date(year,month+1,0).getDate();
-  grid.innerHTML='';
-  for(let i=0;i<firstDay;i++) { const e=document.createElement('div'); e.className='cal-day empty'; e.textContent=''; grid.appendChild(e); }
-  for(let d=1;d<=daysInMonth;d++) {
-    const el=document.createElement('div');
-    const moodClass=d<now.getDate()?MOODS_CAL[Math.floor(Math.random()*6)]:'';
-    el.className='cal-day'+(moodClass?' '+moodClass:'')+(d===now.getDate()?' today':'');
-    el.textContent=d;
-    el.title=d<now.getDate()?'Lihat jurnal':'Hari ini';
-    grid.appendChild(el);
   }
-}
-
-// ── Bar Chart ──
-function buildMoodChart() {
-  const chart=document.getElementById('moodChart');
-  if(!chart) return;
-  const days=['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
-  const values=[6,7,5,8,6,9,7];
-  const colors=['#6366F1','#8B5CF6','#6366F1','#10B981','#8B5CF6','#06B6D4','#6366F1'];
-  chart.innerHTML='';
-  days.forEach((d,i)=>{
-    const wrap=document.createElement('div');
-    wrap.className='bar-wrap';
-    const bar=document.createElement('div');
-    bar.className='bar';
-    bar.style.cssText=`height:${values[i]*12}px; background:${colors[i]}; animation:fadeUp 0.5s ease ${i*0.1}s both;`;
-    const label=document.createElement('div');
-    label.className='bar-label'; label.textContent=d;
-    wrap.appendChild(bar); wrap.appendChild(label);
-    chart.appendChild(wrap);
-  });
-}
-
-// ── Badges ──
-function buildBadges() {
-  const grid=document.getElementById('badgesGrid');
-  if(!grid) return;
-  grid.innerHTML='';
-  BADGES.forEach(b=>{
-    const card=document.createElement('div');
-    card.className='badge-card'+(b.earned?' earned':' locked');
-    card.innerHTML=`<span class="badge-icon">${b.icon}</span><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div>`;
-    if(!b.earned) { const lock=document.createElement('div'); lock.style.cssText='font-size:20px; margin-top:8px;'; lock.textContent='🔒'; card.appendChild(lock); }
-    grid.appendChild(card);
-  });
-}
-
-// ── Particles ──
-function createParticles() {
-  const bg=document.getElementById('animBg');
-  if(!bg) return;
-  for(let i=0;i<15;i++){
-    const p=document.createElement('div');
-    p.className='particle';
-    p.style.cssText=`left:${Math.random()*100}%; animation-duration:${8+Math.random()*12}s; animation-delay:${Math.random()*10}s; width:${2+Math.random()*6}px; height:${2+Math.random()*6}px; background:${Math.random()>0.5?'var(--primary)':'var(--accent)'}`;
-    bg.appendChild(p);
+  function updateStepDisplay() {
+    document
+      .querySelectorAll(".journal-step")
+      .forEach((s, i) => s.classList.toggle("active", i + 1 === currentStep));
+    buildStepIndicator();
+    const pt = document.getElementById("stepProgressText");
+    if (pt) pt.textContent = `Langkah ${currentStep} dari ${totalSteps}`;
+    const bp = document.getElementById("btnPrev");
+    const bn = document.getElementById("btnNext");
+    if (bp) bp.style.display = currentStep > 1 ? "block" : "none";
+    if (bn)
+      bn.textContent =
+        currentStep === totalSteps ? "💾 Simpan Jurnal" : "Lanjut →";
+    if (currentStep === 15) {
+      setTimeout(() => {
+        const ji = document.getElementById("journalInsight");
+        if (ji) {
+          ji.style.display = "block";
+          ji.style.animation = "fadeUp 0.5s ease";
+        }
+        setTimeout(() => {
+          const ti = document.getElementById("typingIndicator");
+          const ic = document.getElementById("insightContent");
+          if (ti) ti.style.display = "none";
+          if (ic) {
+            ic.style.display = "block";
+            ic.innerHTML =
+              "🌟 <strong>Insight hari ini:</strong> Berdasarkan jurnalmu, energimu cukup baik dan kamu menemukan banyak hal untuk disyukuri. Stres yang kamu rasakan bisa dikurangi dengan istirahat berkualitas. Kamu sudah melakukan langkah luar biasa hari ini. Terus tumbuh! 🌱";
+          }
+        }, 2500);
+      }, 500);
+    }
   }
-}
+  function nextStep() {
+    if (currentStep === totalSteps) {
+      saveJournal();
+      return;
+    }
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStepDisplay();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+  function prevStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepDisplay();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+  function goToStep(n) {
+    currentStep = n;
+    updateStepDisplay();
+  }
 
-// ── Init ──
-function init() {
-  updateGreeting();
-  buildEmotions();
-  buildGratitude();
-  buildAffirmations();
-  buildStepIndicator();
-  updateStepDisplay();
-  buildCalendar();
-  buildMoodChart();
-  buildBadges();
-  createParticles();
-  updateMoodSlider(5);
-}
+  function saveJournal() {
+    const ss = document.getElementById("saveSuccess");
+    if (ss) {
+      ss.classList.add("show");
+      fireConfetti();
+      setTimeout(() => ss.classList.remove("show"), 3000);
+    }
+    const streak = document.getElementById("streakNum");
+    if (streak) streak.textContent = parseInt(streak.textContent) + 1;
+  }
 
-document.addEventListener('DOMContentLoaded', init);
-init();
+  // ── Confetti ──
+  function fireConfetti() {
+    const colors = [
+      "#6366F1",
+      "#8B5CF6",
+      "#06B6D4",
+      "#10B981",
+      "#F59E0B",
+      "#EF4444",
+      "#EC4899",
+    ];
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const c = document.createElement("div");
+        c.className = "confetti-piece";
+        c.style.cssText = `left:${Math.random() * 100}vw; top:-10px; background:${colors[Math.floor(Math.random() * colors.length)]}; transform:rotate(${Math.random() * 360}deg); animation-duration:${1.5 + Math.random()}s; animation-delay:${Math.random() * 0.5}s; border-radius:${Math.random() > 0.5 ? "50%" : "2px"};`;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+      }, i * 30);
+    }
+  }
+
+  // ── Breathing ──
+  const BREATH_PHASES = [
+    { name: "Tarik Nafas", dur: 4 },
+    { name: "Tahan", dur: 4 },
+    { name: "Buang Nafas", dur: 4 },
+    { name: "Tahan", dur: 4 },
+  ];
+  function toggleBreath() {
+    breathRunning = !breathRunning;
+    const btn = document.getElementById("breathBtn");
+    const circle = document.getElementById("breathCircle");
+    if (breathRunning) {
+      if (btn) btn.textContent = "⏸ Pause";
+      if (circle) circle.classList.add("running");
+      runBreath();
+    } else {
+      clearTimeout(breathTimer);
+      if (btn) btn.textContent = "▶ Lanjut";
+      if (circle) {
+        circle.classList.remove("running");
+        circle.style.animation = "breathe 8s ease-in-out infinite";
+      }
+    }
+  }
+  function runBreath() {
+    if (!breathRunning) return;
+    const phase = BREATH_PHASES[breathPhaseIdx];
+    const phaseEl = document.getElementById("breathPhase");
+    const countEl = document.getElementById("breathCount");
+    const circle = document.getElementById("breathCircle");
+    if (phaseEl) phaseEl.textContent = phase.name;
+    breathCount = phase.dur;
+    if (countEl) countEl.textContent = breathCount;
+    const sizes = { 0: "220px", 1: "220px", 2: "180px", 3: "180px" };
+    if (circle) {
+      circle.style.transition = `all ${phase.dur}s ease`;
+      circle.style.width = sizes[breathPhaseIdx];
+      circle.style.height = sizes[breathPhaseIdx];
+    }
+    const countDown = setInterval(() => {
+      breathCount--;
+      if (countEl) countEl.textContent = breathCount;
+      if (breathCount <= 0) {
+        clearInterval(countDown);
+        breathPhaseIdx = (breathPhaseIdx + 1) % 4;
+        if (breathPhaseIdx === 0) {
+          breathCycles++;
+          const cyc = document.getElementById("breathCycles");
+          if (cyc) cyc.textContent = `Sesi: ${breathCycles} siklus selesai`;
+        }
+        if (breathRunning) breathTimer = setTimeout(runBreath, 200);
+      }
+    }, 1000);
+  }
+  function resetBreath() {
+    breathRunning = false;
+    clearTimeout(breathTimer);
+    breathPhaseIdx = 0;
+    breathCount = 4;
+    breathCycles = 0;
+    const phaseEl = document.getElementById("breathPhase");
+    const countEl = document.getElementById("breathCount");
+    const btn = document.getElementById("breathBtn");
+    const circle = document.getElementById("breathCircle");
+    const cyc = document.getElementById("breathCycles");
+    if (phaseEl) phaseEl.textContent = "Klik untuk mulai";
+    if (countEl) countEl.textContent = "4";
+    if (btn) btn.textContent = "▶ Mulai Bernapas";
+    if (circle) {
+      circle.classList.remove("running");
+      circle.style.animation = "breathe 8s ease-in-out infinite";
+      circle.style.width = "220px";
+      circle.style.height = "220px";
+    }
+    if (cyc) cyc.textContent = "Sesi: 0 siklus selesai";
+  }
+
+  // ── Calendar ──
+  function buildCalendar() {
+    const grid = document.getElementById("calGrid");
+    if (!grid) return;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    grid.innerHTML = "";
+    for (let i = 0; i < firstDay; i++) {
+      const e = document.createElement("div");
+      e.className = "cal-day empty";
+      e.textContent = "";
+      grid.appendChild(e);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement("div");
+      const moodClass =
+        d < now.getDate() ? MOODS_CAL[Math.floor(Math.random() * 6)] : "";
+      el.className =
+        "cal-day" +
+        (moodClass ? " " + moodClass : "") +
+        (d === now.getDate() ? " today" : "");
+      el.textContent = d;
+      el.title = d < now.getDate() ? "Lihat jurnal" : "Hari ini";
+      grid.appendChild(el);
+    }
+  }
+
+  // ── Bar Chart ──
+  function buildMoodChart() {
+    const chart = document.getElementById("moodChart");
+    if (!chart) return;
+    const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
+    const values = [6, 7, 5, 8, 6, 9, 7];
+    const colors = [
+      "#6366F1",
+      "#8B5CF6",
+      "#6366F1",
+      "#10B981",
+      "#8B5CF6",
+      "#06B6D4",
+      "#6366F1",
+    ];
+    chart.innerHTML = "";
+    days.forEach((d, i) => {
+      const wrap = document.createElement("div");
+      wrap.className = "bar-wrap";
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.cssText = `height:${values[i] * 12}px; background:${colors[i]}; animation:fadeUp 0.5s ease ${i * 0.1}s both;`;
+      const label = document.createElement("div");
+      label.className = "bar-label";
+      label.textContent = d;
+      wrap.appendChild(bar);
+      wrap.appendChild(label);
+      chart.appendChild(wrap);
+    });
+  }
+
+  // ── Badges ──
+  function buildBadges() {
+    const grid = document.getElementById("badgesGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
+    BADGES.forEach((b) => {
+      const card = document.createElement("div");
+      card.className = "badge-card" + (b.earned ? " earned" : " locked");
+      card.innerHTML = `<span class="badge-icon">${b.icon}</span><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div>`;
+      if (!b.earned) {
+        const lock = document.createElement("div");
+        lock.style.cssText = "font-size:20px; margin-top:8px;";
+        lock.textContent = "🔒";
+        card.appendChild(lock);
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Particles ──
+  function createParticles() {
+    const bg = document.getElementById("animBg");
+    if (!bg) return;
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.cssText = `left:${Math.random() * 100}%; animation-duration:${8 + Math.random() * 12}s; animation-delay:${Math.random() * 10}s; width:${2 + Math.random() * 6}px; height:${2 + Math.random() * 6}px; background:${Math.random() > 0.5 ? "var(--primary)" : "var(--accent)"}`;
+      bg.appendChild(p);
+    }
+  }
+
+  // ── Init ──
+  function init() {
+    updateGreeting();
+    buildEmotions();
+    buildGratitude();
+    buildAffirmations();
+    buildStepIndicator();
+    updateStepDisplay();
+    buildCalendar();
+    buildMoodChart();
+    buildBadges();
+    createParticles();
+    updateMoodSlider(5);
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+  init();
 </script>

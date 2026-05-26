@@ -1,0 +1,1424 @@
+
+<h2 class="sr-only">MindBloom UX Redesign — User Flow, Screen States, dan Journey Map Hari 1 hingga Hari 90</h2>
+
+<style>
+:root {
+  --ink: var(--color-text-primary);
+  --ink2: var(--color-text-secondary);
+  --ink3: var(--color-text-tertiary);
+  --surface: var(--color-background-primary);
+  --surface2: var(--color-background-secondary);
+  --border: var(--color-border-tertiary);
+  --border2: var(--color-border-secondary);
+  --r: var(--border-radius-lg);
+  --r-sm: var(--border-radius-md);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.ux-wrap {
+  font-size: 14px;
+  color: var(--ink);
+  padding: 0 0 2rem;
+}
+
+/* ── Nav ── */
+.nav-strip {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 0 0 1.5rem;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+.nav-pill {
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 0.5px solid var(--border2);
+  background: var(--surface2);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.nav-pill:hover { color: var(--ink); border-color: var(--color-border-primary); }
+.nav-pill.active { background: var(--ink); color: var(--surface); border-color: transparent; }
+
+/* ── Section ── */
+.section { display: none; }
+.section.on { display: block; }
+
+.sec-head {
+  margin-bottom: 1.25rem;
+}
+.sec-head h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.sec-head p {
+  font-size: 13px;
+  color: var(--ink2);
+}
+
+/* ── Info Architecture ── */
+.ia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.ia-node {
+  background: var(--surface2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+}
+.ia-node .ia-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--ink3);
+  margin-bottom: 6px;
+}
+.ia-node .ia-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.ia-node .ia-items {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+.ia-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* ── Screen mockup ── */
+.screen-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.screen-card {
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--surface);
+}
+.screen-topbar {
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-bottom: 0.5px solid var(--border);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.screen-body {
+  padding: 14px;
+}
+.screen-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.screen-sub {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* State badges */
+.state-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.badge-empty   { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+.badge-loading { background: var(--color-background-info);    color: var(--color-text-info); }
+.badge-error   { background: var(--color-background-danger);  color: var(--color-text-danger); }
+.badge-success { background: var(--color-background-success); color: var(--color-text-success); }
+.badge-warning { background: var(--color-background-warning); color: var(--color-text-warning); }
+
+/* State mockups */
+.state-box {
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.state-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 18px;
+}
+.state-icon.empty   { background: var(--color-background-secondary); }
+.state-icon.loading { background: var(--color-background-info); }
+.state-icon.error   { background: var(--color-background-danger); }
+.state-icon.success { background: var(--color-background-success); }
+
+.state-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.state-desc  { font-size: 12px; color: var(--ink2); line-height: 1.5; margin-bottom: 12px; }
+
+.state-cta {
+  display: inline-block;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 0.5px solid var(--border2);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .15s;
+}
+.state-cta:hover { background: var(--surface2); }
+.state-cta.primary {
+  background: var(--ink);
+  color: var(--surface);
+  border-color: transparent;
+}
+
+/* Loading skeleton */
+.skel {
+  background: var(--surface2);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%,100% { opacity: .6; }
+  50% { opacity: 1; }
+}
+
+/* ── Onboarding steps ── */
+.ob-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border: 0.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  transition: border-color .15s;
+  cursor: default;
+}
+.ob-step:hover { border-color: var(--border2); }
+.ob-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 0.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500; color: var(--ink2);
+  flex-shrink: 0;
+}
+.ob-num.done {
+  background: var(--ink);
+  color: var(--surface);
+  border-color: transparent;
+}
+.ob-content .ob-label { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.ob-content .ob-desc  { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+
+/* ── Flow steps ── */
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+}
+.flow-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 36px;
+  bottom: 0;
+  width: 0.5px;
+  background: var(--border2);
+}
+.flow-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border2);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500; color: var(--ink2);
+  flex-shrink: 0;
+  margin-right: 14px;
+  z-index: 1;
+  position: relative;
+}
+.flow-dot.purple { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+.flow-dot.teal   { background: #E1F5EE; color: #085041; border-color: #5DCAA5; }
+.flow-dot.amber  { background: #FAEEDA; color: #633806; border-color: #EF9F27; }
+.flow-dot.coral  { background: #FAECE7; color: #4A1B0C; border-color: #F0997B; }
+.flow-body {
+  padding: 4px 0 20px;
+}
+.flow-body .flow-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.flow-body .flow-desc  { font-size: 12px; color: var(--ink2); line-height: 1.55; }
+
+/* ── Journey timeline ── */
+.journey-phases {
+  display: flex;
+  gap: 0;
+  position: relative;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.journey-phase {
+  flex: 1;
+  min-width: 120px;
+  border: 0.5px solid var(--border);
+  border-right: none;
+  padding: 14px 12px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: background .15s;
+}
+.journey-phase:last-child { border-right: 0.5px solid var(--border); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+.journey-phase:first-child { border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.journey-phase.active { background: var(--surface2); }
+.journey-phase:hover { background: var(--surface2); }
+.journey-day   { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .7px; color: var(--ink3); margin-bottom: 4px; }
+.journey-title { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+.journey-mood  { font-size: 18px; }
+
+.journey-detail {
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+  background: var(--surface);
+  margin-bottom: 1rem;
+}
+.journey-detail-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.journey-detail-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.jd-item { }
+.jd-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .6px; color: var(--ink3); margin-bottom: 3px; }
+.jd-value { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+
+/* ── Emotion bar ── */
+.emo-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface2);
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.emo-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .4s ease;
+}
+
+/* ── Premium flow ── */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.plan-card {
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 14px;
+  background: var(--surface);
+  position: relative;
+  transition: border-color .15s;
+  cursor: pointer;
+}
+.plan-card:hover { border-color: var(--border2); }
+.plan-card.featured { border: 2px solid var(--color-border-info); }
+.plan-featured-badge {
+  position: absolute;
+  top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  font-size: 10px; font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.plan-name   { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .7px; color: var(--ink3); margin-bottom: 6px; }
+.plan-price  { font-size: 20px; font-weight: 500; margin-bottom: 2px; }
+.plan-period { font-size: 11px; color: var(--ink3); margin-bottom: 10px; }
+.plan-feat   { font-size: 11px; color: var(--ink2); line-height: 1.8; }
+.plan-feat i { margin-right: 5px; font-size: 11px; }
+.plan-check { color: var(--color-text-success); }
+.plan-cross { color: var(--color-text-tertiary); }
+
+/* ── Mini phone frame ── */
+.phone-wrap {
+  width: 160px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.phone-notch {
+  height: 20px;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+}
+.phone-notch-bar {
+  width: 40px; height: 4px;
+  background: var(--border2);
+  border-radius: 2px;
+}
+.phone-screen {
+  padding: 10px;
+  min-height: 240px;
+}
+
+/* ── Divider ── */
+.divider { height: 0.5px; background: var(--border); margin: 1.25rem 0; }
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .plan-grid { grid-template-columns: 1fr; }
+  .screen-row { grid-template-columns: 1fr; }
+  .ia-grid { grid-template-columns: 1fr 1fr; }
+  .journey-detail-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="ux-wrap">
+
+  <!-- Navigation -->
+  <div class="nav-strip" id="nav">
+    <button class="nav-pill active" onclick="show('ia')">Arsitektur</button>
+    <button class="nav-pill" onclick="show('states')">UI States</button>
+    <button class="nav-pill" onclick="show('onboarding')">Onboarding</button>
+    <button class="nav-pill" onclick="show('daily')">Daily Flow</button>
+    <button class="nav-pill" onclick="show('ai')">AI Coach</button>
+    <button class="nav-pill" onclick="show('garden')">Garden</button>
+    <button class="nav-pill" onclick="show('memory')">Memory</button>
+    <button class="nav-pill" onclick="show('premium')">Premium</button>
+    <button class="nav-pill" onclick="show('journey')">Hari 1→90</button>
+  </div>
+
+  <!-- ── SECTION: Information Architecture ── -->
+  <div class="section on" id="sec-ia">
+    <div class="sec-head">
+      <h3>Information Architecture</h3>
+      <p>Hierarki konten dan navigasi MindBloom — dari root sampai leaf</p>
+    </div>
+
+    <div class="ia-grid">
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#7F77DD"></span>Fondasi
+        </div>
+        <div class="ia-title">Beranda & Auth</div>
+        <div class="ia-items">
+          Landing page<br>
+          Login / Signup<br>
+          Google OAuth<br>
+          Onboarding (3 langkah)
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#1D9E75"></span>Inti
+        </div>
+        <div class="ia-title">Dasbor Harian</div>
+        <div class="ia-items">
+          Salam dinamis<br>
+          Widget mood + streak<br>
+          Banner tulis jurnal<br>
+          Heatmap kalender<br>
+          AI insight hari ini
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#D85A30"></span>Journaling
+        </div>
+        <div class="ia-title">Jurnal Harian</div>
+        <div class="ia-items">
+          15 langkah refleksi<br>
+          Auto-save draft<br>
+          Pemilih emosi<br>
+          Syukur & afirmasi<br>
+          Kalender mood
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#EF9F27"></span>AI Layer
+        </div>
+        <div class="ia-title">AI Coach & Insight</div>
+        <div class="ia-items">
+          Chat reflektif<br>
+          EI analisis otomatis<br>
+          Insight harian/mingguan<br>
+          Memori jangka panjang<br>
+          Prompt adaptif
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#185FA5"></span>Premium
+        </div>
+        <div class="ia-title">Fitur Mendalam</div>
+        <div class="ia-items">
+          Taman emosional<br>
+          Soundscape mixer<br>
+          Life wheel<br>
+          Habit tracker<br>
+          Ruang bernapas
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#D4537E"></span>Kenangan
+        </div>
+        <div class="ia-title">Memory Vault</div>
+        <div class="ia-items">
+          Buku refleksi bulanan<br>
+          Review tahunan<br>
+          PDF export<br>
+          Share card<br>
+          Pencarian semantic
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#888780"></span>Analitik
+        </div>
+        <div class="ia-title">Data & Tren</div>
+        <div class="ia-items">
+          Tren mood 7/30 hari<br>
+          Distribusi emosi<br>
+          Korelasi habit-mood<br>
+          Skor stres<br>
+          Grafik energi
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">
+          <span class="ia-dot" style="background:#639922"></span>Pengaturan
+        </div>
+        <div class="ia-title">Profil & Akun</div>
+        <div class="ia-items">
+          Preferensi notifikasi<br>
+          Tema & tampilan<br>
+          Manajemen langganan<br>
+          Privasi & data<br>
+          Referral kode
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-head" style="margin-top:.5rem">
+      <h3>Screen Flow Utama</h3>
+      <p>Alur navigasi dari setiap titik masuk pengguna</p>
+    </div>
+
+    <div class="screen-row">
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Cold start</span>
+          <span class="state-badge badge-empty">Baru</span>
+        </div>
+        <div class="screen-body">
+          <div class="screen-title">Landing → Signup</div>
+          <div class="screen-sub">Hero, social proof, nilai produk. CTA "Mulai Gratis" → Google OAuth → onboarding 3 pertanyaan → dashboard.</div>
+          <div class="flow-steps" style="margin-top:8px">
+            <div class="flow-step">
+              <div class="flow-dot purple">1</div>
+              <div class="flow-body">
+                <div class="flow-title">Tampilan hero</div>
+                <div class="flow-desc">Tagline + social proof + CTA tunggal</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot purple">2</div>
+              <div class="flow-body">
+                <div class="flow-title">Google OAuth</div>
+                <div class="flow-desc">1 klik, tidak perlu isi form</div>
+              </div>
+            </div>
+            <div class="flow-step" style="--last:1">
+              <div class="flow-dot purple">3</div>
+              <div class="flow-body" style="padding-bottom:0">
+                <div class="flow-title">Onboarding singkat</div>
+                <div class="flow-desc">Nama, tujuan, jam pengingat</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Pengguna kembali</span>
+          <span class="state-badge badge-success">Aktif</span>
+        </div>
+        <div class="screen-body">
+          <div class="screen-title">Dashboard → Jurnal</div>
+          <div class="screen-sub">Salam, widget, banner "Tulis Jurnal", mood kalender, AI insight.</div>
+          <div class="flow-steps" style="margin-top:8px">
+            <div class="flow-step">
+              <div class="flow-dot teal">1</div>
+              <div class="flow-body">
+                <div class="flow-title">Dashboard load</div>
+                <div class="flow-desc">Streak, mood, taman, insight</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot teal">2</div>
+              <div class="flow-body">
+                <div class="flow-title">Tap banner</div>
+                <div class="flow-desc">Masuk ke step 1 jurnal</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot teal">3</div>
+              <div class="flow-body" style="padding-bottom:0">
+                <div class="flow-title">Selesai → AI insight</div>
+                <div class="flow-desc">Confetti + taman tumbuh + AI coach terbuka</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Mobile notif</span>
+          <span class="state-badge badge-warning">Pengingat</span>
+        </div>
+        <div class="screen-body">
+          <div class="screen-title">Notif → Deep link</div>
+          <div class="screen-sub">Push notification jam 21:00 → deep link ke halaman jurnal baru jika belum tulis.</div>
+          <div class="flow-steps" style="margin-top:8px">
+            <div class="flow-step">
+              <div class="flow-dot amber">1</div>
+              <div class="flow-body">
+                <div class="flow-title">Push diterima</div>
+                <div class="flow-desc">"Hei Asmawati, streak 14 hari kamu menunggu 🔥"</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot amber">2</div>
+              <div class="flow-body" style="padding-bottom:0">
+                <div class="flow-title">Tap → langsung tulis</div>
+                <div class="flow-desc">Skip dashboard, buka step 1 jurnal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: UI States ── -->
+  <div class="section" id="sec-states">
+    <div class="sec-head">
+      <h3>UI States — Empty, Loading, Error, Success</h3>
+      <p>Setiap state dirancang dengan empati — tidak ada pesan generik</p>
+    </div>
+
+    <div class="screen-row">
+      <!-- Empty State -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Jurnal kosong</span>
+          <span class="state-badge badge-empty">Empty</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box">
+            <div class="state-icon empty">
+              <i class="ti ti-notebook" style="font-size:18px;color:var(--ink3)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Harimu belum tercatat</div>
+            <div class="state-desc">Setiap perjalanan besar dimulai dari satu langkah kecil. Tulis apa yang kamu rasakan hari ini.</div>
+            <button class="state-cta primary" onclick="sendPrompt('Bagaimana cara memulai journaling yang efektif?')">Mulai menulis ↗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>AI memproses</span>
+          <span class="state-badge badge-loading">Loading</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box">
+            <div class="state-icon loading">
+              <i class="ti ti-sparkles" style="font-size:18px;color:var(--color-text-info)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Bloom sedang membaca...</div>
+            <div class="state-desc">AI sedang menganalisis jurnalmu dan menyiapkan insight personal.</div>
+            <div style="margin-top:8px">
+              <div class="skel" style="height:8px;width:80%;margin:0 auto 6px"></div>
+              <div class="skel" style="height:8px;width:60%;margin:0 auto 6px"></div>
+              <div class="skel" style="height:8px;width:70%;margin:0 auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Koneksi gagal</span>
+          <span class="state-badge badge-error">Error</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box">
+            <div class="state-icon error">
+              <i class="ti ti-wifi-off" style="font-size:18px;color:var(--color-text-danger)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Jurnalmu tersimpan offline</div>
+            <div class="state-desc">Koneksi terputus, tapi tenang — tulisanmu aman di perangkatmu dan akan tersinkron otomatis.</div>
+            <button class="state-cta" onclick="sendPrompt('Bagaimana cara kerja offline sync MindBloom?')">Coba lagi ↗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Jurnal tersimpan</span>
+          <span class="state-badge badge-success">Success</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box">
+            <div class="state-icon success">
+              <i class="ti ti-heart" style="font-size:18px;color:var(--color-text-success)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Kamu luar biasa hari ini.</div>
+            <div class="state-desc">Jurnal ke-14 tersimpan. Streak 🔥 14 hari. Satu tanaman baru tumbuh di tamanmu.</div>
+            <div style="display:flex;gap:6px;justify-content:center;margin-top:8px">
+              <button class="state-cta" onclick="sendPrompt('Lihat insight hari ini')">Lihat insight ↗</button>
+              <button class="state-cta primary">Taman saya</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty — Taman -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Taman baru</span>
+          <span class="state-badge badge-empty">Empty</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box">
+            <div class="state-icon empty">
+              <i class="ti ti-plant" style="font-size:18px;color:var(--ink3)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Tamanmu masih kosong</div>
+            <div class="state-desc">Setiap jurnal yang kamu tulis menumbuhkan satu tanaman baru. Mulailah hari ini.</div>
+            <button class="state-cta primary">Tulis jurnal pertama</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paywall State -->
+      <div class="screen-card">
+        <div class="screen-topbar">
+          <span>Fitur premium</span>
+          <span class="state-badge badge-warning">Terkunci</span>
+        </div>
+        <div class="screen-body">
+          <div class="state-box" style="border-style:dashed">
+            <div class="state-icon" style="background:var(--color-background-warning)">
+              <i class="ti ti-lock" style="font-size:18px;color:var(--color-text-warning)" aria-hidden="true"></i>
+            </div>
+            <div class="state-title">Buka Memory Vault</div>
+            <div class="state-desc">Buku refleksi bulanan & AI narrative tersedia di paket Premium. Coba 7 hari gratis.</div>
+            <button class="state-cta primary" onclick="sendPrompt('Apa bedanya paket free dan premium MindBloom?')">Coba Premium gratis ↗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Onboarding ── -->
+  <div class="section" id="sec-onboarding">
+    <div class="sec-head">
+      <h3>Onboarding Experience</h3>
+      <p>Dari klik "Mulai" hingga jurnal pertama — dirancang selesai dalam 3 menit</p>
+    </div>
+
+    <div class="ob-steps">
+      <div class="ob-step">
+        <div class="ob-num done">1</div>
+        <div class="ob-content">
+          <div class="ob-label">Selamat datang (30 detik)</div>
+          <div class="ob-desc">Layar sambutan hangat: "Hei, aku Bloom. Aku di sini untuk menemanimu." Satu tombol: "Lanjut". Tidak ada daftar fitur, tidak ada harga. Hanya kehadiran yang hangat.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num done">2</div>
+        <div class="ob-content">
+          <div class="ob-label">Nama & sapaan (15 detik)</div>
+          <div class="ob-desc">Satu input: "Bagaimana aku harus memanggilmu?" Langsung dipakai di salam berikutnya: "Senang bertemu denganmu, Asmawati." Validasi simpel, tidak ada field wajib lain.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num done">3</div>
+        <div class="ob-content">
+          <div class="ob-label">Tujuan journaling (20 detik)</div>
+          <div class="ob-desc">3 pilihan visual dengan ikon: "Memahami emosi", "Mengurangi stres", "Membangun kebiasaan". Boleh pilih lebih dari satu. Mempengaruhi AI prompt dan rekomendasi pertama.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num done">4</div>
+        <div class="ob-content">
+          <div class="ob-label">Jam pengingat (10 detik)</div>
+          <div class="ob-desc">Satu time picker dengan default 21:00. Bisa dilewati. "Aku akan mengingatkanmu setiap hari, kecuali kamu sudah menulis lebih awal."</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num" style="background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-text-success)">✓</div>
+        <div class="ob-content">
+          <div class="ob-label">Momen pertama — ajaib (1 menit)</div>
+          <div class="ob-desc">Langsung buka step 1 jurnal. Tidak ada tour, tidak ada tooltip. AI menyambut: "Hari yang bagus untuk memulai. Bagaimana perasaanmu sekarang?" Setelah selesai: confetti, taman muncul benih pertama, streak dimulai.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div style="padding:12px;background:var(--surface2);border-radius:var(--r-sm);border:0.5px solid var(--border)">
+      <div style="font-size:12px;font-weight:500;margin-bottom:6px">Prinsip desain onboarding</div>
+      <div style="font-size:12px;color:var(--ink2);line-height:1.7">
+        Tidak ada splash screen panjang · Tidak ada onboarding carousel 7 slide · Tidak ada "Izinkan notifikasi" di awal · Nilai dirasakan sebelum diminta upgrade · Keberhasilan pertama dalam 5 menit pertama
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Daily Reflection Flow ── -->
+  <div class="section" id="sec-daily">
+    <div class="sec-head">
+      <h3>Daily Reflection Flow</h3>
+      <p>15 langkah yang terasa seperti percakapan, bukan formulir</p>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-dot purple">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Tanggal & konteks</div>
+          <div class="flow-desc">Auto-detect tanggal + waktu. Sapaan kontekstual: "Jumat sore adalah waktu terbaik untuk merefleksi minggu ini."</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot purple">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Mood slider 1–10</div>
+          <div class="flow-desc">Emoji berubah real-time. Skala verbal: 1 = "Sangat berat", 10 = "Luar biasa". Warna slider berubah dari merah ke hijau.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot purple">3</div>
+        <div class="flow-body">
+          <div class="flow-title">Pemilih emosi</div>
+          <div class="flow-desc">Tag cloud berwarna dalam 4 kategori. Pilih bebas. Emosi positif dan negatif sama-sama valid.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot purple">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Baterai energi</div>
+          <div class="flow-desc">Visualisasi baterai 0–100. Warna berubah: merah (lelah) → kuning → hijau (penuh energi).</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">5</div>
+        <div class="flow-body">
+          <div class="flow-title">Cerita hari ini</div>
+          <div class="flow-desc">Prompt hangat: "Apa yang paling berkesan hari ini?" Rich text area. Auto-save setiap 30 detik.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">6</div>
+        <div class="flow-body">
+          <div class="flow-title">Pikiran yang bermain</div>
+          <div class="flow-desc">"Pikiran apa yang paling sering muncul?" — ruang aman untuk mengosongkan kepala.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">7</div>
+        <div class="flow-body">
+          <div class="flow-title">Sumber stres + intensitas</div>
+          <div class="flow-desc">Textarea + slider intensitas 1–10. AI menggunakan ini untuk deteksi burnout.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">8</div>
+        <div class="flow-body">
+          <div class="flow-title">Momen bahagia</div>
+          <div class="flow-desc">"Hal apa yang membuatmu tersenyum hari ini?" — bahkan di hari buruk selalu ada satu hal kecil.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">9</div>
+        <div class="flow-body">
+          <div class="flow-title">Jurnal syukur</div>
+          <div class="flow-desc">Minimal 3 item. Input dinamis — tambah sebanyak mau. Setiap tambahan ada konfetti kecil.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">10</div>
+        <div class="flow-body">
+          <div class="flow-title">Pelajaran hari ini</div>
+          <div class="flow-desc">"Pelajaran terkecil yang tersembunyi hari ini?" — mendorong growth mindset.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">11</div>
+        <div class="flow-body">
+          <div class="flow-title">Refleksi diri (3 pertanyaan)</div>
+          <div class="flow-desc">Apa yang sudah baik · Apa yang bisa diperbaiki · Apa yang akan dilakukan berbeda besok.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">12</div>
+        <div class="flow-body">
+          <div class="flow-title">Belas kasih diri</div>
+          <div class="flow-desc">"Jika sahabatmu mengalami ini, apa yang kamu katakan? Sekarang katakan itu pada dirimu." Langkah paling emosional.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot coral">13</div>
+        <div class="flow-body">
+          <div class="flow-title">Niat besok</div>
+          <div class="flow-desc">Setting intention — bukan to-do list, tapi energi yang ingin dibawa.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot coral">14</div>
+        <div class="flow-body">
+          <div class="flow-title">Afirmasi</div>
+          <div class="flow-desc">8 preset + tulis sendiri. Dipilih berdasarkan mood yang terdeteksi di langkah 2.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot coral">15</div>
+        <div class="flow-body" style="padding-bottom:0">
+          <div class="flow-title">Doa & harapan</div>
+          <div class="flow-desc">Free-form. Tidak ada prompt. Ruang paling pribadi di seluruh aplikasi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: AI Coach Flow ── -->
+  <div class="section" id="sec-ai">
+    <div class="sec-head">
+      <h3>AI Reflection Coach Flow</h3>
+      <p>Bloom — AI yang empatik, tidak menghakimi, dan selalu ada</p>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-dot purple">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Trigger masuk</div>
+          <div class="flow-desc">Muncul setelah jurnal tersimpan (auto-suggest) atau dari tab "Coach" kapanpun. Tidak memaksa — "Mau ngobrol sebentar?"</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot purple">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Context loading (invisible)</div>
+          <div class="flow-desc">Di balik layar: AI memuat jurnal hari ini, 5 memori relevan, 3 jurnal serupa dari masa lalu, dan preferensi pengguna. Pengguna tidak melihat proses ini.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot purple">3</div>
+        <div class="flow-body">
+          <div class="flow-title">Sapaan Bloom</div>
+          <div class="flow-desc">Bloom menyapa berdasarkan jurnal: "Aku baca tentang meeting yang melelahkan itu. Gimana rasanya sekarang?" — bukan "Hai, ada yang bisa aku bantu?"</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Percakapan reflektif</div>
+          <div class="flow-desc">Bloom mengajukan satu pertanyaan terbuka per respons. Tidak memberikan saran. Tidak menghakimi. Validasi dulu, baru eksplorasi.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">5</div>
+        <div class="flow-body">
+          <div class="flow-title">Pattern recognition</div>
+          <div class="flow-desc">"Aku perhatikan ini sudah ketiga kalinya kamu menyebut soal deadline bulan ini. Apakah ada pola yang kamu sadari?"</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">6</div>
+        <div class="flow-body">
+          <div class="flow-title">Reframing gentle</div>
+          <div class="flow-desc">"Bagaimana jika kita lihat dari sudut yang berbeda? Apa yang mungkin bisa dipelajari dari situasi ini?"</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">7</div>
+        <div class="flow-body">
+          <div class="flow-title">Action micro-step</div>
+          <div class="flow-desc">"Langkah kecil apa yang paling mungkin kamu lakukan besok?" — bukan saran, tapi fasilitasi penemuan.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">8</div>
+        <div class="flow-body" style="padding-bottom:0">
+          <div class="flow-title">Penutup hangat + memory save</div>
+          <div class="flow-desc">Bloom mengakhiri dengan penguatan: "Kamu sudah melakukan yang terbaik dengan apa yang kamu punya hari ini." AI menyimpan fakta baru ke long-term memory.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div style="padding:12px;background:var(--color-background-info);border-radius:var(--r-sm);border:0.5px solid var(--color-border-info)">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-info);margin-bottom:4px">Prinsip Bloom AI</div>
+      <div style="font-size:12px;color:var(--color-text-info);line-height:1.7;opacity:.85">
+        Tidak pernah memberikan diagnosis · Tidak pernah menghakimi keputusan · Selalu validasi sebelum eksplorasi · Sarankan profesional jika ada tanda distress tinggi · Ingat konteks percakapan sebelumnya
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Garden Flow ── -->
+  <div class="section" id="sec-garden">
+    <div class="sec-head">
+      <h3>Emotional Garden Flow</h3>
+      <p>Gamifikasi yang terasa organik — taman tumbuh seiring pertumbuhan diri</p>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-dot teal">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Jurnal pertama → benih pertama</div>
+          <div class="flow-desc">Animasi biji jatuh ke tanah setelah jurnal tersimpan. Warna biji sesuai mood: hijau (bahagia), biru (tenang), merah (stres), oranye (cemas).</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Level 2 → Tunas (3 jurnal)</div>
+          <div class="flow-desc">Benih bertunas. Notifikasi dalam-app: "Tamanmu mulai tumbuh! Setiap jurnal menambah tanaman baru."</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">3</div>
+        <div class="flow-body">
+          <div class="flow-title">Level 3 → Tanaman (7 jurnal)</div>
+          <div class="flow-desc">Taman mulai terlihat hidup. Streak mempengaruhi kesehatan tanaman — jika streak putus, tanaman sedikit layu tapi tidak mati.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Bunga langka — refleksi mendalam</div>
+          <div class="flow-desc">Jika jurnal memiliki completion ≥ 90% (langkah 11 & 12 diisi penuh), muncul bunga langka berwarna istimewa. Jarang, sehingga berharga.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">5</div>
+        <div class="flow-body">
+          <div class="flow-title">Level 4 → Pohon (20 jurnal)</div>
+          <div class="flow-desc">Milestone besar. Achievement "Pemikir Mendalam" terbuka. Taman mulai terasa seperti tempat yang nyata.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot teal">6</div>
+        <div class="flow-body" style="padding-bottom:0">
+          <div class="flow-title">Level 5 → Hutan (50 jurnal)</div>
+          <div class="flow-desc">Puncak gamifikasi. Achievement "Penumbuh Hutan". Latar taman berubah menjadi hutan lebat. Share card unik tersedia.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="ia-grid" style="margin-top:.5rem">
+      <div class="ia-node">
+        <div class="ia-label">Warna mood</div>
+        <div class="ia-items">
+          <span class="ia-dot" style="background:#388E3C"></span>Bahagia<br>
+          <span class="ia-dot" style="background:#1976D2"></span>Tenang<br>
+          <span class="ia-dot" style="background:#F57F17"></span>Semangat<br>
+          <span class="ia-dot" style="background:#F97316"></span>Cemas<br>
+          <span class="ia-dot" style="background:#C62828"></span>Stres<br>
+          <span class="ia-dot" style="background:#5B4FE8"></span>Emosional
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">Level taman</div>
+        <div class="ia-items">
+          Benih: 1 jurnal<br>
+          Tunas: 2–6 jurnal<br>
+          Tanaman: 7–19<br>
+          Pohon: 20–49<br>
+          Hutan: 50+
+        </div>
+      </div>
+      <div class="ia-node">
+        <div class="ia-label">Bunga langka</div>
+        <div class="ia-items">
+          Completion ≥ 90%<br>
+          Belas kasih terisi<br>
+          Refleksi diri penuh<br>
+          Muncul ~1 dari 7 jurnal<br>
+          Warna unik per mood
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Memory Vault Flow ── -->
+  <div class="section" id="sec-memory">
+    <div class="sec-head">
+      <h3>Memory Vault Flow</h3>
+      <p>Dari data mentah jurnal menjadi buku kenangan yang bisa dikenang seumur hidup</p>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-dot amber">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Trigger: hari pertama bulan baru</div>
+          <div class="flow-desc">Server mengumpulkan semua jurnal bulan lalu. Proses otomatis, pengguna tidak perlu melakukan apapun.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">2</div>
+        <div class="flow-body">
+          <div class="flow-title">AI mengkurasi highlights</div>
+          <div class="flow-desc">Momen terbaik, pelajaran terbesar, orang paling disebut, topik syukur terbanyak, pencapaian terbesar — dipilih AI dari semua jurnal.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">3</div>
+        <div class="flow-body">
+          <div class="flow-title">AI menulis narasi</div>
+          <div class="flow-desc">2–3 paragraf yang hangat dan personal: "Mei adalah bulan di mana kamu menemukan kekuatan baru..." — bukan summary kering.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Notifikasi: buku siap</div>
+          <div class="flow-desc">Push notification: "📖 Buku Kenangan Mei 2025 sudah siap. Lihat perjalananmu bulan ini."</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">5</div>
+        <div class="flow-body">
+          <div class="flow-title">Pengguna membuka buku</div>
+          <div class="flow-desc">Animasi "buku terbuka". Setiap halaman: mood heatmap, highlight, kutipan jurnal terbaik, narasi AI, distribusi emosi.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-dot amber">6</div>
+        <div class="flow-body" style="padding-bottom:0">
+          <div class="flow-title">Export & share</div>
+          <div class="flow-desc">Download PDF berkualitas tinggi (Premium). Share card visual untuk media sosial. Link shareable dengan token unik.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Premium Flow ── -->
+  <div class="section" id="sec-premium">
+    <div class="sec-head">
+      <h3>Premium Subscription Flow</h3>
+      <p>Paywall yang terasa seperti undangan, bukan tembok</p>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-name">Gratis</div>
+        <div class="plan-price">Rp 0</div>
+        <div class="plan-period">selamanya</div>
+        <div class="plan-feat">
+          <div><i class="ti ti-check plan-check"></i>Jurnal 15 langkah</div>
+          <div><i class="ti ti-check plan-check"></i>Mood tracker</div>
+          <div><i class="ti ti-check plan-check"></i>Streak & badge</div>
+          <div><i class="ti ti-check plan-check"></i>Taman (benih)</div>
+          <div><i class="ti ti-x plan-cross"></i>AI Coach</div>
+          <div><i class="ti ti-x plan-cross"></i>Soundscape</div>
+          <div><i class="ti ti-x plan-cross"></i>Memory Vault</div>
+        </div>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-featured-badge">Paling populer</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">Rp 49K</div>
+        <div class="plan-period">/bulan · 7 hari gratis</div>
+        <div class="plan-feat">
+          <div><i class="ti ti-check plan-check"></i>Semua fitur gratis</div>
+          <div><i class="ti ti-check plan-check"></i>AI Coach unlimited</div>
+          <div><i class="ti ti-check plan-check"></i>6 soundscape + mixer</div>
+          <div><i class="ti ti-check plan-check"></i>Memory Vault</div>
+          <div><i class="ti ti-check plan-check"></i>Life Wheel</div>
+          <div><i class="ti ti-check plan-check"></i>Analytics 90 hari</div>
+          <div><i class="ti ti-check plan-check"></i>Export PDF</div>
+        </div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">Rp 99K</div>
+        <div class="plan-period">/bulan</div>
+        <div class="plan-feat">
+          <div><i class="ti ti-check plan-check"></i>Semua fitur Premium</div>
+          <div><i class="ti ti-check plan-check"></i>EI Engine penuh</div>
+          <div><i class="ti ti-check plan-check"></i>Analytics seumur hidup</div>
+          <div><i class="ti ti-check plan-check"></i>Review tahunan AI</div>
+          <div><i class="ti ti-check plan-check"></i>Custom AI prompts</div>
+          <div><i class="ti ti-check plan-check"></i>API access</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ob-steps" style="margin-top:.5rem">
+      <div class="ob-step">
+        <div class="ob-num done">1</div>
+        <div class="ob-content">
+          <div class="ob-label">Soft paywall (hari ke-7 atau ke-14)</div>
+          <div class="ob-desc">Bukan popup tiba-tiba. Setelah pengguna mencoba fitur premium dan terkunci, muncul panel preview: "Kamu hampir bisa mengakses ini..." dengan tombol "Coba 7 Hari Gratis".</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num done">2</div>
+        <div class="ob-content">
+          <div class="ob-label">Trial tanpa kartu kredit</div>
+          <div class="ob-desc">Pengguna langsung bisa akses semua fitur Premium selama 7 hari. Tidak perlu input payment dulu. Di hari ke-5 ada notifikasi: "Trial kamu berakhir dalam 2 hari."</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num done">3</div>
+        <div class="ob-content">
+          <div class="ob-label">Checkout via Midtrans</div>
+          <div class="ob-desc">Kartu kredit, transfer bank, GoPay, OVO, DANA — semua tersedia. Konfirmasi email otomatis + PDF invoice.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-num">4</div>
+        <div class="ob-content">
+          <div class="ob-label">Welcome Premium</div>
+          <div class="ob-desc">Layar perayaan. AI Coach Bloom menyambut: "Selamat bergabung ke Premium. Sekarang aku bisa menemanimu jauh lebih dalam."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: Journey Day 1 → 90 ── -->
+  <div class="section" id="sec-journey">
+    <div class="sec-head">
+      <h3>Perjalanan Pengguna: Hari 1 → Hari 90</h3>
+      <p>Klik fase untuk melihat detail emosi, fitur, dan momen kritis</p>
+    </div>
+
+    <div class="journey-phases" id="journey-nav">
+      <div class="journey-phase active" onclick="showPhase(0)">
+        <div class="journey-day">Hari 1</div>
+        <div class="journey-title">Pertama kali</div>
+        <div class="journey-mood">🌱</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(1)">
+        <div class="journey-day">Hari 2–3</div>
+        <div class="journey-title">Eksplorasi</div>
+        <div class="journey-mood">✨</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(2)">
+        <div class="journey-day">Hari 4–7</div>
+        <div class="journey-title">Kebiasaan</div>
+        <div class="journey-mood">🔥</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(3)">
+        <div class="journey-day">Hari 8–14</div>
+        <div class="journey-title">Keterikatan</div>
+        <div class="journey-mood">💛</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(4)">
+        <div class="journey-day">Hari 15–30</div>
+        <div class="journey-title">Mendalam</div>
+        <div class="journey-mood">🌿</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(5)">
+        <div class="journey-day">Hari 31–60</div>
+        <div class="journey-title">Transformasi</div>
+        <div class="journey-mood">🌳</div>
+      </div>
+      <div class="journey-phase" onclick="showPhase(6)">
+        <div class="journey-day">Hari 61–90</div>
+        <div class="journey-title">Identitas baru</div>
+        <div class="journey-mood">🏆</div>
+      </div>
+    </div>
+
+    <div class="journey-detail" id="journey-detail">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Emotional arc bars -->
+    <div style="margin-bottom:1rem">
+      <div style="font-size:13px;font-weight:500;margin-bottom:10px">Kurva emosi sepanjang 90 hari</div>
+      <div style="display:grid;gap:10px">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:4px">
+            <span>Kepercayaan diri</span><span id="bar-val-1">rendah</span>
+          </div>
+          <div class="emo-track"><div class="emo-fill" id="bar-1" style="width:15%;background:#1D9E75"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:4px">
+            <span>Kesadaran diri</span><span id="bar-val-2">rendah</span>
+          </div>
+          <div class="emo-track"><div class="emo-fill" id="bar-2" style="width:10%;background:#7F77DD"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:4px">
+            <span>Konsistensi</span><span id="bar-val-3">rendah</span>
+          </div>
+          <div class="emo-track"><div class="emo-fill" id="bar-3" style="width:5%;background:#D85A30"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:4px">
+            <span>Ketenangan batin</span><span id="bar-val-4">rendah</span>
+          </div>
+          <div class="emo-track"><div class="emo-fill" id="bar-4" style="width:20%;background:#0F6E56"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PHASES = [
+  {
+    day:'Hari 1', title:'Pertama kali', mood:'🌱',
+    emotion:'Antusias tapi sedikit skeptis. "Apakah ini akan berbeda dari jurnal biasa?"',
+    fitur:'Onboarding → jurnal pertama → benih pertama di taman → streak dimulai',
+    kritis:'5 menit pertama menentukan retensi hari ke-1. Harus ada satu momen "wow".',
+    ai:'Bloom menyapa setelah jurnal selesai. Satu pertanyaan reflektif simpel.',
+    bars:[15,10,5,20]
+  },
+  {
+    day:'Hari 2–3', title:'Eksplorasi', mood:'✨',
+    emotion:'Penasaran dan mulai menjelajah. Menemukan fitur-fitur baru.',
+    fitur:'Dashboard penuh terbuka · Taman bertunas · Fitur soundscape terlihat',
+    kritis:'Progressive disclosure — fitur diperkenalkan bertahap, tidak sekaligus.',
+    ai:'Bloom mulai mengingat konteks dari jurnal sebelumnya.',
+    bars:[30,25,20,30]
+  },
+  {
+    day:'Hari 4–7', title:'Pembentukan kebiasaan', mood:'🔥',
+    emotion:'"Aku mulai menikmati ini." Streak menjadi motivasi nyata.',
+    fitur:'Streak 7 hari → badge pertama · Tanaman level naik · Insight mingguan pertama',
+    kritis:'Badge streak 7 hari adalah milestone gamifikasi paling penting. Harus terasa perayaan.',
+    ai:'Bloom mulai menunjukkan pola: "Aku perhatikan kamu lebih bahagia di hari Jumat."',
+    bars:[45,40,50,45]
+  },
+  {
+    day:'Hari 8–14', title:'Keterikatan emosional', mood:'💛',
+    emotion:'"Aku tidak bisa tidur tanpa nulis jurnal." Aplikasi mulai terasa milik sendiri.',
+    fitur:'Life Wheel diisi pertama kali · AI Coach mulai dipercaya · Paywall pertama muncul',
+    kritis:'Soft paywall muncul di sini. Harus terasa sebagai undangan, bukan hambatan.',
+    ai:'Bloom mengingat nama orang-orang yang sering disebut. Percakapan makin dalam.',
+    bars:[60,60,65,55]
+  },
+  {
+    day:'Hari 15–30', title:'Refleksi mendalam', mood:'🌿',
+    emotion:'"Aku mulai benar-benar mengenal diriku sendiri." Beberapa pengguna upgrade ke Premium.',
+    fitur:'Memory Book bulan pertama · Habit correlations terbuka · Analytics 30 hari',
+    kritis:'Memory Book pertama adalah momen emosional paling kuat. AI narrative yang hangat.',
+    ai:'Bloom memiliki 10+ memori tentang pengguna. Percakapan sangat personal.',
+    bars:[70,75,70,68]
+  },
+  {
+    day:'Hari 31–60', title:'Transformasi nyata', mood:'🌳',
+    emotion:'"Aku lebih tenang menghadapi masalah." Perubahan nyata dalam pola pikir.',
+    fitur:'Pohon di taman · Review 60 hari · Korelasi habit-mood terlihat jelas',
+    kritis:'Data menunjukkan pola yang tidak disadari pengguna sebelumnya. Momen insight terbesar.',
+    ai:'Bloom bisa prediksi kapan pengguna akan stres berdasarkan pola historis.',
+    bars:[82,85,82,78]
+  },
+  {
+    day:'Hari 61–90', title:'Identitas baru', mood:'🏆',
+    emotion:'"Aku adalah orang yang meluangkan waktu untuk dirinya sendiri setiap hari." Identitas baru terbentuk.',
+    fitur:'Hutan terbuka · Achievement "Juara Konsistensi" · Annual review dimulai',
+    kritis:'Pengguna di sini adalah brand ambassador terbaik. Aktifkan referral program.',
+    ai:'Bloom merayakan: "90 hari. Kamu sudah membuktikan bahwa kamu bisa konsisten untuk dirimu sendiri."',
+    bars:[92,90,95,88]
+  },
+];
+
+const LABELS = ['rendah','mulai','cukup','baik','sangat baik','luar biasa','puncak'];
+function getLabel(pct) {
+  const idx = Math.min(Math.floor(pct/15), 6);
+  return LABELS[idx];
+}
+
+function showPhase(i) {
+  const p = PHASES[i];
+  document.querySelectorAll('.journey-phase').forEach((el,j) => el.classList.toggle('active', j===i));
+  document.getElementById('journey-detail').innerHTML = `
+    <div class="journey-detail-title">${p.day} — ${p.title} ${p.mood}</div>
+    <div style="font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:12px;padding:10px;background:var(--surface2);border-radius:var(--r-sm)">"${p.emotion}"</div>
+    <div class="journey-detail-grid">
+      <div class="jd-item"><div class="jd-label">Fitur aktif</div><div class="jd-value">${p.fitur}</div></div>
+      <div class="jd-item"><div class="jd-label">Momen kritis</div><div class="jd-value">${p.kritis}</div></div>
+      <div class="jd-item"><div class="jd-label">AI Bloom</div><div class="jd-value">${p.ai}</div></div>
+      <div class="jd-item"><div class="jd-label">Metrik target</div><div class="jd-value">Retention D-${i===0?'1':i<3?'7':i<5?'30':'90'} ≥ ${i===0?70:i<3?50:i<5?40:25}%</div></div>
+    </div>
+  `;
+  const bars = p.bars;
+  ['1','2','3','4'].forEach((n,j) => {
+    document.getElementById('bar-'+n).style.width = bars[j]+'%';
+    document.getElementById('bar-val-'+n).textContent = getLabel(bars[j]);
+  });
+}
+
+function show(key) {
+  const ids = ['ia','states','onboarding','daily','ai','garden','memory','premium','journey'];
+  ids.forEach(id => document.getElementById('sec-'+id).classList.remove('on'));
+  document.getElementById('sec-'+key).classList.add('on');
+  document.querySelectorAll('.nav-pill').forEach((el,i) => el.classList.toggle('active', ids[i]===key));
+}
+
+showPhase(0);
+</script>
