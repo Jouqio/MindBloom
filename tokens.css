@@ -1,0 +1,351 @@
+/* ============================================================
+   MindBloom Design System — CSS Tokens & Utilities
+   File: src/styles/tokens.css
+   Version: 1.0 | May 2025
+   ============================================================ */
+
+/* ── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; tab-size: 4; }
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT MODE TOKENS (default)
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Text ─────────────────────────────────────────────────── */
+  --color-text-primary:      #0D0F1A;
+  --color-text-secondary:    #4A4A52;
+  --color-text-tertiary:     #8A8A9A;
+  --color-text-placeholder:  #AEAEBB;
+  --color-text-inverse:      #FFFFFF;
+  --color-text-disabled:     #C4C4CC;
+
+  /* ── Background ───────────────────────────────────────────── */
+  --color-background-primary:   #FFFFFF;
+  --color-background-secondary: #F4F3EF;
+  --color-background-tertiary:  #ECEAE4;
+  --color-background-elevated:  #FFFFFF;
+  --color-background-overlay:   rgba(13, 15, 26, 0.48);
+
+  /* ── Border ───────────────────────────────────────────────── */
+  --color-border-tertiary:  rgba(0, 0, 0, 0.07);
+  --color-border-secondary: rgba(0, 0, 0, 0.14);
+  --color-border-primary:   rgba(0, 0, 0, 0.26);
+  --color-border-focus:     rgba(127, 119, 221, 0.65);
+
+  /* ── Brand ────────────────────────────────────────────────── */
+  --color-brand-50:         #EEEDFE;
+  --color-brand-100:        #CECBF6;
+  --color-brand-200:        #AFA9EC;
+  --color-brand-400:        #7F77DD;   /* Primary brand */
+  --color-brand-600:        #534AB7;
+  --color-brand-800:        #3C3489;
+  --color-brand-900:        #26215C;
+
+  /* ── Semantic: Success / Teal ─────────────────────────────── */
+  --color-success-50:       #E1F5EE;
+  --color-success-400:      #1D9E75;
+  --color-success-600:      #0F6E56;
+  --color-text-success:     #085041;
+  --color-background-success: #E1F5EE;
+  --color-border-success:   #5DCAA5;
+
+  /* ── Semantic: Warning / Amber ────────────────────────────── */
+  --color-warning-50:       #FAEEDA;
+  --color-warning-400:      #EF9F27;
+  --color-warning-600:      #BA7517;
+  --color-text-warning:     #633806;
+  --color-background-warning: #FAEEDA;
+  --color-border-warning:   #EF9F27;
+
+  /* ── Semantic: Danger / Red ───────────────────────────────── */
+  --color-danger-50:        #FCEBEB;
+  --color-danger-400:       #E24B4A;
+  --color-danger-600:       #A32D2D;
+  --color-text-danger:      #791F1F;
+  --color-background-danger: #FCEBEB;
+  --color-border-danger:    #E24B4A;
+
+  /* ── Semantic: Info / Blue ────────────────────────────────── */
+  --color-info-50:          #E6F1FB;
+  --color-info-400:         #378ADD;
+  --color-info-600:         #185FA5;
+  --color-text-info:        #0C447C;
+  --color-background-info:  #E6F1FB;
+  --color-border-info:      #85B7EB;
+
+  /* ── Mood Colors ──────────────────────────────────────────── */
+  --color-mood-happy:       #1D9E75;   /* bahagia */
+  --color-mood-happy-bg:    #E1F5EE;
+  --color-mood-calm:        #378ADD;   /* tenang */
+  --color-mood-calm-bg:     #E6F1FB;
+  --color-mood-excited:     #EF9F27;   /* semangat */
+  --color-mood-excited-bg:  #FAEEDA;
+  --color-mood-anxious:     #D85A30;   /* cemas */
+  --color-mood-anxious-bg:  #FAECE7;
+  --color-mood-stressed:    #E24B4A;   /* stres */
+  --color-mood-stressed-bg: #FCEBEB;
+  --color-mood-emotional:   #7F77DD;   /* emosional */
+  --color-mood-emotional-bg:#EEEDFE;
+  --color-mood-tired:       #888780;   /* lelah */
+  --color-mood-tired-bg:    #F1EFE8;
+
+  /* ── Gradients ────────────────────────────────────────────── */
+  --gradient-brand:         linear-gradient(135deg, #7F77DD 0%, #D4537E 100%);
+  --gradient-calm:          linear-gradient(135deg, #1D9E75 0%, #378ADD 100%);
+  --gradient-streak:        linear-gradient(135deg, #EF9F27 0%, #D85A30 100%);
+  --gradient-surface:       linear-gradient(180deg, #FFFFFF 0%, #F4F3EF 100%);
+  --gradient-aurora-1:      radial-gradient(ellipse at top left,  rgba(127,119,221,0.15), transparent 60%);
+  --gradient-aurora-2:      radial-gradient(ellipse at bottom right, rgba(29,158,117,0.10), transparent 60%);
+
+  /* ── Typography ───────────────────────────────────────────── */
+  --font-sans:   var(--font-family-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
+  --font-mono:   var(--font-family-mono, ui-monospace, 'SF Mono', 'Fira Code', monospace);
+  --font-serif:  var(--font-family-serif, 'Playfair Display', 'Georgia', serif);
+
+  --font-size-display: 1.5rem;    /* 24px */
+  --font-size-h1:      1.25rem;   /* 20px */
+  --font-size-h2:      1.125rem;  /* 18px */
+  --font-size-h3:      1rem;      /* 16px */
+  --font-size-h4:      0.9375rem; /* 15px */
+  --font-size-lg:      0.9375rem; /* 15px */
+  --font-size-base:    0.875rem;  /* 14px */
+  --font-size-sm:      0.8125rem; /* 13px */
+  --font-size-xs:      0.75rem;   /* 12px */
+  --font-size-2xs:     0.6875rem; /* 11px */
+  --font-size-3xs:     0.625rem;  /* 10px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+  --font-weight-semi:    600;     /* Use sparingly */
+
+  --line-height-tight:  1.25;
+  --line-height-snug:   1.4;
+  --line-height-base:   1.6;
+  --line-height-relaxed:1.75;
+
+  --letter-spacing-tight:  -0.01em;
+  --letter-spacing-normal:  0;
+  --letter-spacing-wide:    0.02em;
+  --letter-spacing-overline: 0.06em;
+
+  --max-prose-width: 65ch;
+
+  /* ── Spacing (base-4) ─────────────────────────────────────── */
+  --space-0:  0;
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1:  4px;
+  --space-1-5: 6px;
+  --space-2:  8px;
+  --space-2-5: 10px;
+  --space-3:  12px;
+  --space-3-5: 14px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-9:  36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ── Border Radius ────────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --border-radius-md:  8px;    /* buttons, inputs, tags */
+  --border-radius-lg:  12px;   /* cards, panels */
+  --radius-xl:   16px;   /* sheets, modals */
+  --radius-2xl:  20px;   /* large modals, hero cards */
+  --radius-full: 9999px; /* pills, circles */
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --shadow-none: none;
+  --shadow-xs:   0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:   0 4px 8px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg:   0 8px 16px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-brand-glow: 0 0 0 3px rgba(127, 119, 221, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(127, 119, 221, 0.20);
+
+  /* ── Animation ────────────────────────────────────────────── */
+  --duration-instant: 0ms;
+  --duration-fast:    100ms;
+  --duration-base:    150ms;
+  --duration-slow:    250ms;
+  --duration-slower:  400ms;
+  --duration-slowest: 600ms;
+
+  --ease-default:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce:   cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ── Z-index ──────────────────────────────────────────────── */
+  --z-base:      0;
+  --z-raised:    10;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-sidebar:   250;
+  --z-modal:     300;
+  --z-popover:   350;
+  --z-toast:     400;
+  --z-tooltip:   500;
+
+  /* ── Glassmorphism ────────────────────────────────────────── */
+  --glass-background:     rgba(255, 255, 255, 0.72);
+  --glass-background-mid: rgba(255, 255, 255, 0.56);
+  --glass-border:         rgba(0, 0, 0, 0.08);
+  --glass-blur:           blur(20px);
+  --glass-blur-sm:        blur(12px);
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  --layout-max-width:   1200px;
+  --layout-sidebar-w:   240px;
+  --layout-nav-h:       60px;
+  --layout-content-pad: 24px;
+  --layout-mobile-pad:  16px;
+  --layout-col-gap:     24px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DARK MODE TOKENS
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Text */
+    --color-text-primary:      #F0EFE8;
+    --color-text-secondary:    #9A9AAF;
+    --color-text-tertiary:     #5A5A72;
+    --color-text-placeholder:  #48485C;
+    --color-text-disabled:     #3A3A4A;
+
+    /* Background */
+    --color-background-primary:   #0D0D12;
+    --color-background-secondary: #16161E;
+    --color-background-tertiary:  #1E1E28;
+    --color-background-elevated:  #1A1A24;
+    --color-background-overlay:   rgba(0, 0, 0, 0.65);
+
+    /* Border */
+    --color-border-tertiary:  rgba(255, 255, 255, 0.07);
+    --color-border-secondary: rgba(255, 255, 255, 0.13);
+    --color-border-primary:   rgba(255, 255, 255, 0.24);
+    --color-border-focus:     rgba(127, 119, 221, 0.55);
+
+    /* Brand (same hue, slightly lighter in dark) */
+    --color-brand-50:         #1E1D30;
+    --color-brand-100:        #2A284A;
+    --color-brand-200:        #3C3870;
+    --color-brand-400:        #9088F0;   /* slightly lighter for dark bg */
+    --color-brand-600:        #B0A8F6;
+    --color-brand-800:        #CECBF6;
+    --color-brand-900:        #EEEDFE;
+
+    /* Success / Teal */
+    --color-text-success:        #5DCAA5;
+    --color-background-success:  #0A1F18;
+    --color-border-success:      #0F6E56;
+
+    /* Warning / Amber */
+    --color-text-warning:        #F0B84A;
+    --color-background-warning:  #1E1505;
+    --color-border-warning:      #BA7517;
+
+    /* Danger / Red */
+    --color-text-danger:         #F07070;
+    --color-background-danger:   #1E0A0A;
+    --color-border-danger:       #A32D2D;
+
+    /* Info / Blue */
+    --color-text-info:           #7AB8F0;
+    --color-background-info:     #08121E;
+    --color-border-info:         #185FA5;
+
+    /* Mood backgrounds (desaturated for dark mode comfort) */
+    --color-mood-happy-bg:    #0A1A14;
+    --color-mood-calm-bg:     #08121E;
+    --color-mood-excited-bg:  #1A1005;
+    --color-mood-anxious-bg:  #1A0D08;
+    --color-mood-stressed-bg: #1A0808;
+    --color-mood-emotional-bg:#141230;
+    --color-mood-tired-bg:    #141412;
+
+    /* Surface gradient */
+    --gradient-surface:  linear-gradient(180deg, #0D0D12 0%, #16161E 100%);
+
+    /* Glassmorphism */
+    --glass-background:     rgba(13, 13, 20, 0.78);
+    --glass-background-mid: rgba(13, 13, 20, 0.60);
+    --glass-border:         rgba(255, 255, 255, 0.08);
+
+    /* Shadows (stronger in dark) */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.20);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30), 0 1px 2px rgba(0, 0, 0, 0.20);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.20);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.40), 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* Manual dark mode class override */
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Same overrides as @media prefers-color-scheme: dark above */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BASE STYLES
+   ══════════════════════════════════════════════════════════════ */
+html {
+  font-size: 16px;
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Focus visible (keyboard navigation) ──────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--border-radius-md);
+}
+
+/* ── Selection ────────────────────────────────────────────────── */
+::selection {
+  background-color: rgba(127, 119, 221, 0.20);
+  color: var(--color-text-primary);
+}
+
+/* ── Scrollbar (webkit) ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-border-primary); }
