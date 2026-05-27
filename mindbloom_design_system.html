@@ -1,0 +1,1104 @@
+
+<h2 class="sr-only">MindBloom Design System — Color tokens, typography, spacing, component library, dark mode, dan accessibility guidelines</h2>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body,p,span,div,button,input,label{font-family:var(--font-sans)}
+
+.ds-wrap{padding:0 0 2rem}
+.ds-nav{display:flex;gap:4px;flex-wrap:wrap;padding-bottom:1rem;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:1.5rem}
+.dn{padding:5px 12px;border-radius:100px;border:.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .15s;white-space:nowrap}
+.dn:hover,.dn.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.sec{display:none}.sec.on{display:block}
+.sec-title{font-size:16px;font-weight:500;margin-bottom:4px}
+.sec-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem}
+.divider{height:.5px;background:var(--color-border-tertiary);margin:1.25rem 0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.token-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px}
+.token-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:.4px}
+.token-value{font-size:13px;color:var(--color-text-primary);font-family:var(--font-mono)}
+.token-preview{height:28px;border-radius:6px;margin-bottom:8px}
+.swatch-row{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.swatch{height:32px;flex:1;border-radius:4px;min-width:28px}
+.small-label{font-size:10px;color:var(--color-text-tertiary);margin-top:3px}
+
+/* Component preview cards */
+.comp-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:1rem}
+.comp-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.comp-label{font-size:10px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.comp-demo{display:flex;flex-direction:column;gap:8px}
+
+/* ── Buttons ── */
+.mb-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:none}
+.mb-btn-primary{background:var(--color-text-primary);color:var(--color-background-primary)}
+.mb-btn-primary:hover{opacity:.85}
+.mb-btn-secondary{background:var(--color-background-secondary);color:var(--color-text-primary);border:.5px solid var(--color-border-secondary)}
+.mb-btn-secondary:hover{border-color:var(--color-border-primary)}
+.mb-btn-ghost{background:transparent;color:var(--color-text-secondary);border:.5px solid var(--color-border-tertiary)}
+.mb-btn-ghost:hover{background:var(--color-background-secondary)}
+.mb-btn-danger{background:var(--color-background-danger);color:var(--color-text-danger);border:.5px solid var(--color-border-danger)}
+.mb-btn-sm{padding:6px 12px;font-size:12px}
+.mb-btn-lg{padding:12px 24px;font-size:14px}
+.mb-btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:var(--border-radius-md)}
+
+/* ── Inputs ── */
+.mb-input{width:100%;padding:9px 12px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);font-size:13px;outline:none;transition:border-color .15s}
+.mb-input:focus{border-color:var(--color-border-primary);box-shadow:0 0 0 3px rgba(127,119,221,.12)}
+.mb-input-wrap{position:relative}
+.mb-input-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--color-text-tertiary);font-size:15px;pointer-events:none}
+.mb-input.has-icon{padding-left:32px}
+.mb-label{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;display:block}
+.mb-hint{font-size:11px;color:var(--color-text-tertiary);margin-top:4px}
+.mb-input-error{border-color:var(--color-border-danger)!important;box-shadow:0 0 0 3px rgba(226,75,74,.1)!important}
+.mb-error-msg{font-size:11px;color:var(--color-text-danger);margin-top:4px}
+
+/* ── Card ── */
+.mb-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.mb-card-elevated{box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)}
+.mb-card-interactive:hover{border-color:var(--color-border-secondary);cursor:pointer}
+.mb-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mb-card-title{font-size:13px;font-weight:500}
+.mb-card-meta{font-size:11px;color:var(--color-text-tertiary)}
+
+/* ── Badge / Pill ── */
+.mb-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:500}
+.mb-badge-neutral{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.mb-badge-info{background:var(--color-background-info);color:var(--color-text-info)}
+.mb-badge-success{background:var(--color-background-success);color:var(--color-text-success)}
+.mb-badge-warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.mb-badge-danger{background:var(--color-background-danger);color:var(--color-text-danger)}
+.mb-badge-purple{background:#EEEDFE;color:#3C3489}
+
+/* ── Mood Picker ── */
+.mood-track{display:flex;align-items:center;gap:3px}
+.mood-node{width:30px;height:30px;border-radius:50%;border:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.mood-node:hover,.mood-node.active{transform:scale(1.2);border-color:var(--color-border-primary);background:var(--color-background-primary);box-shadow:0 0 0 2px var(--color-border-secondary)}
+.mood-label{font-size:11px;color:var(--color-text-tertiary);margin-top:5px;text-align:center}
+.mood-slider-wrap{display:flex;flex-direction:column;gap:6px}
+.mood-emoji-big{font-size:28px;text-align:center;line-height:1}
+.mood-range{display:flex;align-items:center;gap:8px}
+.mood-range input{flex:1}
+.mood-score{font-size:13px;font-weight:500;min-width:24px;text-align:right}
+
+/* ── Emotion Tag ── */
+.emo-grid{display:flex;flex-wrap:wrap;gap:5px}
+.emo-tag{padding:4px 10px;border-radius:100px;border:.5px solid;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.emo-tag:hover{opacity:.8}
+.emo-tag.selected{font-weight:500}
+
+/* ── Calendar mini ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-dayname{font-size:9px;text-align:center;color:var(--color-text-tertiary);font-weight:500}
+.cal-day{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;cursor:pointer;transition:all .15s;color:var(--color-text-secondary);background:var(--color-background-secondary)}
+.cal-day.today{background:var(--color-text-primary);color:var(--color-background-primary)}
+.cal-day.mood-h{background:#E1F5EE;color:#085041}
+.cal-day.mood-c{background:#E6F1FB;color:#0C447C}
+.cal-day.mood-s{background:#FCEBEB;color:#791F1F}
+.cal-day.mood-a{background:#FAEEDA;color:#633806}
+.cal-day.mood-e{background:#EEEDFE;color:#26215C}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day:hover:not(.today){border:.5px solid var(--color-border-secondary)}
+
+/* ── Progress Ring ── */
+.prog-ring-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.prog-ring-center{position:absolute;text-align:center;line-height:1.2}
+.prog-ring-value{font-size:16px;font-weight:500;display:block}
+.prog-ring-label{font-size:9px;color:var(--color-text-tertiary)}
+
+/* ── Habit Card ── */
+.habit-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px}
+.habit-row{display:flex;align-items:center;gap:10px}
+.habit-icon-wrap{width:34px;height:34px;border-radius:9px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.habit-info{flex:1;min-width:0}
+.habit-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.habit-meta{font-size:11px;color:var(--color-text-tertiary);margin-top:1px}
+.habit-dots{display:flex;gap:3px}
+.habit-dot{width:8px;height:8px;border-radius:50%}
+.habit-dot.done{background:#1D9E75}
+.habit-dot.miss{background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary)}
+.habit-check{width:28px;height:28px;border-radius:8px;border:.5px solid var(--color-border-secondary);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+.habit-check.done{background:#1D9E75;border-color:#1D9E75}
+
+/* ── Insight Card ── */
+.insight-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px}
+.insight-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.insight-tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:100px}
+.insight-stat{font-size:22px;font-weight:500;margin-bottom:3px}
+.insight-body{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.insight-bar{height:3px;border-radius:2px;background:var(--color-background-secondary);margin-top:10px;overflow:hidden}
+.insight-bar-fill{height:100%;border-radius:2px;transition:width .5s ease}
+
+/* ── Achievement Card ── */
+.ach-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;text-align:center}
+.ach-icon{width:48px;height:48px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:22px}
+.ach-icon.earned{background:#FAEEDA}
+.ach-name{font-size:13px;font-weight:500;margin-bottom:3px}
+.ach-desc{font-size:11px;color:var(--color-text-tertiary);line-height:1.5}
+.ach-progress{display:flex;align-items:center;gap:6px;margin-top:10px}
+.ach-prog-bar{flex:1;height:3px;border-radius:2px;background:var(--color-background-secondary);overflow:hidden}
+.ach-prog-fill{height:100%;border-radius:2px;background:#EF9F27}
+.ach-prog-label{font-size:10px;color:var(--color-text-tertiary);white-space:nowrap}
+
+/* ── AI Chat Bubble ── */
+.chat-wrap{display:flex;flex-direction:column;gap:8px}
+.chat-msg{display:flex;gap:8px;align-items:flex-end}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-avatar{width:26px;height:26px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;border:.5px solid var(--color-border-tertiary)}
+.chat-bubble{padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.55;max-width:82%}
+.chat-bubble.ai{background:var(--color-background-secondary);color:var(--color-text-primary);border-bottom-left-radius:3px;border:.5px solid var(--color-border-tertiary)}
+.chat-bubble.user-b{background:var(--color-text-primary);color:var(--color-background-primary);border-bottom-right-radius:3px}
+.chat-time{font-size:10px;color:var(--color-text-tertiary);padding:0 4px}
+.typing-dots{display:flex;gap:3px;align-items:center;padding:2px 0}
+.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--color-text-tertiary);animation:tdot 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+
+/* ── Sheet/Modal ── */
+.mb-sheet{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-xl, 16px) var(--border-radius-xl, 16px) 0 0;padding:16px}
+.mb-sheet-handle{width:36px;height:3px;border-radius:2px;background:var(--color-border-secondary);margin:0 auto 14px}
+.mb-sheet-title{font-size:15px;font-weight:500;margin-bottom:4px}
+.mb-sheet-sub{font-size:12px;color:var(--color-text-secondary);margin-bottom:14px}
+.mb-modal-overlay{background:rgba(0,0,0,.35);border-radius:var(--border-radius-lg);padding:20px;display:flex;align-items:center;justify-content:center;min-height:220px}
+.mb-modal{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:18px;width:100%;max-width:320px}
+.mb-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.mb-modal-title{font-size:14px;font-weight:500}
+
+/* ── Mini Chart ── */
+.bar-chart-wrap{display:flex;align-items:flex-end;gap:4px;height:60px;padding:0 2px}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+.bar-rect{border-radius:3px 3px 0 0;width:100%;transition:height .4s ease}
+.bar-lbl{font-size:9px;color:var(--color-text-tertiary)}
+
+/* ── Spacing viz ── */
+.sp-row{display:flex;align-items:center;gap:12px;padding:5px 0}
+.sp-block{background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);border-radius:3px;flex-shrink:0}
+.sp-label{font-size:12px;font-family:var(--font-mono);color:var(--color-text-secondary)}
+.sp-name{font-size:11px;color:var(--color-text-tertiary);margin-left:4px}
+
+/* ── Type specimen ── */
+.type-row{padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.type-row:last-child{border-bottom:none}
+.type-meta{font-size:10px;font-family:var(--font-mono);color:var(--color-text-tertiary);margin-bottom:4px}
+
+/* ── Accessibility ── */
+.a11y-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.a11y-row:last-child{border-bottom:none}
+.a11y-check{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.a11y-pass{background:var(--color-background-success);color:var(--color-text-success)}
+.a11y-warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.a11y-text{font-size:12px;color:var(--color-text-primary)}
+.a11y-sub{font-size:11px;color:var(--color-text-secondary)}
+
+/* ── Contrast demo ── */
+.contrast-pair{display:flex;gap:8px;align-items:stretch;margin-bottom:8px}
+.cp-box{padding:10px 12px;border-radius:var(--border-radius-md);flex:1;display:flex;flex-direction:column;gap:2px}
+.cp-ratio{font-size:10px;opacity:.7;margin-top:4px}
+</style>
+
+<div class="ds-wrap">
+
+<!-- NAV -->
+<nav class="ds-nav" aria-label="Design system sections">
+  <button class="dn on" onclick="show('colors')">Colors</button>
+  <button class="dn" onclick="show('type')">Typography</button>
+  <button class="dn" onclick="show('space')">Spacing</button>
+  <button class="dn" onclick="show('elevation')">Elevation</button>
+  <button class="dn" onclick="show('components')">Components</button>
+  <button class="dn" onclick="show('charts')">Charts</button>
+  <button class="dn" onclick="show('dark')">Dark Mode</button>
+  <button class="dn" onclick="show('a11y')">Accessibility</button>
+  <button class="dn" onclick="show('tokens')">Tokens</button>
+</nav>
+
+<!-- ══ COLORS ══ -->
+<section class="sec on" id="sec-colors">
+  <div class="sec-title">Color System</div>
+  <div class="sec-sub">Semantic tokens + 9 categorical ramps. Semua warna mendukung light & dark mode otomatis.</div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Semantic colors</div>
+  <div class="row" style="margin-bottom:1.25rem">
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-text-primary)"></div>
+      <div class="token-label">text-primary</div>
+      <div class="token-value">--color-text-primary</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-text-secondary)"></div>
+      <div class="token-label">text-secondary</div>
+      <div class="token-value">--color-text-secondary</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-text-tertiary)"></div>
+      <div class="token-label">text-tertiary</div>
+      <div class="token-value">--color-text-tertiary</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-primary)"></div>
+      <div class="token-label">bg-primary</div>
+      <div class="token-value">--color-background-primary</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-secondary)"></div>
+      <div class="token-label">bg-secondary</div>
+      <div class="token-value">--color-background-secondary</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-border-tertiary);border:.5px solid var(--color-border-secondary)"></div>
+      <div class="token-label">border-tertiary</div>
+      <div class="token-value">--color-border-tertiary</div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Status colors</div>
+  <div class="row" style="margin-bottom:1.25rem">
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-success)"></div>
+      <div class="token-label" style="color:var(--color-text-success)">success</div>
+      <div class="token-value">bg-success / text-success</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-warning)"></div>
+      <div class="token-label" style="color:var(--color-text-warning)">warning</div>
+      <div class="token-value">bg-warning / text-warning</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-danger)"></div>
+      <div class="token-label" style="color:var(--color-text-danger)">danger</div>
+      <div class="token-value">bg-danger / text-danger</div>
+    </div>
+    <div class="token-card">
+      <div class="token-preview" style="background:var(--color-background-info)"></div>
+      <div class="token-label" style="color:var(--color-text-info)">info</div>
+      <div class="token-value">bg-info / text-info</div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">MindBloom categorical ramps (7 stops each)</div>
+
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div id="ramp-rows"></div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Mood color mapping</div>
+  <div class="row">
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#1D9E75;flex-shrink:0"></div>
+      <div><div class="token-label">Bahagia</div><div class="token-value">teal-400 #1D9E75</div></div>
+    </div>
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#378ADD;flex-shrink:0"></div>
+      <div><div class="token-label">Tenang</div><div class="token-value">blue-400 #378ADD</div></div>
+    </div>
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#EF9F27;flex-shrink:0"></div>
+      <div><div class="token-label">Semangat</div><div class="token-value">amber-400 #EF9F27</div></div>
+    </div>
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#D85A30;flex-shrink:0"></div>
+      <div><div class="token-label">Cemas</div><div class="token-value">coral-400 #D85A30</div></div>
+    </div>
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#E24B4A;flex-shrink:0"></div>
+      <div><div class="token-label">Stres</div><div class="token-value">red-400 #E24B4A</div></div>
+    </div>
+    <div class="token-card" style="display:flex;gap:10px;align-items:center;grid-column:span 2">
+      <div style="width:14px;height:14px;border-radius:3px;background:#7F77DD;flex-shrink:0"></div>
+      <div><div class="token-label">Emosional</div><div class="token-value">purple-400 #7F77DD</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TYPOGRAPHY ══ -->
+<section class="sec" id="sec-type">
+  <div class="sec-title">Typography System</div>
+  <div class="sec-sub">Anthropic Sans sebagai primary font. Dua weight saja: 400 regular, 500 medium. Hierarki lewat ukuran, bukan ketebalan.</div>
+
+  <div id="type-specimens"></div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Line height & letter spacing rules</div>
+  <div class="row">
+    <div class="token-card"><div class="token-label">Body</div><div class="token-value">line-height: 1.7<br>letter-spacing: 0</div></div>
+    <div class="token-card"><div class="token-label">Heading</div><div class="token-value">line-height: 1.25<br>letter-spacing: -0.01em</div></div>
+    <div class="token-card"><div class="token-label">Caption</div><div class="token-value">line-height: 1.5<br>letter-spacing: 0.01em</div></div>
+    <div class="token-card"><div class="token-label">Mono</div><div class="token-value">line-height: 1.6<br>font-family: var(--font-mono)</div></div>
+    <div class="token-card"><div class="token-label">Overline</div><div class="token-value">font-size: 10px<br>text-transform: uppercase<br>letter-spacing: 0.06em</div></div>
+    <div class="token-card"><div class="token-label">Prose max</div><div class="token-value">max-width: 65ch<br>Optimal reading width</div></div>
+  </div>
+</section>
+
+<!-- ══ SPACING ══ -->
+<section class="sec" id="sec-space">
+  <div class="sec-title">Spacing & Grid System</div>
+  <div class="sec-sub">Base-4 spacing scale. Rem untuk rhythm vertikal, px untuk komponen internal.</div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Spacing scale</div>
+  <div id="spacing-scale"></div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Border radius scale</div>
+  <div class="row">
+    <div class="token-card">
+      <div style="height:32px;border-radius:2px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">none → xs</div><div class="token-value">2px</div>
+    </div>
+    <div class="token-card">
+      <div style="height:32px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">md (default)</div><div class="token-value">var(--border-radius-md)</div>
+    </div>
+    <div class="token-card">
+      <div style="height:32px;border-radius:var(--border-radius-lg);background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">lg (cards)</div><div class="token-value">var(--border-radius-lg)</div>
+    </div>
+    <div class="token-card">
+      <div style="height:32px;border-radius:16px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">xl (sheets)</div><div class="token-value">16px</div>
+    </div>
+    <div class="token-card">
+      <div style="height:32px;border-radius:100px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">pill (badges)</div><div class="token-value">100px</div>
+    </div>
+    <div class="token-card">
+      <div style="height:32px;border-radius:50%;width:32px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);margin-bottom:8px"></div>
+      <div class="token-label">circle (avatar)</div><div class="token-value">50%</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Grid system</div>
+  <div class="row">
+    <div class="token-card"><div class="token-label">Columns (desktop)</div><div class="token-value">12 col, 24px gap</div></div>
+    <div class="token-card"><div class="token-label">Columns (tablet)</div><div class="token-value">8 col, 20px gap</div></div>
+    <div class="token-card"><div class="token-label">Columns (mobile)</div><div class="token-value">4 col, 16px gap</div></div>
+    <div class="token-card"><div class="token-label">Max content width</div><div class="token-value">1200px</div></div>
+    <div class="token-card"><div class="token-label">Sidebar width</div><div class="token-value">240px fixed</div></div>
+    <div class="token-card"><div class="token-label">Nav height</div><div class="token-value">60px sticky</div></div>
+  </div>
+</section>
+
+<!-- ══ ELEVATION ══ -->
+<section class="sec" id="sec-elevation">
+  <div class="sec-title">Elevation & Border System</div>
+  <div class="sec-sub">MindBloom menghindari bayangan berat. Elevation diekspresikan lewat border weight dan background fill — bukan drop shadow.</div>
+
+  <div style="display:flex;flex-direction:column;gap:12px" id="elev-demos"></div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Glassmorphism rules</div>
+  <div class="row2">
+    <div class="token-card">
+      <div class="token-label">Kapan digunakan</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+        Navbar sticky · Bottom sheet · Floating action button · Tooltip overlay · Lightbox backdrop
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">Kapan TIDAK digunakan</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+        Card biasa · Input field · Button · Table · List item · Komponen data
+      </div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">CSS pattern (light)</div>
+      <div class="token-value" style="font-size:11px;line-height:1.7">background: rgba(255,255,255,.72)<br>backdrop-filter: blur(20px)<br>border: .5px solid rgba(0,0,0,.08)</div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">CSS pattern (dark)</div>
+      <div class="token-value" style="font-size:11px;line-height:1.7">background: rgba(15,15,20,.78)<br>backdrop-filter: blur(20px)<br>border: .5px solid rgba(255,255,255,.08)</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Gradient rules</div>
+  <div class="row">
+    <div class="token-card">
+      <div style="height:36px;border-radius:6px;background:linear-gradient(135deg,#7F77DD,#D4537E);margin-bottom:8px"></div>
+      <div class="token-label">Brand gradient</div>
+      <div class="token-value" style="font-size:11px">purple-400 → pink-400<br>135deg · CTA primary</div>
+    </div>
+    <div class="token-card">
+      <div style="height:36px;border-radius:6px;background:linear-gradient(135deg,#1D9E75,#378ADD);margin-bottom:8px"></div>
+      <div class="token-label">Calm gradient</div>
+      <div class="token-value" style="font-size:11px">teal-400 → blue-400<br>135deg · Garden & wellness</div>
+    </div>
+    <div class="token-card">
+      <div style="height:36px;border-radius:6px;background:linear-gradient(135deg,#EF9F27,#D85A30);margin-bottom:8px"></div>
+      <div class="token-label">Streak gradient</div>
+      <div class="token-value" style="font-size:11px">amber-400 → coral-400<br>135deg · Streak & streak milestones</div>
+    </div>
+    <div class="token-card">
+      <div style="height:36px;border-radius:6px;background:linear-gradient(180deg,var(--color-background-primary) 0%,var(--color-background-secondary) 100%);margin-bottom:8px;border:.5px solid var(--color-border-tertiary)"></div>
+      <div class="token-label">Surface gradient</div>
+      <div class="token-value" style="font-size:11px">bg-primary → bg-secondary<br>180deg · Card headers</div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--color-text-secondary);padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-top:4px">
+    <strong style="font-weight:500">Aturan gradien:</strong> Gradien hanya untuk elemen dengan peran emosional (CTA, streak, milestone). Komponen data dan navigasi selalu solid color. Max 2 stop per gradien, angle 135deg atau 180deg saja.
+  </div>
+</section>
+
+<!-- ══ COMPONENTS ══ -->
+<section class="sec" id="sec-components">
+  <div class="sec-title">Component Library</div>
+  <div class="sec-sub">Semua komponen menggunakan CSS variables — otomatis mendukung light dan dark mode.</div>
+
+  <!-- Buttons -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Buttons</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+      <button class="mb-btn mb-btn-primary"><i class="ti ti-pencil" aria-hidden="true" style="font-size:14px"></i>Primary</button>
+      <button class="mb-btn mb-btn-secondary">Secondary</button>
+      <button class="mb-btn mb-btn-ghost">Ghost</button>
+      <button class="mb-btn mb-btn-danger"><i class="ti ti-trash" aria-hidden="true" style="font-size:14px"></i>Danger</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <button class="mb-btn mb-btn-primary mb-btn-sm">Small</button>
+      <button class="mb-btn mb-btn-primary mb-btn-lg">Large</button>
+      <button class="mb-btn mb-btn-secondary mb-btn-icon" aria-label="Settings"><i class="ti ti-settings" aria-hidden="true" style="font-size:16px"></i></button>
+      <button class="mb-btn mb-btn-primary" disabled style="opacity:.4;cursor:not-allowed">Disabled</button>
+      <button class="mb-btn mb-btn-primary" style="animation:none;background:linear-gradient(135deg,#7F77DD,#D4537E)">CTA gradient</button>
+    </div>
+  </div>
+
+  <!-- Inputs -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Inputs</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div class="row2">
+      <div>
+        <label class="mb-label">Default input</label>
+        <input class="mb-input" type="text" placeholder="Ceritakan harimu...">
+        <div class="mb-hint">Maks. 5000 karakter</div>
+      </div>
+      <div>
+        <label class="mb-label">With icon</label>
+        <div class="mb-input-wrap">
+          <i class="ti ti-search mb-input-icon" aria-hidden="true"></i>
+          <input class="mb-input has-icon" type="text" placeholder="Cari jurnal...">
+        </div>
+      </div>
+      <div>
+        <label class="mb-label">Error state</label>
+        <input class="mb-input mb-input-error" type="text" value="terlalu pendek">
+        <div class="mb-error-msg"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>Minimal 3 karakter</div>
+      </div>
+      <div>
+        <label class="mb-label">Textarea</label>
+        <textarea class="mb-input" rows="3" placeholder="Tulis refleksi mendalam..." style="resize:none"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Card variants</div>
+  <div class="row" style="margin-bottom:12px">
+    <div class="mb-card">
+      <div class="mb-card-header"><span class="mb-card-title">Default card</span><span class="mb-card-meta">14 Mei</span></div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Konten card default. Border tipis 0.5px, background primary.</div>
+    </div>
+    <div class="mb-card mb-card-elevated">
+      <div class="mb-card-header"><span class="mb-card-title">Elevated card</span><span class="mb-badge mb-badge-info">Baru</span></div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Sedikit bayangan untuk menyatakan fokus. Digunakan untuk highlight item.</div>
+    </div>
+    <div class="mb-card mb-card-interactive">
+      <div class="mb-card-header"><span class="mb-card-title">Interactive card</span><i class="ti ti-chevron-right" aria-hidden="true" style="font-size:14px;color:var(--color-text-tertiary)"></i></div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55">Hover menambah border emphasis. Cursor pointer. Gunakan untuk item yang bisa diklik.</div>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Badges & pills</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+      <span class="mb-badge mb-badge-neutral">Netral</span>
+      <span class="mb-badge mb-badge-info"><i class="ti ti-info-circle" aria-hidden="true" style="font-size:11px"></i>Info</span>
+      <span class="mb-badge mb-badge-success"><i class="ti ti-check" aria-hidden="true" style="font-size:11px"></i>Tersimpan</span>
+      <span class="mb-badge mb-badge-warn"><i class="ti ti-flame" aria-hidden="true" style="font-size:11px"></i>Streak 7 hari</span>
+      <span class="mb-badge mb-badge-danger">Stres tinggi</span>
+      <span class="mb-badge mb-badge-purple"><i class="ti ti-sparkles" aria-hidden="true" style="font-size:11px"></i>AI Insight</span>
+    </div>
+  </div>
+
+  <!-- Mood Picker -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Mood picker</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">Geser atau klik untuk memilih mood</div>
+    <div class="mood-slider-wrap">
+      <div class="mood-emoji-big" id="mood-emoji">😊</div>
+      <div class="mood-range">
+        <span style="font-size:11px;color:var(--color-text-tertiary)">1</span>
+        <input type="range" min="1" max="10" value="6" step="1" id="mood-range" oninput="updateMood(this.value)" style="flex:1">
+        <span style="font-size:11px;color:var(--color-text-tertiary)">10</span>
+        <span class="mood-score" id="mood-score-val">6</span>
+      </div>
+      <div id="mood-label" style="font-size:11px;color:var(--color-text-secondary);text-align:center">Cukup baik</div>
+    </div>
+    <div class="divider" style="margin:.75rem 0"></div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">Pilih emosi yang kamu rasakan</div>
+    <div class="emo-grid" id="emo-tags"></div>
+  </div>
+
+  <!-- Mood Calendar -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Mood calendar</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span style="font-size:13px;font-weight:500">Mei 2025</span>
+      <div style="display:flex;gap:4px">
+        <button class="mb-btn mb-btn-ghost mb-btn-sm mb-btn-icon" aria-label="Bulan sebelumnya"><i class="ti ti-chevron-left" aria-hidden="true" style="font-size:14px"></i></button>
+        <button class="mb-btn mb-btn-ghost mb-btn-sm mb-btn-icon" aria-label="Bulan berikutnya"><i class="ti ti-chevron-right" aria-hidden="true" style="font-size:14px"></i></button>
+      </div>
+    </div>
+    <div class="cal-head">
+      <div class="cal-dayname">Min</div><div class="cal-dayname">Sen</div><div class="cal-dayname">Sel</div>
+      <div class="cal-dayname">Rab</div><div class="cal-dayname">Kam</div><div class="cal-dayname">Jum</div><div class="cal-dayname">Sab</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <span style="font-size:10px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#1D9E75;display:inline-block"></span>Bahagia</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#378ADD;display:inline-block"></span>Tenang</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#E24B4A;display:inline-block"></span>Stres</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#EF9F27;display:inline-block"></span>Cemas</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#7F77DD;display:inline-block"></span>Emosional</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHARTS & SPECIAL COMPONENTS ══ -->
+<section class="sec" id="sec-charts">
+  <div class="sec-title">Charts, Progress & Special Components</div>
+  <div class="sec-sub">Komponen khusus MindBloom: progress ring, habit card, insight card, achievement, AI chat bubble.</div>
+
+  <div class="comp-row">
+    <!-- Progress Ring -->
+    <div class="comp-card">
+      <div class="comp-label">Progress ring</div>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div class="prog-ring-wrap">
+            <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+              <circle cx="36" cy="36" r="30" fill="none" stroke="var(--color-border-tertiary)" stroke-width="6"/>
+              <circle cx="36" cy="36" r="30" fill="none" stroke="#7F77DD" stroke-width="6" stroke-linecap="round"
+                stroke-dasharray="188" stroke-dashoffset="47" transform="rotate(-90 36 36)"/>
+            </svg>
+            <div class="prog-ring-center"><span class="prog-ring-value" style="color:#7F77DD">75</span><span class="prog-ring-label">skor refleksi</span></div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div class="prog-ring-wrap">
+            <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+              <circle cx="36" cy="36" r="30" fill="none" stroke="var(--color-border-tertiary)" stroke-width="6"/>
+              <circle cx="36" cy="36" r="30" fill="none" stroke="#1D9E75" stroke-width="6" stroke-linecap="round"
+                stroke-dasharray="188" stroke-dashoffset="75" transform="rotate(-90 36 36)"/>
+            </svg>
+            <div class="prog-ring-center"><span class="prog-ring-value" style="color:#1D9E75">60</span><span class="prog-ring-label">energi</span></div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div class="prog-ring-wrap">
+            <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+              <circle cx="36" cy="36" r="30" fill="none" stroke="var(--color-border-tertiary)" stroke-width="6"/>
+              <circle cx="36" cy="36" r="30" fill="none" stroke="#EF9F27" stroke-width="6" stroke-linecap="round"
+                stroke-dasharray="188" stroke-dashoffset="113" transform="rotate(-90 36 36)"/>
+            </svg>
+            <div class="prog-ring-center"><span class="prog-ring-value" style="color:#EF9F27">14</span><span class="prog-ring-label">streak</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini Bar Chart -->
+    <div class="comp-card">
+      <div class="comp-label">Mood chart (7 hari)</div>
+      <div class="bar-chart-wrap" id="mini-chart"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:4px">
+        <span style="font-size:9px;color:var(--color-text-tertiary)">Sen</span>
+        <span style="font-size:9px;color:var(--color-text-tertiary)">Min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Habit Cards -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Habit cards</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px" id="habit-cards"></div>
+
+  <!-- Insight Cards -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Insight cards</div>
+  <div class="row" style="margin-bottom:12px" id="insight-cards"></div>
+
+  <!-- Achievement Cards -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Achievement cards</div>
+  <div class="row" style="margin-bottom:12px" id="ach-cards"></div>
+
+  <!-- AI Chat Bubbles -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">AI coach chat bubbles</div>
+  <div class="mb-card" style="margin-bottom:12px">
+    <div class="chat-wrap" id="chat-demo"></div>
+  </div>
+
+  <!-- Sheet -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Bottom sheet</div>
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px;margin-bottom:12px">
+    <div class="mb-sheet">
+      <div class="mb-sheet-handle" aria-hidden="true"></div>
+      <div class="mb-sheet-title">Tambah kebiasaan baru</div>
+      <div class="mb-sheet-sub">Kebiasaan akan ditambahkan ke tracker harianmu</div>
+      <label class="mb-label">Nama kebiasaan</label>
+      <input class="mb-input" style="margin-bottom:10px" placeholder="Contoh: Olahraga 30 menit">
+      <div style="display:flex;gap:8px">
+        <button class="mb-btn mb-btn-ghost" style="flex:1">Batal</button>
+        <button class="mb-btn mb-btn-primary" style="flex:1">Tambahkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Modal</div>
+  <div class="mb-modal-overlay">
+    <div class="mb-modal">
+      <div class="mb-modal-header">
+        <span class="mb-modal-title">Hapus jurnal ini?</span>
+        <button class="mb-btn mb-btn-ghost mb-btn-icon mb-btn-sm" aria-label="Tutup modal"><i class="ti ti-x" aria-hidden="true" style="font-size:14px"></i></button>
+      </div>
+      <p style="font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:14px">Jurnal tanggal 14 Mei akan dihapus secara permanen. Tindakan ini tidak bisa dibatalkan.</p>
+      <div style="display:flex;gap:8px">
+        <button class="mb-btn mb-btn-ghost" style="flex:1">Batal</button>
+        <button class="mb-btn mb-btn-danger" style="flex:1"><i class="ti ti-trash" aria-hidden="true" style="font-size:13px"></i>Hapus</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DARK MODE ══ -->
+<section class="sec" id="sec-dark">
+  <div class="sec-title">Dark Mode System</div>
+  <div class="sec-sub">Semua warna menggunakan CSS variables yang otomatis beradaptasi. Tidak ada hardcode hex di komponen.</div>
+
+  <div class="row">
+    <div class="token-card">
+      <div class="token-label">Strategy</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">CSS variables otomatis via <code>prefers-color-scheme</code>. Semua komponen inherit — tidak ada overriding manual per komponen.</div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">Surface hierarchy (dark)</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">Level 0: near-black background<br>Level 1: card surface (lighter)<br>Level 2: input / secondary fill<br>Level 3: hover state</div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">Never hardcode</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">Jangan gunakan <code>#333</code>, <code>#fff</code>, atau <code>rgba(0,0,0,...)</code> langsung. Selalu gunakan <code>var(--color-*)</code></div>
+    </div>
+    <div class="token-card">
+      <div class="token-label">Gradient adjustment</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">Gradient opacity dikurangi di dark mode. Gunakan <code>prefers-color-scheme: dark</code> media query jika perlu tuning.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Color stop usage (light vs dark)</div>
+  <div id="dark-mode-table"></div>
+</section>
+
+<!-- ══ ACCESSIBILITY ══ -->
+<section class="sec" id="sec-a11y">
+  <div class="sec-title">Accessibility Guidelines</div>
+  <div class="sec-sub">WCAG 2.1 AA minimum. Target AA+ untuk teks kritis (jurnal, insight). Emosi adalah kebutuhan — akses adalah hak.</div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px">Checklist utama</div>
+  <div id="a11y-list"></div>
+
+  <div class="divider"></div>
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px">Contrast ratio demos</div>
+  <div id="contrast-demos"></div>
+</section>
+
+<!-- ══ TOKENS ══ -->
+<section class="sec" id="sec-tokens">
+  <div class="sec-title">Design Token Reference</div>
+  <div class="sec-sub">Lengkap dalam format CSS variables, siap dipakai di Tailwind config, Figma tokens, atau Style Dictionary.</div>
+
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;overflow-x:auto">
+    <pre style="font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);white-space:pre;line-height:1.7" id="token-dump"></pre>
+  </div>
+</section>
+
+</div>
+
+<script>
+function show(key){
+  ['colors','type','space','elevation','components','charts','dark','a11y','tokens'].forEach(k=>{
+    const el=document.getElementById('sec-'+k);
+    if(el) el.classList.toggle('on',k===key);
+  });
+  document.querySelectorAll('.dn').forEach((b,i)=>{
+    const keys=['colors','type','space','elevation','components','charts','dark','a11y','tokens'];
+    b.classList.toggle('on',keys[i]===key);
+  });
+}
+
+/* ── Color ramps ── */
+const RAMPS=[
+  {name:'purple',label:'Purple',stops:['#EEEDFE','#CECBF6','#AFA9EC','#7F77DD','#534AB7','#3C3489','#26215C']},
+  {name:'teal',label:'Teal',stops:['#E1F5EE','#9FE1CB','#5DCAA5','#1D9E75','#0F6E56','#085041','#04342C']},
+  {name:'coral',label:'Coral',stops:['#FAECE7','#F5C4B3','#F0997B','#D85A30','#993C1D','#712B13','#4A1B0C']},
+  {name:'pink',label:'Pink',stops:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E','#993556','#72243E','#4B1528']},
+  {name:'blue',label:'Blue',stops:['#E6F1FB','#B5D4F4','#85B7EB','#378ADD','#185FA5','#0C447C','#042C53']},
+  {name:'green',label:'Green',stops:['#EAF3DE','#C0DD97','#97C459','#639922','#3B6D11','#27500A','#173404']},
+  {name:'amber',label:'Amber',stops:['#FAEEDA','#FAC775','#EF9F27','#BA7517','#854F0B','#633806','#412402']},
+  {name:'red',label:'Red',stops:['#FCEBEB','#F7C1C1','#F09595','#E24B4A','#A32D2D','#791F1F','#501313']},
+  {name:'gray',label:'Gray',stops:['#F1EFE8','#D3D1C7','#B4B2A9','#888780','#5F5E5A','#444441','#2C2C2A']},
+];
+const STOP_LABELS=['50','100','200','400','600','800','900'];
+const rampEl=document.getElementById('ramp-rows');
+RAMPS.forEach(r=>{
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:6px';
+  row.innerHTML=`<span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);width:52px;flex-shrink:0">${r.label}</span>
+    <div style="display:flex;flex:1;gap:2px">${r.stops.map((s,i)=>`<div title="${r.name}-${STOP_LABELS[i]}: ${s}" style="flex:1;height:24px;border-radius:3px;background:${s}" aria-label="${r.label} ${STOP_LABELS[i]}"></div>`).join('')}</div>`;
+  rampEl.appendChild(row);
+});
+
+/* ── Typography specimens ── */
+const types=[
+  {tag:'Display',size:'22px',weight:500,text:'Refleksi diri setiap hari'},
+  {tag:'Heading 1',size:'18px',weight:500,text:'Selamat pagi, Asmawati'},
+  {tag:'Heading 2',size:'16px',weight:500,text:'Jurnal harian'},
+  {tag:'Body large',size:'15px',weight:400,text:'Ceritakan apa yang paling berkesan hari ini.'},
+  {tag:'Body default',size:'14px',weight:400,text:'Refleksi diri adalah cara terbaik untuk memahami polamu sendiri.'},
+  {tag:'Body small',size:'13px',weight:400,text:'Mood hari ini lebih baik 18% dibanding minggu lalu.'},
+  {tag:'Caption',size:'12px',weight:400,text:'Tersimpan otomatis · 21:34'},
+  {tag:'Overline',size:'10px',weight:500,text:'STREAK HARIAN',extra:'letter-spacing:.06em;text-transform:uppercase'},
+  {tag:'Mono',size:'12px',weight:400,text:'--color-text-primary: #0D0F1A',extra:`font-family:var(--font-mono)`},
+];
+const typeEl=document.getElementById('type-specimens');
+types.forEach(t=>{
+  const div=document.createElement('div');
+  div.className='type-row';
+  div.innerHTML=`<div class="type-meta">${t.tag} · ${t.size} / ${t.weight}</div>
+    <div style="font-size:${t.size};font-weight:${t.weight};${t.extra||''}">${t.text}</div>`;
+  typeEl.appendChild(div);
+});
+
+/* ── Spacing scale ── */
+const spaces=[
+  {name:'--space-1',px:'4px',use:'Icon gap, badge padding'},
+  {name:'--space-2',px:'8px',use:'Inline gap, chip padding'},
+  {name:'--space-3',px:'12px',use:'Button padding, list gap'},
+  {name:'--space-4',px:'16px',use:'Card padding (mobile)'},
+  {name:'--space-5',px:'20px',use:'Section gap'},
+  {name:'--space-6',px:'24px',use:'Card padding (desktop), column gap'},
+  {name:'--space-8',px:'32px',use:'Section margin'},
+  {name:'--space-10',px:'40px',use:'Large section gap'},
+  {name:'--space-12',px:'48px',use:'Page section padding'},
+  {name:'--space-16',px:'64px',use:'Hero padding, major section'},
+];
+const spEl=document.getElementById('spacing-scale');
+spaces.forEach(s=>{
+  const px=parseInt(s.px);
+  const row=document.createElement('div');
+  row.className='sp-row';
+  row.innerHTML=`<div class="sp-block" style="width:${Math.max(px,4)}px;height:14px" aria-hidden="true"></div>
+    <span class="sp-label">${s.name}</span>
+    <span style="font-size:11px;font-family:var(--font-mono);color:var(--color-text-tertiary);min-width:32px">${s.px}</span>
+    <span class="sp-name">${s.use}</span>`;
+  spEl.appendChild(row);
+});
+
+/* ── Elevation demos ── */
+const elevs=[
+  {name:'Flat (default)',desc:'Komponen data, list item, input field',style:'background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary)'},
+  {name:'Surface 1',desc:'Card raised, panel, tooltip',style:'background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)'},
+  {name:'Glass — navbar',desc:'Sticky header, floating panel',style:'background:rgba(255,255,255,.72);backdrop-filter:blur(20px);border:.5px solid rgba(0,0,0,.08)'},
+  {name:'Focus ring',desc:'Semua interactive element saat fokus keyboard',style:'background:var(--color-background-primary);border:.5px solid var(--color-border-primary);box-shadow:0 0 0 3px rgba(127,119,221,.15)'},
+];
+const elevEl=document.getElementById('elev-demos');
+elevs.forEach(e=>{
+  const div=document.createElement('div');
+  div.style.cssText=`${e.style};border-radius:var(--border-radius-lg);padding:12px 14px`;
+  div.innerHTML=`<div style="font-size:13px;font-weight:500;margin-bottom:3px">${e.name}</div><div style="font-size:12px;color:var(--color-text-secondary)">${e.desc}</div>`;
+  elevEl.appendChild(div);
+});
+
+/* ── Mood picker ── */
+const MOODS=['😭','😢','😔','😟','😐','🙂','😊','😄','🤩','😍'];
+const MOOD_LABELS=['Sangat berat','Sedih','Kurang baik','Tidak nyaman','Biasa saja','Cukup baik','Baik','Senang','Sangat senang','Luar biasa'];
+function updateMood(v){
+  document.getElementById('mood-emoji').textContent=MOODS[v-1];
+  document.getElementById('mood-score-val').textContent=v;
+  document.getElementById('mood-label').textContent=MOOD_LABELS[v-1];
+}
+
+/* ── Emotion tags ── */
+const EMOTIONS=[
+  {t:'Senang',c:'#1D9E75',bg:'#E1F5EE'},{t:'Bersyukur',c:'#0F6E56',bg:'#E1F5EE'},
+  {t:'Tenang',c:'#185FA5',bg:'#E6F1FB'},{t:'Terinspirasi',c:'#534AB7',bg:'#EEEDFE'},
+  {t:'Sedih',c:'#534AB7',bg:'#EEEDFE'},{t:'Frustrasi',c:'#993C1D',bg:'#FAECE7'},
+  {t:'Cemas',c:'#854F0B',bg:'#FAEEDA'},{t:'Lelah',c:'#5F5E5A',bg:'#F1EFE8'},
+  {t:'Overthinking',c:'#993556',bg:'#FBEAF0'},{t:'Stres',c:'#A32D2D',bg:'#FCEBEB'},
+];
+const emoGrid=document.getElementById('emo-tags');
+EMOTIONS.forEach(e=>{
+  const tag=document.createElement('span');
+  tag.className='emo-tag';
+  tag.textContent=e.t;
+  tag.style.cssText=`color:${e.c};background:${e.bg};border-color:${e.c}30`;
+  tag.onclick=()=>{tag.classList.toggle('selected');tag.style.borderColor=tag.classList.contains('selected')?e.c:e.c+'30'};
+  emoGrid.appendChild(tag);
+});
+
+/* ── Calendar ── */
+const moods=['empty','mood-h','mood-c','mood-a','mood-h','mood-s','mood-e','mood-h','mood-c','mood-h','mood-h','mood-s','mood-c','mood-h','mood-a','mood-h','mood-c','mood-h','mood-e','mood-h','mood-c','mood-a','mood-s','mood-h','mood-c','today','','','','',''];
+const calEl=document.getElementById('cal-grid');
+for(let i=0;i<3;i++){const e=document.createElement('div');e.className='cal-day empty';e.textContent='';calEl.appendChild(e);}
+for(let d=1;d<=31;d++){
+  const div=document.createElement('div');
+  const cls=d===26?'today':(d<26?moods[d]||'':'');
+  div.className='cal-day '+(d<4?'empty':cls);
+  div.textContent=d>=4?d:'';
+  calEl.appendChild(div);
+}
+
+/* ── Mini bar chart ── */
+const barData=[6,8,5,7,9,6,8];
+const chartEl=document.getElementById('mini-chart');
+const barColors=['#7F77DD','#1D9E75','#E24B4A','#7F77DD','#1D9E75','#7F77DD','#1D9E75'];
+barData.forEach((v,i)=>{
+  const col=document.createElement('div');col.className='bar-col';
+  const bar=document.createElement('div');
+  bar.className='bar-rect';
+  bar.style.cssText=`height:${v*7}px;background:${barColors[i]};opacity:.75`;
+  col.appendChild(bar);
+  chartEl.appendChild(col);
+});
+
+/* ── Habit cards ── */
+const habits=[
+  {icon:'🏃',name:'Olahraga',streak:'12 hari',days:[1,1,0,1,1,0,1]},
+  {icon:'📚',name:'Membaca',streak:'8 hari',days:[1,1,1,0,1,1,0]},
+  {icon:'💧',name:'Minum air',streak:'14 hari',days:[1,1,1,1,1,1,1]},
+];
+const habitEl=document.getElementById('habit-cards');
+habits.forEach(h=>{
+  const card=document.createElement('div');card.className='habit-card';
+  card.innerHTML=`<div class="habit-row">
+    <div class="habit-icon-wrap" aria-hidden="true">${h.icon}</div>
+    <div class="habit-info">
+      <div class="habit-name">${h.name}</div>
+      <div class="habit-meta"><i class="ti ti-flame" aria-hidden="true" style="font-size:11px;color:#EF9F27;margin-right:2px"></i>${h.streak}</div>
+    </div>
+    <div class="habit-dots" aria-label="7 hari terakhir">${h.days.map(d=>`<div class="habit-dot ${d?'done':'miss'}" aria-hidden="true"></div>`).join('')}</div>
+    <div class="habit-check ${h.days[6]?'done':''}" role="checkbox" aria-checked="${h.days[6]?'true':'false'}" aria-label="Tandai ${h.name} selesai hari ini">
+      ${h.days[6]?`<i class="ti ti-check" aria-hidden="true" style="font-size:12px;color:white"></i>`:''}
+    </div>
+  </div>`;
+  habitEl.appendChild(card);
+});
+
+/* ── Insight cards ── */
+const insights=[
+  {tag:'Mood',tagColor:'#EEEDFE',tagText:'#534AB7',stat:'+18%',label:'vs minggu lalu',body:'Mood rata-ratamu meningkat signifikan. Kebiasaan olahraga mempengaruhi ini.',bar:72,barColor:'#7F77DD'},
+  {tag:'Stres',tagColor:'#FCEBEB',tagText:'#A32D2D',stat:'Rendah',label:'hari ini',body:'Tidak ada pemicu stres besar terdeteksi. Energimu stabil sepanjang hari.',bar:25,barColor:'#E24B4A'},
+  {tag:'Syukur',tagColor:'#E1F5EE',tagText:'#085041',stat:'5 item',label:'tercatat',body:'Keluarga dan kesehatan menjadi topik syukur terbanyak bulan ini.',bar:85,barColor:'#1D9E75'},
+  {tag:'AI Insight',tagColor:'#EEEDFE',tagText:'#534AB7',stat:'Pola baru',label:'ditemukan',body:'Pada hari kamu olahraga, mood rata-rata naik 18%. Konsistensi terbukti.',bar:60,barColor:'#7F77DD'},
+];
+const insightEl=document.getElementById('insight-cards');
+insights.forEach(ins=>{
+  const card=document.createElement('div');card.className='insight-card';
+  card.innerHTML=`<div class="insight-header">
+    <span class="insight-tag" style="background:${ins.tagColor};color:${ins.tagText}">${ins.tag}</span>
+    <i class="ti ti-sparkles" aria-hidden="true" style="font-size:14px;color:var(--color-text-tertiary)"></i>
+  </div>
+  <div class="insight-stat" style="color:${ins.barColor}">${ins.stat}</div>
+  <div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:6px">${ins.label}</div>
+  <div class="insight-body">${ins.body}</div>
+  <div class="insight-bar"><div class="insight-bar-fill" style="width:${ins.bar}%;background:${ins.barColor}"></div></div>`;
+  insightEl.appendChild(card);
+});
+
+/* ── Achievement cards ── */
+const achs=[
+  {icon:'🔥',name:'Streak 7 Hari',desc:'Tulis 7 hari berturut-turut',earned:true,prog:100,total:'7/7'},
+  {icon:'🌱',name:'Pertumbuhan Diri',desc:'50 jurnal diselesaikan',earned:false,prog:46,total:'23/50'},
+  {icon:'💛',name:'Guru Rasa Syukur',desc:'100 item syukur total',earned:false,prog:72,total:'72/100'},
+  {icon:'🏆',name:'Juara Konsistensi',desc:'90 hari streak berturut',earned:false,prog:16,total:'14/90'},
+];
+const achEl=document.getElementById('ach-cards');
+achs.forEach(a=>{
+  const card=document.createElement('div');card.className='ach-card';
+  const iconStyle=a.earned?'earned':'';
+  card.innerHTML=`<div class="ach-icon ${iconStyle}" aria-hidden="true" style="${a.earned?'':'opacity:.45'}">${a.icon}</div>
+    <div class="ach-name" style="${!a.earned?'color:var(--color-text-secondary)':''}">${a.name}</div>
+    <div class="ach-desc">${a.desc}</div>
+    <div class="ach-progress" aria-label="${a.total} selesai">
+      <div class="ach-prog-bar"><div class="ach-prog-fill" style="width:${a.prog}%;${a.earned?'background:#1D9E75':''}"></div></div>
+      <span class="ach-prog-label">${a.total}</span>
+    </div>`;
+  achEl.appendChild(card);
+});
+
+/* ── Chat bubbles ── */
+const chatMsgs=[
+  {role:'ai',text:'Aku baca di jurnalmu soal meeting yang melelahkan itu. Bagaimana perasaanmu sekarang?'},
+  {role:'user',text:'Masih sedikit capek, tapi sudah lebih baik dari tadi.'},
+  {role:'ai',text:'Itu wajar. Tubuh dan pikiranmu butuh waktu untuk pulih. Apa satu hal kecil yang bisa kamu lakukan malam ini untuk merawat dirimu?'},
+  {role:'typing'},
+];
+const chatEl=document.getElementById('chat-demo');
+chatMsgs.forEach(m=>{
+  const div=document.createElement('div');
+  if(m.role==='typing'){
+    div.className='chat-msg';
+    div.innerHTML=`<div class="chat-avatar" aria-hidden="true" style="font-size:13px">B</div>
+      <div class="chat-bubble ai"><div class="typing-dots" aria-label="Bloom sedang mengetik">
+        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+      </div></div>`;
+  } else {
+    div.className=`chat-msg ${m.role==='user'?'user':''}`;
+    const avatarContent=m.role==='ai'?'B':'A';
+    const bubbleCls=m.role==='ai'?'ai':'user-b';
+    div.innerHTML=m.role==='ai'
+      ?`<div class="chat-avatar" aria-hidden="true" style="font-size:13px">${avatarContent}</div><div class="chat-bubble ${bubbleCls}">${m.text}</div>`
+      :`<div class="chat-bubble ${bubbleCls}">${m.text}</div><div class="chat-avatar" aria-hidden="true" style="font-size:13px">${avatarContent}</div>`;
+  }
+  chatEl.appendChild(div);
+});
+
+/* ── Dark mode table ── */
+const dmData=[
+  ['purple-50 #EEEDFE','Light fill, selected bg','purple-800 #3C3489'],
+  ['teal-400 #1D9E75','Happy mood, success state','Sama — sudah cukup kontras di kedua mode'],
+  ['amber-400 #EF9F27','Streak, warning','Sama — saturation tetap terlihat'],
+  ['coral-400 #D85A30','Anxious, CTA gradient stop','Sama — vivid di kedua mode'],
+  ['red-400 #E24B4A','Stres, error','Sama — hue merah kuat di kedua mode'],
+];
+const dmEl=document.getElementById('dark-mode-table');
+const t=document.createElement('div');
+t.style.cssText='display:flex;flex-direction:column;gap:6px';
+dmData.forEach((row,i)=>{
+  const r=document.createElement('div');
+  r.style.cssText='display:flex;gap:10px;align-items:center;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)';
+  r.innerHTML=`<div style="width:12px;height:12px;border-radius:2px;background:${row[0].split(' ')[1]};flex-shrink:0" aria-hidden="true"></div>
+    <span style="font-size:11px;font-family:var(--font-mono);color:var(--color-text-primary);min-width:130px">${row[0]}</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);flex:1">${row[1]}</span>
+    <span style="font-size:11px;color:var(--color-text-tertiary)">${row[2]}</span>`;
+  t.appendChild(r);
+});
+document.getElementById('dark-mode-table').appendChild(t);
+
+/* ── Accessibility checklist ── */
+const a11yItems=[
+  {pass:true,text:'Touch target minimum 44×44px',sub:'Semua tombol dan link interaktif'},
+  {pass:true,text:'Keyboard navigasi penuh',sub:'Tab order logis, visible focus ring on all elements'},
+  {pass:true,text:'ARIA labels pada ikon-only buttons',sub:'aria-label wajib jika tidak ada teks terlihat'},
+  {pass:true,text:'Screen reader: jurnal form',sub:'Setiap langkah memiliki heading h2, field punya label eksplisit'},
+  {pass:true,text:'Mood slider: accessible range input',sub:'aria-valuenow, aria-valuemin, aria-valuemax, aria-valuetext="Senang"'},
+  {pass:true,text:'Color tidak menjadi satu-satunya penanda',sub:'Mood kalender: warna + teks tanggal, badge: warna + label'},
+  {pass:true,text:'Animasi: respek prefers-reduced-motion',sub:'Semua transisi di-disable jika user memilih reduced motion'},
+  {pass:true,text:'Kontras teks 4.5:1 minimum (AA)',sub:'Body text, caption, semua konten jurnal'},
+  {pass:false,text:'Kontras non-text 3:1',sub:'Icon, border, focus indicator — perlu audit per komponen'},
+  {pass:true,text:'Error tidak hanya warna merah',sub:'Icon + teks pesan error di bawah field'},
+  {pass:true,text:'Session timeout warning',sub:'Peringatan 2 menit sebelum sesi habis dengan opsi perpanjang'},
+  {pass:true,text:'Language attribute',sub:'html lang="id" untuk Indonesian content'},
+];
+const a11yEl=document.getElementById('a11y-list');
+a11yItems.forEach(item=>{
+  const row=document.createElement('div');row.className='a11y-row';
+  row.innerHTML=`<div class="a11y-check ${item.pass?'a11y-pass':'a11y-warn'}" aria-hidden="true">${item.pass?'✓':'!'}</div>
+    <div><div class="a11y-text">${item.text}</div><div class="a11y-sub">${item.sub}</div></div>`;
+  a11yEl.appendChild(row);
+});
+
+/* ── Contrast demos ── */
+const contrastData=[
+  {bg:'#EEEDFE',text:'#3C3489',ratio:'9.8:1',label:'Purple text on purple-50',pass:'AAA'},
+  {bg:'#E1F5EE',text:'#085041',ratio:'8.2:1',label:'Teal text on teal-50',pass:'AAA'},
+  {bg:'var(--color-background-primary)',text:'var(--color-text-primary)',ratio:'~14:1',label:'Body text on white / dark bg',pass:'AAA'},
+  {bg:'var(--color-background-secondary)',text:'var(--color-text-secondary)',ratio:'~5.5:1',label:'Secondary text on secondary bg',pass:'AA'},
+];
+const contrastEl=document.getElementById('contrast-demos');
+contrastData.forEach(c=>{
+  const pair=document.createElement('div');pair.className='contrast-pair';
+  const box=document.createElement('div');
+  box.className='cp-box';
+  box.style.background=c.bg;
+  box.innerHTML=`<span style="font-size:13px;font-weight:500;color:${c.text}">${c.label}</span>
+    <span class="cp-ratio" style="color:${c.text};opacity:.6">${c.ratio} · WCAG ${c.pass}</span>`;
+  pair.appendChild(box);
+  contrastEl.appendChild(pair);
+});
+
+/* ── Token dump ── */
+const tokens=`/* MindBloom Design Tokens v1.0 */
+/* Semantic (auto light/dark via CSS variables) */
+--color-text-primary        /* #0D0F1A → #F5F5F0 dark */
+--color-text-secondary      /* #4A4A52 → #9A9AAF dark */
+--color-text-tertiary       /* #8A8A9A → #5A5A6F dark */
+--color-background-primary  /* #FFFFFF → #0F0F14 dark */
+--color-background-secondary/* #F4F3EF → #1A1A22 dark */
+--color-border-tertiary     /* rgba(0,0,0,.08) → rgba(255,255,255,.07) */
+--color-border-secondary    /* rgba(0,0,0,.16) → rgba(255,255,255,.14) */
+--color-border-primary      /* rgba(0,0,0,.28) → rgba(255,255,255,.24) */
+
+/* Mood semantic colors */
+--color-mood-happy:   #1D9E75   /* teal-400   */
+--color-mood-calm:    #378ADD   /* blue-400   */
+--color-mood-excited: #EF9F27   /* amber-400  */
+--color-mood-anxious: #D85A30   /* coral-400  */
+--color-mood-stressed:#E24B4A   /* red-400    */
+--color-mood-emotional:#7F77DD  /* purple-400 */
+--color-mood-tired:   #888780   /* gray-400   */
+
+/* Brand */
+--color-brand-primary:  #7F77DD   /* purple-400 */
+--color-brand-secondary:#D4537E   /* pink-400   */
+--color-brand-accent:   #1D9E75   /* teal-400   */
+--color-brand-gradient: linear-gradient(135deg, #7F77DD, #D4537E)
+--color-calm-gradient:  linear-gradient(135deg, #1D9E75, #378ADD)
+--color-streak-gradient:linear-gradient(135deg, #EF9F27, #D85A30)
+
+/* Spacing (base-4) */
+--space-1: 4px    --space-2: 8px    --space-3: 12px
+--space-4: 16px   --space-5: 20px   --space-6: 24px
+--space-8: 32px   --space-10: 40px  --space-12: 48px
+--space-16: 64px
+
+/* Border radius */
+--radius-xs: 2px    --radius-sm: 4px
+--border-radius-md: 8px  /* buttons, inputs */
+--border-radius-lg: 12px /* cards */
+--radius-xl: 16px   /* sheets */
+--radius-pill: 100px/* badges */
+
+/* Typography */
+--font-size-display: 22px  --font-weight-display: 500
+--font-size-h1: 18px       --font-weight-h1: 500
+--font-size-h2: 16px       --font-weight-h2: 500
+--font-size-body-lg: 15px  --font-weight-body: 400
+--font-size-body: 14px
+--font-size-body-sm: 13px
+--font-size-caption: 12px
+--font-size-overline: 10px --font-weight-overline: 500
+--line-height-body: 1.7   --line-height-heading: 1.25
+--letter-spacing-overline: 0.06em
+--max-prose-width: 65ch
+
+/* Animation */
+--duration-fast: 100ms   /* hover states */
+--duration-base: 150ms   /* most transitions */
+--duration-slow: 250ms   /* page transitions */
+--duration-slower: 400ms /* data animations */
+--ease-default: cubic-bezier(.4, 0, .2, 1)
+--ease-spring:  cubic-bezier(.34, 1.56, .64, 1)
+
+/* Elevation */
+--shadow-sm: 0 1px 2px rgba(0,0,0,.05)
+--shadow-md: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)
+--focus-ring: 0 0 0 3px rgba(127,119,221,.15)
+
+/* Z-index scale */
+--z-base: 0    --z-raised: 10   --z-dropdown: 100
+--z-sticky: 200  --z-modal: 300  --z-toast: 400`;
+document.getElementById('token-dump').textContent=tokens;
+</script>
