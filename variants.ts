@@ -1,7 +1,7 @@
 // ============================================================
 // MindBloom Motion Design System — Framer Motion Variants
 // File: src/lib/motion/variants.ts
-// Version: 1.0 | May 2025
+// Version: 1.0 | May 2026
 // ============================================================
 
 import type { Variants, Transition } from 'framer-motion'
