@@ -3,7 +3,7 @@ const {
   Header, Footer, AlignmentType, HeadingLevel, BorderStyle, WidthType,
   ShadingType, VerticalAlign, LevelFormat, TabStopType, PageBreak, SimpleField
 } = require('docx');
-const fs = require('fs');
+const fs = require('f');
 
 const C = {
   indigo:'5B4FE8', violet:'7C6EF5', pink:'FF7B8A', green:'1DB97A',
