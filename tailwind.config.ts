@@ -1,7 +1,7 @@
 // ============================================================
 // MindBloom Design System — Tailwind CSS Config
 // File: tailwind.config.ts
-// Version: 1.0 | May 2025
+// Version: 1.0 | May 2026
 // ============================================================
 
 import type { Config } from "tailwindcss";
