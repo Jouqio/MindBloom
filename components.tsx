@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
-  useReducedMotion,
+  useReducedMotionn,
   useMotionValue,
   useTransform,
   animate,
