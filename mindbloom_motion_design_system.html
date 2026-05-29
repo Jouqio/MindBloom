@@ -1,0 +1,786 @@
+
+<h2 class="sr-only">MindBloom Motion Design System — 13 animasi interaktif dengan spesifikasi duration, easing, trigger, dan accessibility fallback untuk setiap komponen</h2>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.ms{font-size:14px;color:var(--color-text-primary)}
+.nav{display:flex;gap:4px;flex-wrap:wrap;padding-bottom:12px;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:16px}
+.np{padding:5px 11px;border-radius:100px;border:.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:12px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;transition:all .12s;white-space:nowrap}
+.np:hover,.np.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.sec{display:none}.sec.on{display:block}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.spec-item{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.spec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--color-text-tertiary);margin-bottom:3px}
+.spec-val{font-size:12px;color:var(--color-text-primary);font-family:var(--font-mono)}
+.stage{background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:24px;display:flex;align-items:center;justify-content:center;min-height:200px;position:relative;overflow:hidden;margin-bottom:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.btn-run{padding:7px 16px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;font-weight:500;cursor:pointer;color:var(--color-text-primary);transition:all .12s}
+.btn-run:hover{border-color:var(--color-border-primary)}
+.btn-run.primary{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.a11y-note{font-size:11px;color:var(--color-text-tertiary);padding:8px 10px;background:var(--color-background-secondary);border-left:2px solid var(--color-border-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;margin-top:8px}
+.timing-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.timing-bar{flex:1;height:5px;background:var(--color-border-tertiary);border-radius:3px;overflow:hidden;position:relative}
+.timing-fill{height:100%;border-radius:3px;width:0;transition:none}
+.timing-label{font-size:11px;color:var(--color-text-secondary);min-width:56px}
+.timing-ms{font-size:11px;font-family:var(--font-mono);color:var(--color-text-tertiary);min-width:36px;text-align:right}
+.curve-svg{width:80px;height:40px;flex-shrink:0}
+</style>
+
+<div class="ms">
+<nav class="nav">
+  <button class="np on" onclick="show('page')">Page</button>
+  <button class="np" onclick="show('hero')">Hero</button>
+  <button class="np" onclick="show('orb')">Orb</button>
+  <button class="np" onclick="show('aurora')">Aurora</button>
+  <button class="np" onclick="show('mood')">Mood</button>
+  <button class="np" onclick="show('step')">Step</button>
+  <button class="np" onclick="show('ai')">AI Typing</button>
+  <button class="np" onclick="show('save')">Save</button>
+  <button class="np" onclick="show('confetti')">Confetti</button>
+  <button class="np" onclick="show('achieve')">Achievement</button>
+  <button class="np" onclick="show('breath')">Breathing</button>
+  <button class="np" onclick="show('chart')">Chart</button>
+  <button class="np" onclick="show('dash')">Dashboard</button>
+</nav>
+
+<!-- ═══ PAGE TRANSITION ═══ -->
+<div class="sec on" id="s-page">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runPage()">▶ Play transition</button>
+    <span style="font-size:12px;color:var(--color-text-tertiary)">Simulasi pindah halaman</span>
+  </div>
+  <div class="stage" style="gap:16px;flex-direction:column">
+    <div id="page-a" style="width:100%;max-width:320px;background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;transition:opacity .25s cubic-bezier(0,0,.2,1),transform .25s cubic-bezier(0,0,.2,1)">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Halaman asal</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Dashboard → Jurnal</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:90%"></div>
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:70%"></div>
+      </div>
+    </div>
+    <div id="page-b" style="width:100%;max-width:320px;background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;opacity:0;transform:translateY(16px);transition:opacity .3s cubic-bezier(0,0,.2,1),transform .3s cubic-bezier(0,0,.2,1)">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px">Halaman tujuan</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Jurnal Harian — step 1</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:80%"></div>
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:60%"></div>
+      </div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Duration exit</div><div class="spec-val">250ms</div></div>
+    <div class="spec-item"><div class="spec-label">Duration enter</div><div class="spec-val">300ms</div></div>
+    <div class="spec-item"><div class="spec-label">Easing</div><div class="spec-val">cubic-bezier(0,0,.2,1)<br>ease-out</div></div>
+    <div class="spec-item"><div class="spec-label">Trigger</div><div class="spec-val">navigation event<br>router.push()</div></div>
+    <div class="spec-item"><div class="spec-label">Exit motion</div><div class="spec-val">opacity 1→0<br>translateY 0→-8px</div></div>
+    <div class="spec-item"><div class="spec-label">Enter motion</div><div class="spec-val">opacity 0→1<br>translateY 16→0px</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: prefers-reduced-motion → semua transition diganti opacity-only 100ms. Layout tidak bergerak, hanya fade.</div>
+</div>
+
+<!-- ═══ HERO ANIMATION ═══ -->
+<div class="sec" id="s-hero">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runHero()">▶ Play hero</button>
+  </div>
+  <div class="stage" style="flex-direction:column;gap:8px;padding:32px 24px">
+    <div id="h-badge" style="padding:4px 12px;border-radius:100px;border:.5px solid var(--color-border-secondary);font-size:11px;font-weight:500;color:var(--color-text-secondary);opacity:0;transform:translateY(12px);transition:opacity .5s cubic-bezier(0,0,.2,1),transform .5s cubic-bezier(0,0,.2,1)">Platform kesehatan mental berbasis AI</div>
+    <div id="h-title" style="font-size:22px;font-weight:500;text-align:center;line-height:1.25;opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(0,0,.2,1),transform .55s cubic-bezier(0,0,.2,1)">Tempat aman untuk<br>mendengar dirimu sendiri</div>
+    <div id="h-sub" style="font-size:13px;color:var(--color-text-secondary);text-align:center;max-width:280px;opacity:0;transform:translateY(16px);transition:opacity .5s cubic-bezier(0,0,.2,1),transform .5s cubic-bezier(0,0,.2,1)">Refleksi harian yang bermakna, dipandu AI yang memahami perasaanmu.</div>
+    <button id="h-cta" style="margin-top:8px;padding:10px 24px;border-radius:var(--border-radius-md);background:var(--color-text-primary);color:var(--color-background-primary);border:none;font-size:13px;font-weight:500;cursor:pointer;opacity:0;transform:translateY(12px) scale(.97);transition:opacity .45s cubic-bezier(.34,1.56,.64,1),transform .45s cubic-bezier(.34,1.56,.64,1)">Mulai menulis hari ini</button>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Stagger delay</div><div class="spec-val">badge: 0ms<br>title: 80ms<br>sub: 160ms<br>cta: 240ms</div></div>
+    <div class="spec-item"><div class="spec-label">Duration</div><div class="spec-val">450–550ms each</div></div>
+    <div class="spec-item"><div class="spec-label">Easing body</div><div class="spec-val">cubic-bezier(0,0,.2,1)<br>ease-out</div></div>
+    <div class="spec-item"><div class="spec-label">Easing CTA</div><div class="spec-val">cubic-bezier(.34,1.56,.64,1)<br>spring — slight overshoot</div></div>
+    <div class="spec-item"><div class="spec-label">Trigger</div><div class="spec-val">onMount / DOMContentLoaded<br>IntersectionObserver</div></div>
+    <div class="spec-item"><div class="spec-label">Motion</div><div class="spec-val">translateY(16→0px)<br>opacity(0→1)</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → semua elemen muncul langsung opacity 1 tanpa translasi, delay tetap (agar layar tidak "pop" sekaligus).</div>
+</div>
+
+<!-- ═══ FLOATING ORB ═══ -->
+<div class="sec" id="s-orb">
+  <div class="stage" style="min-height:240px;position:relative;overflow:hidden" id="orb-stage">
+    <div id="orb1" style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#AFA9EC,#EEEDFE80);top:-40px;left:-30px;animation:orbFloat1 8s ease-in-out infinite"></div>
+    <div id="orb2" style="position:absolute;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9FE1CB,#E1F5EE80);bottom:-30px;right:-20px;animation:orbFloat2 10s ease-in-out infinite 2s"></div>
+    <div id="orb3" style="position:absolute;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FAC775,#FAEEDA80);top:50%;left:50%;transform:translate(-50%,-50%);animation:orbFloat3 12s ease-in-out infinite 5s"></div>
+    <div style="position:relative;z-index:2;text-align:center">
+      <div style="font-size:13px;font-weight:500;margin-bottom:4px">Floating orbs</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Latar belakang ambient — selalu berjalan</div>
+    </div>
+  </div>
+  <style>
+    @keyframes orbFloat1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(24px,-16px) scale(1.06)}66%{transform:translate(-14px,20px) scale(.94)}}
+    @keyframes orbFloat2{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(-20px,12px) scale(1.08)}75%{transform:translate(16px,-20px) scale(.92)}}
+    @keyframes orbFloat3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+  </style>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Duration</div><div class="spec-val">orb-1: 8s<br>orb-2: 10s<br>orb-3: 12s</div></div>
+    <div class="spec-item"><div class="spec-label">Easing</div><div class="spec-val">ease-in-out<br>infinite loop</div></div>
+    <div class="spec-item"><div class="spec-label">Motion</div><div class="spec-val">translate X/Y ±20px<br>scale .92–1.08<br>stagger delay 0/2s/5s</div></div>
+    <div class="spec-item"><div class="spec-label">Rendering</div><div class="spec-val">will-change: transform<br>filter: blur(60px)<br>opacity: .18–.25</div></div>
+    <div class="spec-item"><div class="spec-label">Trigger</div><div class="spec-val">CSS animation autoplay<br>paused saat tab hidden</div></div>
+    <div class="spec-item"><div class="spec-label">Framer Motion</div><div class="spec-val">animate={{x,y,scale}}<br>transition={{repeat:Infinity, type:"tween"}}</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → animation-play-state: paused. Orb tetap terlihat sebagai dekorasi statis. Tidak ada informasi yang dikodekan dalam gerakan.</div>
+</div>
+
+<!-- ═══ AURORA ═══ -->
+<div class="sec" id="s-aurora">
+  <div class="stage" style="min-height:220px;position:relative;overflow:hidden">
+    <canvas id="aurora-canvas" width="600" height="200" style="position:absolute;inset:0;width:100%;height:100%;opacity:.35"></canvas>
+    <div style="position:relative;z-index:2;text-align:center">
+      <div style="font-size:13px;font-weight:500;margin-bottom:4px">Aurora background</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Gradient animasi halus — ambient only</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Technique</div><div class="spec-val">Canvas 2D / SVG radialGradient<br>CSS @keyframes fallback</div></div>
+    <div class="spec-item"><div class="spec-label">Duration cycle</div><div class="spec-val">18–26s per orb<br>different speeds = organic</div></div>
+    <div class="spec-item"><div class="spec-label">Colors</div><div class="spec-val">purple-200 · teal-200<br>amber-200 · pink-100<br>opacity 12–22%</div></div>
+    <div class="spec-item"><div class="spec-label">Easing</div><div class="spec-val">sinusoidal (Math.sin)<br>smooth infinite loop</div></div>
+    <div class="spec-item"><div class="spec-label">Performance</div><div class="spec-val">requestAnimationFrame<br>pause on visibility:hidden<br>GPU: will-change:transform</div></div>
+    <div class="spec-item"><div class="spec-label">Dark mode</div><div class="spec-val">opacity dikurangi ke 8–12%<br>warna lebih gelap di dark</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → static radial-gradient background, tidak ada animasi. Aurora adalah dekorasi murni, tidak ada fungsi yang bergantung padanya.</div>
+</div>
+
+<!-- ═══ MOOD SELECTION ═══ -->
+<div class="sec" id="s-mood">
+  <div class="controls">
+    <span style="font-size:12px;color:var(--color-text-tertiary)">Klik emoji untuk trigger animasi</span>
+  </div>
+  <div class="stage" style="flex-direction:column;gap:16px">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center" id="mood-row">
+      <div class="mood-node" onclick="pickMood(this,'😭','#E24B4A')" data-v="1">😭</div>
+      <div class="mood-node" onclick="pickMood(this,'😔','#D85A30')" data-v="3">😔</div>
+      <div class="mood-node" onclick="pickMood(this,'😐','#888780')" data-v="5">😐</div>
+      <div class="mood-node" onclick="pickMood(this,'🙂','#1D9E75')" data-v="7">🙂</div>
+      <div class="mood-node" onclick="pickMood(this,'😊','#1D9E75')" data-v="8">😊</div>
+      <div class="mood-node" onclick="pickMood(this,'😄','#1D9E75')" data-v="9">😄</div>
+      <div class="mood-node" onclick="pickMood(this,'😍','#1D9E75')" data-v="10">😍</div>
+    </div>
+    <div id="mood-feedback" style="text-align:center;min-height:40px">
+      <div id="mood-big" style="font-size:40px;line-height:1;opacity:0;transform:scale(.6)">😊</div>
+      <div id="mood-lbl" style="font-size:12px;color:var(--color-text-tertiary);margin-top:4px;opacity:0"></div>
+    </div>
+    <input type="range" min="1" max="10" value="5" id="mood-slider" oninput="sliderMood(this.value)" style="width:100%;max-width:280px">
+  </div>
+  <style>
+    .mood-node{width:36px;height:36px;border-radius:50%;border:.5px solid var(--color-border-tertiary);background:var(--color-background-primary);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:transform .15s cubic-bezier(.34,1.56,.64,1),border-color .15s,background .15s;user-select:none}
+    .mood-node:hover{transform:scale(1.2)}
+    .mood-node.picked{transform:scale(1.25);border-color:var(--active-c,#1D9E75);background:var(--active-bg,#E1F5EE)}
+  </style>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Select scale</div><div class="spec-val">0 → 1.25<br>duration: 200ms<br>spring overshoot</div></div>
+    <div class="spec-item"><div class="spec-label">Big emoji appear</div><div class="spec-val">scale .6→1 + opacity 0→1<br>duration: 300ms<br>cubic-bezier(.34,1.56,.64,1)</div></div>
+    <div class="spec-item"><div class="spec-label">Emoji morph</div><div class="spec-val">scale 1→.8→1 saat ganti<br>duration: 180ms<br>ease-in-out</div></div>
+    <div class="spec-item"><div class="spec-label">Slider feedback</div><div class="spec-val">real-time, no debounce<br>color lerp per value</div></div>
+    <div class="spec-item"><div class="spec-label">Easing</div><div class="spec-val">cubic-bezier(.34,1.56,.64,1)<br>spring bounce — playful</div></div>
+    <div class="spec-item"><div class="spec-label">Color transition</div><div class="spec-val">border + bg interpolate<br>merah (1) → hijau (10)</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: animasi opsional — emoji selalu terlihat. Slider punya aria-valuenow + aria-valuetext="Baik". Keyboard: Arrow keys navigasi mood.</div>
+</div>
+
+<!-- ═══ JOURNAL STEP ═══ -->
+<div class="sec" id="s-step">
+  <div class="controls">
+    <button class="btn-run" onclick="stepPrev()" id="step-prev-btn" disabled>← Kembali</button>
+    <span id="step-counter" style="font-size:12px;color:var(--color-text-tertiary)">Langkah 1 / 4</span>
+    <button class="btn-run primary" onclick="stepNext()">Lanjut →</button>
+  </div>
+  <div class="stage" style="min-height:180px;overflow:hidden">
+    <div id="step-wrap" style="width:100%;position:relative">
+      <div class="step-card on" id="sc-1" style="padding:16px">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Langkah 1 dari 15</div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:6px">Bagaimana perasaanmu?</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">Geser slider untuk menilai mood 1–10</div>
+        <div style="margin-top:12px;height:6px;border-radius:3px;background:var(--color-border-tertiary);overflow:hidden"><div style="height:100%;width:60%;background:#1D9E75;border-radius:3px"></div></div>
+      </div>
+      <div class="step-card" id="sc-2" style="padding:16px;opacity:0;position:absolute;top:0;left:0;right:0;transform:translateX(32px)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Langkah 2 dari 15</div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:6px">Pilih emosimu</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">Bisa pilih lebih dari satu emosi</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px">
+          <span style="padding:4px 10px;border-radius:100px;font-size:11px;background:#E1F5EE;color:#085041">Senang</span>
+          <span style="padding:4px 10px;border-radius:100px;font-size:11px;background:#FAEEDA;color:#633806">Cemas</span>
+          <span style="padding:4px 10px;border-radius:100px;font-size:11px;background:#EEEDFE;color:#26215C">Tenang</span>
+        </div>
+      </div>
+      <div class="step-card" id="sc-3" style="padding:16px;opacity:0;position:absolute;top:0;left:0;right:0;transform:translateX(32px)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Langkah 3 dari 15</div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:6px">Energi hari ini</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">Seberapa berenergi kamu? 0–100</div>
+        <div style="margin-top:12px;position:relative;height:28px;border-radius:5px;border:.5px solid var(--color-border-secondary);overflow:hidden">
+          <div style="height:100%;width:72%;background:#1D9E75;border-radius:4px"></div>
+          <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:500;color:var(--color-background-primary)">72%</div>
+        </div>
+      </div>
+      <div class="step-card" id="sc-4" style="padding:16px;opacity:0;position:absolute;top:0;left:0;right:0;transform:translateX(32px)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Langkah 4 dari 15</div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:6px">Ceritakan harimu</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">Apa yang paling berkesan hari ini?</div>
+        <div style="margin-top:12px;height:40px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);display:flex;align-items:center;padding:0 10px"><span style="font-size:12px;color:var(--color-text-tertiary)">Mulai menulis...</span></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .step-card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);width:100%}
+    .step-card.on{opacity:1;position:relative;transform:none}
+  </style>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Exit (current)</div><div class="spec-val">opacity 1→0, translateX 0→-24px<br>duration: 200ms, ease-in</div></div>
+    <div class="spec-item"><div class="spec-label">Enter (next)</div><div class="spec-val">opacity 0→1, translateX 32→0px<br>duration: 280ms, ease-out</div></div>
+    <div class="spec-item"><div class="spec-label">Back exit</div><div class="spec-val">translateX 0→+24px, fade out</div></div>
+    <div class="spec-item"><div class="spec-label">Back enter</div><div class="spec-val">translateX -32→0px, fade in</div></div>
+    <div class="spec-item"><div class="spec-label">Progress dot</div><div class="spec-val">scale .8→1.3 saat aktif<br>color transition 150ms</div></div>
+    <div class="spec-item"><div class="spec-label">Container height</div><div class="spec-val">animate height dari step ke step<br>spring, stiffness 300</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → instant swap tanpa slide. Focus dipindah ke heading step baru. aria-live="polite" mengumumkan "Langkah 2 dari 15".</div>
+</div>
+
+<!-- ═══ AI TYPING ═══ -->
+<div class="sec" id="s-ai">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runAI()">▶ Play AI response</button>
+    <button class="btn-run" onclick="resetAI()">↺ Reset</button>
+  </div>
+  <div class="stage" style="flex-direction:column;align-items:flex-start;gap:10px;padding:20px">
+    <div style="display:flex;align-items:flex-end;gap:8px">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0">B</div>
+      <div id="ai-typing-bubble" style="padding:10px 13px;border-radius:13px;border-bottom-left-radius:3px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);font-size:12px;max-width:280px;min-height:38px;display:flex;align-items:center">
+        <div id="ai-dots" style="display:flex;gap:4px">
+          <div class="td" style="width:5px;height:5px;border-radius:50%;background:var(--color-text-tertiary);animation:tdot 1.2s ease-in-out infinite"></div>
+          <div class="td" style="width:5px;height:5px;border-radius:50%;background:var(--color-text-tertiary);animation:tdot 1.2s ease-in-out .18s infinite"></div>
+          <div class="td" style="width:5px;height:5px;border-radius:50%;background:var(--color-text-tertiary);animation:tdot 1.2s ease-in-out .36s infinite"></div>
+        </div>
+        <span id="ai-text" style="display:none;line-height:1.55;color:var(--color-text-primary)"></span>
+      </div>
+    </div>
+    <div id="ai-user-msg" style="align-self:flex-end;padding:9px 13px;border-radius:13px;border-bottom-right-radius:3px;background:var(--color-text-primary);color:var(--color-background-primary);font-size:12px;max-width:220px;opacity:0;transform:translateY(8px) scale(.97);transition:opacity .25s ease-out,transform .25s cubic-bezier(.34,1.56,.64,1)">Aku masih capek setelah meeting tadi...</div>
+  </div>
+  <style>
+    @keyframes tdot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  </style>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Typing dots</div><div class="spec-val">3 dots, stagger 180ms<br>translateY 0→-4px<br>opacity .3→1<br>loop: 1.2s ease-in-out</div></div>
+    <div class="spec-item"><div class="spec-label">Dots → text</div><div class="spec-val">dots fade out 150ms<br>text stream: char by char<br>15–25ms per char</div></div>
+    <div class="spec-item"><div class="spec-label">Bubble expand</div><div class="spec-val">height animasi saat text tumbuh<br>transition: height 80ms ease-out</div></div>
+    <div class="spec-item"><div class="spec-label">User bubble</div><div class="spec-val">opacity 0→1, scale .97→1<br>translateY 8→0px<br>duration: 250ms spring</div></div>
+    <div class="spec-item"><div class="spec-label">Cursor blink</div><div class="spec-val">| blink 500ms<br>hilang saat stream selesai</div></div>
+    <div class="spec-item"><div class="spec-label">Streaming</div><div class="spec-val">SSE chunks → requestAnimationFrame<br>tidak block main thread</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → dots tidak bergerak, text muncul sekaligus setelah 800ms delay. aria-live="polite" di bubble AI untuk screen reader.</div>
+</div>
+
+<!-- ═══ SAVE SUCCESS ═══ -->
+<div class="sec" id="s-save">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runSave()">▶ Simpan jurnal</button>
+  </div>
+  <div class="stage" style="min-height:220px">
+    <div id="save-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;transform:scale(.9);transition:opacity .35s cubic-bezier(0,0,.2,1),transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;z-index:2;background:var(--color-background-secondary);border-radius:var(--border-radius-lg)">
+      <div id="save-check" style="width:52px;height:52px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .4s cubic-bezier(.34,1.56,.64,1) .1s">
+        <i class="ti ti-check" aria-hidden="true" style="font-size:24px;color:#085041"></i>
+      </div>
+      <div id="save-title" style="font-size:15px;font-weight:500;opacity:0;transform:translateY(8px);transition:opacity .3s ease-out .3s,transform .3s ease-out .3s">Jurnal tersimpan!</div>
+      <div id="save-sub" style="font-size:12px;color:var(--color-text-secondary);opacity:0;transform:translateY(6px);transition:opacity .3s ease-out .4s,transform .3s ease-out .4s">Streak 🔥 14 hari · Tanaman baru tumbuh 🌱</div>
+      <div id="save-btns" style="display:flex;gap:8px;margin-top:4px;opacity:0;transition:opacity .3s ease-out .55s">
+        <button class="btn-run">Lihat taman</button>
+        <button class="btn-run">Buka AI Coach</button>
+      </div>
+    </div>
+    <div id="save-form" style="width:100%;max-width:280px;transition:opacity .2s ease-in">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Jurnal 14 Mei 2025</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:90%"></div>
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:75%"></div>
+        <div style="height:8px;border-radius:3px;background:var(--color-border-tertiary);width:85%"></div>
+      </div>
+      <button class="btn-run primary" style="margin-top:12px" onclick="runSave()">Simpan jurnal ↗</button>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Overlay appear</div><div class="spec-val">opacity 0→1, scale .9→1<br>duration: 350ms spring</div></div>
+    <div class="spec-item"><div class="spec-label">Check icon</div><div class="spec-val">scale 0→1, delay 100ms<br>duration: 400ms spring bounce</div></div>
+    <div class="spec-item"><div class="spec-label">Text stagger</div><div class="spec-val">title: delay 300ms<br>sub: delay 400ms<br>buttons: delay 550ms</div></div>
+    <div class="spec-item"><div class="spec-label">Duration each</div><div class="spec-val">300ms ease-out<br>translateY 8→0px</div></div>
+    <div class="spec-item"><div class="spec-label">Confetti trigger</div><div class="spec-val">setelah overlay muncul<br>50 partikel, 2.5s fall</div></div>
+    <div class="spec-item"><div class="spec-label">Auto dismiss</div><div class="spec-val">tidak auto-dismiss<br>pengguna kontrol penuh</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → overlay muncul seketika, semua elemen tampil tanpa transisi. aria-role="dialog" + aria-modal. Focus trap ke dalam overlay.</div>
+</div>
+
+<!-- ═══ CONFETTI ═══ -->
+<div class="sec" id="s-confetti">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runConfetti()">🎉 Fire confetti!</button>
+    <button class="btn-run" onclick="runConfetti(20,'streak')">🔥 Streak milestone</button>
+    <button class="btn-run" onclick="runConfetti(15,'gratitude')">💛 Gratitude</button>
+  </div>
+  <div class="stage" style="min-height:220px;overflow:hidden" id="confetti-stage">
+    <div style="text-align:center">
+      <div style="font-size:13px;font-weight:500;margin-bottom:4px">Konfeti akan muncul di sini</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Klik tombol di atas untuk trigger</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Particle count</div><div class="spec-val">save: 50 partikel<br>streak: 20 partikel<br>gratitude: 15 partikel</div></div>
+    <div class="spec-item"><div class="spec-label">Duration</div><div class="spec-val">2–3.5s per partikel<br>random variance ±0.5s</div></div>
+    <div class="spec-item"><div class="spec-label">Motion</div><div class="spec-val">translateY -10px→100vh<br>rotate 0→720deg<br>opacity 1→0 di 80%</div></div>
+    <div class="spec-item"><div class="spec-label">Shapes</div><div class="spec-val">rect (50%) · circle (30%)<br>thin rect — ticker (20%)</div></div>
+    <div class="spec-item"><div class="spec-label">Colors</div><div class="spec-val">purple-400 · teal-400<br>amber-400 · pink-400<br>coral-400</div></div>
+    <div class="spec-item"><div class="spec-label">Cleanup</div><div class="spec-val">DOM cleanup setelah 4s<br>max 50 particles di DOM</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → konfeti tidak muncul sama sekali. Pesan sukses tetap ditampilkan melalui toast. Tidak ada informasi yang hilang.</div>
+</div>
+
+<!-- ═══ ACHIEVEMENT ═══ -->
+<div class="sec" id="s-achieve">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runAchieve()">🏆 Unlock achievement</button>
+  </div>
+  <div class="stage" style="min-height:240px;overflow:hidden">
+    <div id="ach-card-demo" style="width:100%;max-width:280px;background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px;text-align:center;transform:scale(.85) translateY(20px);opacity:0;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s ease-out">
+      <div id="ach-icon-demo" style="width:60px;height:60px;border-radius:50%;background:#FAEEDA;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1) .2s">🔥</div>
+      <div id="ach-name-demo" style="font-size:14px;font-weight:500;margin-bottom:4px;opacity:0;transform:translateY(6px);transition:opacity .3s ease-out .45s,transform .3s ease-out .45s">Streak 7 Hari!</div>
+      <div id="ach-desc-demo" style="font-size:12px;color:var(--color-text-secondary);opacity:0;transition:opacity .3s ease-out .6s">Kamu berhasil menulis 7 hari berturut-turut. Luar biasa!</div>
+      <div id="ach-xp-demo" style="margin-top:12px;padding:6px 14px;border-radius:100px;background:#FAEEDA;font-size:11px;font-weight:500;color:#633806;display:inline-block;opacity:0;transition:opacity .3s ease-out .75s">+ 75 XP</div>
+    </div>
+    <div id="ach-ring" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+      <div id="ach-ripple1" style="width:120px;height:120px;border-radius:50%;border:2px solid #EF9F27;opacity:0;transform:scale(.5);transition:transform .6s ease-out,opacity .6s ease-out;position:absolute"></div>
+      <div id="ach-ripple2" style="width:120px;height:120px;border-radius:50%;border:1.5px solid #EF9F27;opacity:0;transform:scale(.5);transition:transform .8s ease-out .15s,opacity .8s ease-out .15s;position:absolute"></div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Card entrance</div><div class="spec-val">scale .85→1, opacity 0→1<br>duration: 500ms spring</div></div>
+    <div class="spec-item"><div class="spec-label">Icon pop</div><div class="spec-val">scale 0→1, delay 200ms<br>duration: 500ms spring bounce<br>cubic-bezier(.34,1.56,.64,1)</div></div>
+    <div class="spec-item"><div class="spec-label">Text stagger</div><div class="spec-val">name: +450ms · desc: +600ms<br>xp badge: +750ms</div></div>
+    <div class="spec-item"><div class="spec-label">Ripple rings</div><div class="spec-val">2 rings, delay 15ms<br>scale .5→2.5, opacity 0.8→0<br>duration: 600–800ms</div></div>
+    <div class="spec-item"><div class="spec-label">Confetti trigger</div><div class="spec-val">saat card muncul<br>20 partikel warna amber</div></div>
+    <div class="spec-item"><div class="spec-label">Toast fallback</div><div class="spec-val">jika tab hidden: toast saat<br>pengguna kembali</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → card muncul langsung. aria-role="alertdialog" + aria-live="assertive" untuk pengumuman achievement kepada screen reader.</div>
+</div>
+
+<!-- ═══ BREATHING ═══ -->
+<div class="sec" id="s-breath">
+  <div class="controls">
+    <button class="btn-run primary" id="breath-btn" onclick="toggleBreath()">▶ Mulai bernapas</button>
+    <span id="breath-phase-lbl" style="font-size:12px;color:var(--color-text-tertiary)">4-4-4-4 box breathing</span>
+  </div>
+  <div class="stage" style="min-height:260px;position:relative">
+    <div id="br-ring2" style="width:200px;height:200px;border-radius:50%;border:.5px solid var(--color-border-secondary);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:width 4s ease-in-out,height 4s ease-in-out;opacity:.3"></div>
+    <div id="br-ring1" style="width:180px;height:180px;border-radius:50%;border:.5px solid var(--color-border-primary);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:width 4s ease-in-out,height 4s ease-in-out;opacity:.5"></div>
+    <div id="br-circle" style="width:140px;height:140px;border-radius:50%;border:.5px solid var(--color-border-primary);background:var(--color-background-secondary);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:width 4s ease-in-out,height 4s ease-in-out;cursor:pointer" onclick="toggleBreath()">
+      <span id="br-phase" style="font-size:13px;font-weight:500;color:var(--color-text-secondary)">Siap</span>
+      <span id="br-count" style="font-size:36px;font-weight:500;line-height:1">4</span>
+    </div>
+  </div>
+  <div id="breath-phases-row" style="display:flex;justify-content:center;gap:12px;margin-bottom:12px;font-size:11px">
+    <div style="text-align:center"><div style="font-size:18px;font-weight:500;color:var(--color-text-secondary)">4</div><div style="color:var(--color-text-tertiary)">Tarik</div></div>
+    <div style="text-align:center"><div style="font-size:18px;font-weight:500;color:var(--color-text-secondary)">4</div><div style="color:var(--color-text-tertiary)">Tahan</div></div>
+    <div style="text-align:center"><div style="font-size:18px;font-weight:500;color:var(--color-text-secondary)">4</div><div style="color:var(--color-text-tertiary)">Buang</div></div>
+    <div style="text-align:center"><div style="font-size:18px;font-weight:500;color:var(--color-text-secondary)">4</div><div style="color:var(--color-text-tertiary)">Tahan</div></div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Expand (inhale)</div><div class="spec-val">140px → 180px<br>rings: 180→230, 200→250<br>duration: 4s ease-in-out</div></div>
+    <div class="spec-item"><div class="spec-label">Hold (tahan)</div><div class="spec-val">size statis<br>subtle pulse: scale 1→1.02<br>duration: 4s ease-in-out</div></div>
+    <div class="spec-item"><div class="spec-label">Shrink (exhale)</div><div class="spec-val">180px → 130px<br>ease-in-out 4s</div></div>
+    <div class="spec-item"><div class="spec-label">Countdown</div><div class="spec-val">4→3→2→1 setiap 1000ms<br>number fade cross: 200ms</div></div>
+    <div class="spec-item"><div class="spec-label">Color shift</div><div class="spec-val">inhale: purple tint<br>exhale: teal tint<br>transition: 2s ease</div></div>
+    <div class="spec-item"><div class="spec-label">Easing principle</div><div class="spec-val">ease-in-out wajib<br>linear terasa mekanis<br>organic = breath-like</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → lingkaran tidak berubah ukuran. Hanya countdown angka dan teks fase yang berubah. Pengalaman tetap fungsional sepenuhnya.</div>
+</div>
+
+<!-- ═══ CHART ═══ -->
+<div class="sec" id="s-chart">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runChart()">▶ Animasikan chart</button>
+    <button class="btn-run" onclick="switchChart()">Switch chart type</button>
+  </div>
+  <div class="stage" style="min-height:200px;flex-direction:column;gap:12px">
+    <div id="bar-chart" style="display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px;width:100%;max-width:360px">
+      <!-- populated by JS -->
+    </div>
+    <div style="display:flex;justify-content:space-between;width:100%;max-width:360px;padding:0 4px">
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Sen</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Sel</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Rab</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Kam</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Jum</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Sab</span>
+      <span style="font-size:10px;color:var(--color-text-tertiary)">Min</span>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Bar entrance</div><div class="spec-val">scaleY 0→1, origin: bottom<br>stagger: 60ms per bar<br>duration: 500ms</div></div>
+    <div class="spec-item"><div class="spec-label">Bar easing</div><div class="spec-val">cubic-bezier(.34,1.56,.64,1)<br>spring — slight overshoot untuk feel hidup</div></div>
+    <div class="spec-item"><div class="spec-label">Line chart draw</div><div class="spec-val">stroke-dashoffset path draw<br>duration: 800ms ease-out<br>fill fade-in setelah line</div></div>
+    <div class="spec-item"><div class="spec-label">Value tooltip</div><div class="spec-val">opacity 0→1, translateY 4→0<br>duration: 150ms ease-out<br>on hover/focus</div></div>
+    <div class="spec-item"><div class="spec-label">Update (data change)</div><div class="spec-val">bars tween height sebelumnya<br>ke tinggi baru: 400ms ease</div></div>
+    <div class="spec-item"><div class="spec-label">IntersectionObserver</div><div class="spec-val">trigger saat 50% dalam viewport<br>tidak animate kalau off-screen</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → bars muncul langsung di height final. Data tabel tersedia sebagai visually-hidden fallback. Chart label di aria-label tiap bar.</div>
+</div>
+
+<!-- ═══ DASHBOARD WIDGET ═══ -->
+<div class="sec" id="s-dash">
+  <div class="controls">
+    <button class="btn-run primary" onclick="runDash()">▶ Animasikan dashboard</button>
+  </div>
+  <div class="stage" style="min-height:240px;align-items:flex-start;padding:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:400px" id="dash-grid">
+      <div class="dw" id="dw1" style="opacity:0;transform:translateY(12px) scale(.96)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Streak harian</div>
+        <div style="font-size:22px;font-weight:500;display:flex;align-items:center;gap:6px"><span>🔥</span><span id="streak-num">0</span></div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:2px">Hari berturut-turut</div>
+      </div>
+      <div class="dw" id="dw2" style="opacity:0;transform:translateY(12px) scale(.96)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Skor refleksi</div>
+        <div style="position:relative;display:inline-flex">
+          <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="26" fill="none" stroke="var(--color-border-tertiary)" stroke-width="5"/>
+            <circle cx="32" cy="32" r="26" fill="none" stroke="#7F77DD" stroke-width="5" stroke-linecap="round"
+              stroke-dasharray="163" id="ring-fill" stroke-dashoffset="163" transform="rotate(-90 32 32)" style="transition:stroke-dashoffset 1.2s cubic-bezier(0,0,.2,1)"/>
+          </svg>
+          <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:500;color:#7F77DD" id="ring-val">0</span>
+        </div>
+      </div>
+      <div class="dw" id="dw3" style="opacity:0;transform:translateY(12px) scale(.96)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Energi hari ini</div>
+        <div id="bat-wrap" style="border-radius:5px;border:.5px solid var(--color-border-secondary);height:22px;overflow:hidden;position:relative">
+          <div id="bat-fill" style="height:100%;width:0;background:#1D9E75;border-radius:4px;transition:width 1s cubic-bezier(0,0,.2,1)"></div>
+          <span id="bat-lbl" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:500">0%</span>
+        </div>
+      </div>
+      <div class="dw" id="dw4" style="opacity:0;transform:translateY(12px) scale(.96)">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px">Skor syukur</div>
+        <div style="font-size:22px;font-weight:500" id="grat-val">0</div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:2px">+5 dari kemarin</div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .dw{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;transition:opacity .4s cubic-bezier(0,0,.2,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
+  </style>
+  <div class="spec">
+    <div class="spec-item"><div class="spec-label">Widget stagger</div><div class="spec-val">w1: 0ms · w2: 60ms<br>w3: 120ms · w4: 180ms</div></div>
+    <div class="spec-item"><div class="spec-label">Widget entrance</div><div class="spec-val">opacity 0→1, scale .96→1<br>translateY 12→0px<br>duration: 400ms spring</div></div>
+    <div class="spec-item"><div class="spec-label">Counter count-up</div><div class="spec-val">0→target, duration 1s<br>easeOut quad<br>RAF loop: Math.round</div></div>
+    <div class="spec-item"><div class="spec-label">Progress ring</div><div class="spec-val">stroke-dashoffset 163→target<br>duration: 1.2s ease-out<br>delay 300ms setelah visible</div></div>
+    <div class="spec-item"><div class="spec-label">Battery fill</div><div class="spec-val">width 0→72%, 1s ease-out<br>color: merah jika <30%</div></div>
+    <div class="spec-item"><div class="spec-label">Trigger</div><div class="spec-val">IntersectionObserver 40%<br>sekali saja, tidak loop</div></div>
+  </div>
+  <div class="a11y-note">Accessibility: reduced-motion → semua nilai muncul langsung di angka final. Tidak ada count-up. Progress ring muncul penuh. Layout tidak berubah.</div>
+</div>
+
+</div>
+
+<script>
+function show(k){
+  const keys=['page','hero','orb','aurora','mood','step','ai','save','confetti','achieve','breath','chart','dash'];
+  keys.forEach(id=>document.getElementById('s-'+id).classList.remove('on'));
+  document.getElementById('s-'+k).classList.add('on');
+  document.querySelectorAll('.np').forEach((b,i)=>b.classList.toggle('on',keys[i]===k));
+}
+
+/* ── Page Transition ── */
+function runPage(){
+  const a=document.getElementById('page-a'),b=document.getElementById('page-b');
+  a.style.opacity='0';a.style.transform='translateY(-8px)';
+  setTimeout(()=>{
+    b.style.opacity='1';b.style.transform='translateY(0)';
+    setTimeout(()=>{
+      a.style.transition='none';a.style.opacity='1';a.style.transform='translateY(0)';
+      setTimeout(()=>{
+        a.style.transition='opacity .25s cubic-bezier(0,0,.2,1),transform .25s cubic-bezier(0,0,.2,1)';
+        b.style.transition='none';b.style.opacity='0';b.style.transform='translateY(16px)';
+        setTimeout(()=>b.style.transition='opacity .3s cubic-bezier(0,0,.2,1),transform .3s cubic-bezier(0,0,.2,1)',50);
+      },1200);
+    },1000);
+  },200);
+}
+
+/* ── Hero Animation ── */
+function runHero(){
+  const els=['h-badge','h-title','h-sub','h-cta'];
+  const delays=[0,80,160,240];
+  els.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.style.opacity='0';el.style.transform=id==='h-cta'?'translateY(12px) scale(.97)':'translateY(16px)';
+    el.style.transition='none';
+    setTimeout(()=>{
+      el.style.transition=id==='h-cta'
+        ?'opacity .45s cubic-bezier(.34,1.56,.64,1),transform .45s cubic-bezier(.34,1.56,.64,1)'
+        :'opacity .55s cubic-bezier(0,0,.2,1),transform .55s cubic-bezier(0,0,.2,1)';
+      el.style.opacity='1';el.style.transform='translateY(0) scale(1)';
+    },delays[i]+50);
+  });
+}
+
+/* ── Mood ── */
+const MOODS=['😭','😢','😔','😟','😐','🙂','😊','😄','🤩','😍'];
+const MLABELS=['Sangat berat','Berat','Kurang baik','Tidak nyaman','Biasa','Cukup baik','Baik','Senang','Sangat senang','Luar biasa!'];
+const MCOLORS=['#E24B4A','#D85A30','#D85A30','#D85A30','#888780','#1D9E75','#1D9E75','#1D9E75','#1D9E75','#1D9E75'];
+const MBGS=['#FCEBEB','#FAECE7','#FAECE7','#FAECE7','#F1EFE8','#E1F5EE','#E1F5EE','#E1F5EE','#E1F5EE','#E1F5EE'];
+let lastMoodVal=5;
+function pickMood(el,emoji,color){
+  document.querySelectorAll('.mood-node').forEach(n=>n.classList.remove('picked'));
+  el.classList.add('picked');el.style.setProperty('--active-c',color);el.style.setProperty('--active-bg',color+'22');
+  const val=parseInt(el.dataset.v)-1;
+  const big=document.getElementById('mood-big'),lbl=document.getElementById('mood-lbl');
+  big.style.transition='none';big.style.opacity='0';big.style.transform='scale(.6)';
+  setTimeout(()=>{
+    big.textContent=emoji;lbl.textContent=MLABELS[val];lbl.style.opacity='1';
+    big.style.transition='opacity .3s cubic-bezier(.34,1.56,.64,1),transform .3s cubic-bezier(.34,1.56,.64,1)';
+    big.style.opacity='1';big.style.transform='scale(1)';
+  },80);
+}
+function sliderMood(v){
+  v=parseInt(v)-1;
+  const big=document.getElementById('mood-big'),lbl=document.getElementById('mood-lbl');
+  if(big.style.opacity!=='1'){big.style.opacity='1';big.style.transform='scale(1)';}
+  if(v!==lastMoodVal){
+    big.style.transform='scale(.85)';
+    setTimeout(()=>{big.textContent=MOODS[v];big.style.transform='scale(1)';},100);
+    lbl.textContent=MLABELS[v];lbl.style.opacity='1';
+    lastMoodVal=v;
+  }
+}
+
+/* ── Journal Steps ── */
+let curStep=1,maxStep=4;
+function stepNext(){
+  if(curStep>=maxStep)return;
+  exitStep(curStep,'left');curStep++;enterStep(curStep,'right');updateStepUI();
+}
+function stepPrev(){
+  if(curStep<=1)return;
+  exitStep(curStep,'right');curStep--;enterStep(curStep,'left');updateStepUI();
+}
+function exitStep(n,dir){
+  const c=document.getElementById('sc-'+n);
+  c.style.transition='opacity .2s ease-in,transform .2s ease-in';
+  c.style.opacity='0';c.style.transform=dir==='left'?'translateX(-24px)':'translateX(24px)';
+  setTimeout(()=>{c.style.position='absolute';c.style.pointerEvents='none';},220);
+}
+function enterStep(n,dir){
+  const c=document.getElementById('sc-'+n);
+  c.style.transition='none';c.style.opacity='0';c.style.transform=dir==='right'?'translateX(32px)':'translateX(-32px)';
+  c.style.position='absolute';
+  setTimeout(()=>{
+    c.style.transition='opacity .28s cubic-bezier(0,0,.2,1),transform .28s cubic-bezier(0,0,.2,1)';
+    c.style.opacity='1';c.style.transform='translateX(0)';
+    c.style.position='relative';
+  },50);
+}
+function updateStepUI(){
+  document.getElementById('step-counter').textContent=`Langkah ${curStep} / ${maxStep}`;
+  document.getElementById('step-prev-btn').disabled=curStep<=1;
+}
+
+/* ── AI Typing ── */
+const AI_MSG="Aku dengar kamu capek setelah meeting tadi. Itu wajar sekali. Apa satu hal kecil yang bisa kamu lakukan malam ini untuk merawat dirimu? 💙";
+let aiInterval=null;
+function runAI(){
+  resetAI();
+  const um=document.getElementById('ai-user-msg');
+  um.style.opacity='1';um.style.transform='translateY(0) scale(1)';
+  setTimeout(()=>{
+    const dots=document.getElementById('ai-dots'),text=document.getElementById('ai-text');
+    let i=0;
+    setTimeout(()=>{
+      dots.style.transition='opacity .15s';dots.style.opacity='0';
+      setTimeout(()=>{
+        dots.style.display='none';text.style.display='inline';text.textContent='';
+        aiInterval=setInterval(()=>{
+          if(i<AI_MSG.length){text.textContent+=AI_MSG[i];i++;}
+          else clearInterval(aiInterval);
+        },22);
+      },150);
+    },1400);
+  },300);
+}
+function resetAI(){
+  clearInterval(aiInterval);
+  const um=document.getElementById('ai-user-msg');
+  um.style.transition='none';um.style.opacity='0';um.style.transform='translateY(8px) scale(.97)';
+  setTimeout(()=>um.style.transition='opacity .25s ease-out,transform .25s cubic-bezier(.34,1.56,.64,1)',50);
+  const dots=document.getElementById('ai-dots'),text=document.getElementById('ai-text');
+  dots.style.display='flex';dots.style.opacity='1';text.style.display='none';text.textContent='';
+}
+
+/* ── Save Success ── */
+function runSave(){
+  const form=document.getElementById('save-form'),ov=document.getElementById('save-overlay');
+  const chk=document.getElementById('save-check'),title=document.getElementById('save-title');
+  const sub=document.getElementById('save-sub'),btns=document.getElementById('save-btns');
+  form.style.opacity='0';
+  setTimeout(()=>{
+    ov.style.pointerEvents='all';ov.style.opacity='1';ov.style.transform='scale(1)';
+    setTimeout(()=>{chk.style.transform='scale(1)';},100);
+    setTimeout(()=>{title.style.opacity='1';title.style.transform='translateY(0)';},300);
+    setTimeout(()=>{sub.style.opacity='1';sub.style.transform='translateY(0)';},400);
+    setTimeout(()=>{btns.style.opacity='1';},550);
+    runConfetti(50,'save');
+  },200);
+  setTimeout(()=>{
+    ov.style.opacity='0';ov.style.transform='scale(.9)';
+    chk.style.transform='scale(0)';
+    title.style.opacity='0';title.style.transform='translateY(8px)';
+    sub.style.opacity='0';sub.style.transform='translateY(6px)';
+    btns.style.opacity='0';
+    ov.style.pointerEvents='none';
+    form.style.opacity='1';
+  },4500);
+}
+
+/* ── Confetti ── */
+const CONF_COLORS=['#7F77DD','#1D9E75','#EF9F27','#D4537E','#D85A30'];
+function runConfetti(count=50,type='save'){
+  const stage=document.getElementById('s-save');
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      const isCircle=Math.random()>.5,isThin=Math.random()>.7;
+      c.style.cssText=`position:fixed;width:${isCircle?7:isThin?3:8}px;height:${isCircle?7:isThin?14:7}px;border-radius:${isCircle?'50%':'2px'};background:${CONF_COLORS[Math.floor(Math.random()*CONF_COLORS.length)]};top:-10px;left:${10+Math.random()*80}vw;z-index:9999;pointer-events:none;animation:cfall ${1.8+Math.random()*1.4}s ease-in forwards;transform:rotate(${Math.random()*360}deg)`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),3500);
+    },i*40);
+  }
+}
+const cstyle=document.createElement('style');
+cstyle.textContent='@keyframes cfall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}80%{opacity:.8}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
+document.head.appendChild(cstyle);
+
+/* ── Achievement ── */
+function runAchieve(){
+  const card=document.getElementById('ach-card-demo'),icon=document.getElementById('ach-icon-demo');
+  const name=document.getElementById('ach-name-demo'),desc=document.getElementById('ach-desc-demo');
+  const xp=document.getElementById('ach-xp-demo');
+  const r1=document.getElementById('ach-ripple1'),r2=document.getElementById('ach-ripple2');
+  card.style.transform='scale(.85) translateY(20px)';card.style.opacity='0';
+  icon.style.transform='scale(0)';
+  [name,desc,xp].forEach(el=>{el.style.opacity='0';if(el===name||el===desc)el.style.transform='translateY(6px)';});
+  setTimeout(()=>{
+    card.style.transform='scale(1) translateY(0)';card.style.opacity='1';
+    r1.style.opacity='0.6';r1.style.transform='scale(2.2)';
+    r2.style.opacity='0.4';r2.style.transform='scale(2.6)';
+    setTimeout(()=>{r1.style.opacity='0';r2.style.opacity='0';},800);
+    setTimeout(()=>{icon.style.transform='scale(1)';},200);
+    setTimeout(()=>{name.style.opacity='1';name.style.transform='translateY(0)';},450);
+    setTimeout(()=>{desc.style.opacity='1';},600);
+    setTimeout(()=>{xp.style.opacity='1';},750);
+    runConfetti(20,'achieve');
+  },100);
+}
+
+/* ── Breathing ── */
+let breathRunning=false,breathPhase=0,breathCount=4,breathCountI=null,breathPhaseI=null;
+const PHASES=['Tarik nafas','Tahan','Buang nafas','Tahan'];
+const SIZES={circle:{in:175,hold:175,out:130,hold2:130},ring1:{in:225,hold:225,out:165,hold2:165}};
+function toggleBreath(){
+  breathRunning=!breathRunning;
+  document.getElementById('breath-btn').textContent=breathRunning?'⏸ Pause':'▶ Lanjut';
+  if(breathRunning) runBreathPhase();
+  else{clearTimeout(breathPhaseI);clearInterval(breathCountI);}
+}
+function runBreathPhase(){
+  if(!breathRunning)return;
+  const phase=PHASES[breathPhase%4];
+  document.getElementById('br-phase').textContent=phase;
+  const circ=document.getElementById('br-circle'),r1=document.getElementById('br-ring1'),r2=document.getElementById('br-ring2');
+  const isIn=breathPhase%4===0,isOut=breathPhase%4===2;
+  const cs=isIn?175:isOut?130:null;
+  if(cs){circ.style.width=cs+'px';circ.style.height=cs+'px';r1.style.width=(cs+40)+'px';r1.style.height=(cs+40)+'px';r2.style.width=(cs+60)+'px';r2.style.height=(cs+60)+'px';}
+  breathCount=4;document.getElementById('br-count').textContent=4;
+  clearInterval(breathCountI);
+  breathCountI=setInterval(()=>{
+    breathCount--;
+    document.getElementById('br-count').textContent=Math.max(0,breathCount);
+    if(breathCount<=0){clearInterval(breathCountI);}
+  },1000);
+  breathPhaseI=setTimeout(()=>{breathPhase++;if(breathRunning)runBreathPhase();},4100);
+}
+
+/* ── Chart ── */
+let chartType='bar';
+const chartData=[{v:6,c:'#7F77DD'},{v:8,c:'#1D9E75'},{v:5,c:'#E24B4A'},{v:7,c:'#7F77DD'},{v:9,c:'#1D9E75'},{v:6,c:'#7F77DD'},{v:8,c:'#1D9E75'}];
+function runChart(){
+  const wrap=document.getElementById('bar-chart');wrap.innerHTML='';
+  chartData.forEach((d,i)=>{
+    const col=document.createElement('div');
+    col.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px';
+    const bar=document.createElement('div');
+    bar.style.cssText=`width:100%;border-radius:4px 4px 0 0;background:${d.c};height:0;transform-origin:bottom;transition:height .5s cubic-bezier(.34,1.56,.64,1) ${i*60}ms`;
+    bar.setAttribute('aria-label',`Hari ke-${i+1}: mood ${d.v}`);
+    col.appendChild(bar);
+    const lbl=document.createElement('span');
+    lbl.style.cssText='font-size:10px;color:var(--color-text-tertiary)';
+    lbl.textContent=d.v;col.appendChild(lbl);
+    wrap.appendChild(col);
+    setTimeout(()=>{bar.style.height=(d.v*11)+'px';},50+i*60);
+  });
+}
+function switchChart(){chartType=chartType==='bar'?'line':'bar';runChart();}
+
+/* ── Dashboard count-up ── */
+function countUp(id,target,duration=1000,suffix=''){
+  const el=document.getElementById(id);let start=0,startTime=null;
+  function step(ts){if(!startTime)startTime=ts;const p=Math.min((ts-startTime)/duration,1);
+  const val=Math.round(p*target);el.textContent=val+suffix;if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+function runDash(){
+  const widgets=['dw1','dw2','dw3','dw4'];
+  widgets.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(12px) scale(.96)';
+    setTimeout(()=>{
+      el.style.transition='opacity .4s cubic-bezier(0,0,.2,1),transform .4s cubic-bezier(.34,1.56,.64,1)';
+      el.style.opacity='1';el.style.transform='translateY(0) scale(1)';
+    },i*60+50);
+  });
+  setTimeout(()=>countUp('streak-num',14,1000),100);
+  setTimeout(()=>{
+    const rf=document.getElementById('ring-fill'),rv=document.getElementById('ring-val');
+    rf.style.strokeDashoffset=Math.round(163*(1-.75));
+    countUp('ring-val',75,1200);
+  },200);
+  setTimeout(()=>{
+    const bat=document.getElementById('bat-fill'),lbl=document.getElementById('bat-lbl');
+    bat.style.width='72%';
+    let n=0;const ti=setInterval(()=>{n+=2;if(n>=72){n=72;clearInterval(ti);}lbl.textContent=n+'%';},14);
+  },300);
+  setTimeout(()=>countUp('grat-val',82,1000),400);
+}
+
+/* ── Aurora canvas ── */
+(function(){
+  const cv=document.getElementById('aurora-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d');let t=0;
+  const orbs=[
+    {x:.15,y:.3,r:.5,color:[175,169,236]},
+    {x:.8,y:.6,r:.4,color:[29,158,117]},
+    {x:.5,y:.8,r:.35,color:[239,159,39]},
+  ];
+  function draw(){
+    ctx.clearRect(0,0,600,200);
+    orbs.forEach((o,i)=>{
+      const ox=o.x+Math.sin(t*.4+i*2.1)*.12,oy=o.y+Math.cos(t*.3+i*1.7)*.1;
+      const grd=ctx.createRadialGradient(ox*600,oy*200,0,ox*600,oy*200,o.r*300);
+      grd.addColorStop(0,`rgba(${o.color},0.55)`);
+      grd.addColorStop(1,`rgba(${o.color},0)`);
+      ctx.fillStyle=grd;ctx.fillRect(0,0,600,200);
+    });
+    t+=.012;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+runHero();runChart();
+</script>
