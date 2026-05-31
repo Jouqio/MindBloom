@@ -1,7 +1,7 @@
 -- ============================================================
 -- MindBloom Database Schema — Production Ready
 -- File: 002_journal_core.sql
--- Purpose: Journal entries (15 steps), mood logs, emotions,
+-- Purpose: Journal entries (15 steps), mood logs, emotions, js
 --          gratitude items, energy tracking
 -- ============================================================
 
